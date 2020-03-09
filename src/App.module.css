@@ -6,20 +6,6 @@
 
 .form {
   width: 320px;
-  text-align: left;
-}
-
-.control {
-  padding: 8px 16px;
-}
-
-.label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.input {
-  width: 100%;
 }
 
 .example {

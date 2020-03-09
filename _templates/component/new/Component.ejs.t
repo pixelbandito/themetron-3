@@ -4,7 +4,7 @@ to: <%= h.getFolder(name) %><%= h.changeCase.pascal(h.getComponentName(name)) %>
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import styles from './<%= h.changeCase.pascal(h.getComponentName(name)) %>.module.css';
 
 const <%= h.changeCase.pascal(h.getComponentName(name)) %> = ({

@@ -1,0 +1,12 @@
+.Control {
+  padding: 8px 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input {
+  width: 100%;
+}

@@ -1,4 +1,4 @@
-import { getMinLineHeight, getSizes } from './theme-utils';
+import { getButtons, getShared, getSizes } from './theme-utils';
 
 const baseSize = 4;
 
@@ -9,70 +9,31 @@ const colors = {
 	black: '#16161d',
 	primary: 'blue',
 	success: 'green',
-	info: 'lightBlue',
+	info: 'lightblue',
 	neutral: 'gray',
 	warning: 'yellow',
 	danger: 'red',
 };
 
+const shared = getShared({ colors });
+
 const fonts = {
 	sansSerif: 'sans-serif',
 	serif: 'serif',
-	md: {
-		size: 12,
-		lineHeight: getMinLineHeight({ size: 12, spacing }).ratio,
-	},
-	sm: {
-		size: 10,
-		lineHeight: getMinLineHeight({ size: 10, spacing }).ratio,
-	},
-	lg: {
-		size: 16,
-		lineHeight: getMinLineHeight({ size: 16, spacing }).ratio,
-	},
-};
-
-const shared = {
-	backgroundColor: colors.white,
-	color: colors.black,
-	elevation: 1,
-	inverted: false,
-	roundness: 0,
-	shine: 0,
-};
-
-const buttons = {
-	borderWidth: 1,
-	roundness: 0.2,
-	shine: 1, // Very shiny: glass, shiny: plastic, slightly shiny: paper, 0: flat
 	sizes: {
-		md: {
-			fontSize: fonts.md.size,
-			paddingH: spacing.md,
-			paddingV: spacing.sm,
-		},
-		sm: {
-			fontSize: fonts.sm.size,
-			paddingH: spacing.sm,
-			paddingV: spacing.xs,
-		},
-		lg: {
-			fontSize: fonts.lg.size,
-			paddingH: spacing.md,
-			paddingV: spacing.sm,
-		},
+		xs: 10,
+		sm: 12,
+		md: 16,
+		lg: 24,
+		xl: 32,
 	},
-	variants: {
-		default: {
-			backgroundColor: colors.primary,
-			color: colors.white,
-			hover: {
-				backgroundColor: colors.success,
-				color: colors.white,
-			},
-		},
+	weights: {
+		normal: 400,
+		bold: 700,
 	},
 };
+
+const buttons = getButtons({ colors, fonts, spacing });
 
 	/*
 		Dark mode?
@@ -112,7 +73,7 @@ const buttons = {
 		And a different material palette
 		- Edged for visibility
 		- Edged for 3D realism
-	*/
+*/
 
 export default {
 	buttons,
