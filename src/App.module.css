@@ -6,8 +6,12 @@
 
 .form {
   width: 320px;
+  height: 100%;
+  overflow-y: auto;
+  border-right: 1px solid gray;
 }
 
 .example {
   padding: 16px;
+  overflow-y: auto;
 }

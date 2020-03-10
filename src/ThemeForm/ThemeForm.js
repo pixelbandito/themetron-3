@@ -5,6 +5,7 @@ import colorConvert from 'color-convert';
 import { getButtons, getSizes } from '../theme-utils.mjs';
 import Button from '../Button';
 import Control from './Control';
+import ContrastRatios from './ContrastRatios';
 import styles from './ThemeForm.module.css';
 
 export const getNumberOrDont = (string) => {
@@ -133,7 +134,7 @@ const ThemeForm = ({
     setThemeForm(nextTheme);
   }, [fontSizes, themeForm]);
 
-  const handleChangeFontSizesCount = e => {
+  const handleChangeFontSizesCount = useCallback(e => {
     console.log({ fontSizes });
     const nextFontSizesCount = getNumberOrDont(e.target.value);
     let nextSizes = getSizes({ count: nextFontSizesCount });
@@ -147,9 +148,9 @@ const ThemeForm = ({
 
     setFontSizes(nextSizes);
     setFontSizesCount(nextFontSizesCount);
-  }
+  }, [fontSizes]);
 
-  const handleChangeMdSize = e => {
+  const handleChangeMdSize = useCallback(e => {
     const nextMdSize = getNumberOrDont(e.target.value);
     const spacing = getSizes({ count: 5, mdSize: nextMdSize });
     setMdSize(nextMdSize);
@@ -159,7 +160,7 @@ const ThemeForm = ({
       buttons: getButtons({ colors: themeForm.colors, fonts: themeForm.fonts, spacing }),
       spacing,
     });
-  }
+  }, [themeForm]);
 
   return (
     <form className={classNames(className, styles.ThemeForm)}>
@@ -171,18 +172,25 @@ const ThemeForm = ({
       />
       <section>
         <h4>Semantic colors</h4>
-        {Object.entries(colors).map(([key, value]) => {
-          console.log('colors.map', { key, value });
+        {Object.entries(colors).map(([key, value], i) => {
           return (
-            <Control
-              id={`semanticColor-${key}`}
-              key={key}
-              label={key}
-              onChange={event => handleChangeColor({ event, key })}
-              type="color"
-              value={`${value}`}
-            />
-          );
+            <div key={key}>
+              <Control
+                id={`semanticColor-${key}`}
+                key={key}
+                label={key}
+                onChange={event => handleChangeColor({ event, key })}
+                type="color"
+                value={`${value}`}
+              />
+              <div className={styles.contrastRatios}>
+                <ContrastRatios
+                  color={value}
+                  colors={colors}
+                />
+              </div>
+            </div>
+            );
         })}
       </section>
       <Control
