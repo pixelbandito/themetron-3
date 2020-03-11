@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import styles from './Examples.module.css';
+import ColorViz from '../ThemeForm/ColorViz';
 import Button from '../Button';
 
 const Examples = () => {
@@ -33,15 +34,19 @@ const Examples = () => {
       </div>
       <div>
         <h2>Color ramps</h2>
-        <div>
-          <h3>primary</h3>
-          <label>md</label>
-          {' '}
-          <span
-            className={styles.swatch}
-            style={{ backgroundColor: themeContext.colors.primary }}
-          />
-        </div>
+        {Object.entries(themeContext.colors).map(([key, value]) => (
+          <div key={key}>
+            <h3>{key}</h3>
+            <label>md</label>
+            {' '}
+            <span
+              className={styles.swatch}
+              style={{ backgroundColor: value }}
+            />
+            <br />
+            <ColorViz color={value} />
+          </div>
+        ))}
       </div>
     </>
   );
