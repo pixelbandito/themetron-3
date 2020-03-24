@@ -1,14 +1,66 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { ThemeContext } from 'styled-components';
-import styles from './Examples.module.css';
-import ColorViz from '../ThemeForm/ColorViz';
+
+import { getHexFromHexOrName, getLuminance } from '../utils/colors';
 import Button from '../Button';
+import ColorRamp from '../ThemeForm/ColorRamp';
+import ColorViz from '../ThemeForm/ColorViz';
+import styles from './Examples.module.css';
+
+const ColorExample = ({
+  name,
+  hex,
+  mode,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const safeHex = useMemo(() => getHexFromHexOrName(hex), [hex]);
+
+  return (
+    <div>
+      <h3>
+        <input
+          checked={!!isExpanded}
+          onChange={event => setIsExpanded(event.target.checked)}
+          type="checkbox"
+          style={{ marginRight: '1rem' }}
+        />
+        <span
+          className={styles.swatch}
+          style={{ backgroundColor: hex }}
+        />
+      {name}{' '}
+        <small className={styles.subtitle}>{getLuminance(safeHex).toFixed(2)}</small>
+      </h3>
+      <ColorRamp
+        color={hex}
+        contrastRatios={[7, 4.5, 1]}
+        mode={mode}
+        luminances={safeHex === '#ffffff' ? [0.0194, 0.1046, 0.1812, 0.2195, 0.3564, 0.6939] : undefined}
+
+      />
+      {isExpanded && (
+        <div style={{ margin: '0.5rem 0' }}>
+          <ColorViz color={hex} />
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Examples = () => {
+  const [mode, setColorMode] = useState('hsl');
   const themeContext = useContext(ThemeContext);
 
   return (
     <>
+      <div>
+        Pick a color mode:{' '}
+        <select value={mode.toUpperCase()} onChange={(event) => setColorMode(event.target.value.toLowerCase())}>
+          <option>HSL</option>
+          <option>HSV</option>
+          <option>LAB</option>
+        </select>
+      </div>
       <h1 id="heading">Heading</h1>
       <Button size="sm">Button</Button>
       {' '}
@@ -34,19 +86,17 @@ const Examples = () => {
       </div>
       <div>
         <h2>Color ramps</h2>
-        {Object.entries(themeContext.colors).map(([key, value]) => (
-          <div key={key}>
-            <h3>{key}</h3>
-            <label>md</label>
-            {' '}
-            <span
-              className={styles.swatch}
-              style={{ backgroundColor: value }}
+        {Object.entries(themeContext.colors)
+          .filter(([key]) => ['white', 'neutral'].indexOf(key) >= 0)
+          .map(([key, value]) => (
+            <ColorExample
+              key={key}
+              name={key}
+              hex={value}
+              mode={mode}
             />
-            <br />
-            <ColorViz color={value} />
-          </div>
-        ))}
+          ))
+        }
       </div>
     </>
   );
