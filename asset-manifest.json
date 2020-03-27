@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/themetron-3/static/css/main.6e33ced2.chunk.css",
+    "main.js": "/themetron-3/static/js/main.9ec0cc92.chunk.js",
+    "main.js.map": "/themetron-3/static/js/main.9ec0cc92.chunk.js.map",
+    "runtime-main.js": "/themetron-3/static/js/runtime-main.d0eb32a4.js",
+    "runtime-main.js.map": "/themetron-3/static/js/runtime-main.d0eb32a4.js.map",
+    "static/js/2.a6b5c5fc.chunk.js": "/themetron-3/static/js/2.a6b5c5fc.chunk.js",
+    "static/js/2.a6b5c5fc.chunk.js.map": "/themetron-3/static/js/2.a6b5c5fc.chunk.js.map",
+    "index.html": "/themetron-3/index.html",
+    "precache-manifest.8aa80246f005703f2e059baadb2d45b9.js": "/themetron-3/precache-manifest.8aa80246f005703f2e059baadb2d45b9.js",
+    "service-worker.js": "/themetron-3/service-worker.js",
+    "static/css/main.6e33ced2.chunk.css.map": "/themetron-3/static/css/main.6e33ced2.chunk.css.map",
+    "static/js/2.a6b5c5fc.chunk.js.LICENSE.txt": "/themetron-3/static/js/2.a6b5c5fc.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d0eb32a4.js",
+    "static/js/2.a6b5c5fc.chunk.js",
+    "static/css/main.6e33ced2.chunk.css",
+    "static/js/main.9ec0cc92.chunk.js"
+  ]
+}
