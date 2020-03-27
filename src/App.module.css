@@ -1,0 +1,17 @@
+.App {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 320px 1fr;
+}
+
+.form {
+  width: 320px;
+  height: 100%;
+  overflow-y: auto;
+  border-right: 1px solid gray;
+}
+
+.example {
+  padding: 16px;
+  overflow-y: auto;
+}
