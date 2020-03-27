@@ -25,7 +25,7 @@ export const getLuminance = hex => {
   return luminance;
 };
 
-export const getTargetLuminanceViaHsl = ({
+export const setColorByLuminanceWithHsl = ({
   attempt = 0,
   hex,
   initHsl,
@@ -52,7 +52,7 @@ export const getTargetLuminanceViaHsl = ({
     return hex;
   }
 
-  return getTargetLuminanceViaHsl({
+  return setColorByLuminanceWithHsl({
     attempt: attempt + 1,
     hex: `#${colorConvert.hsl.hex(hsl)}`,
     initHsl: safeInitHsl,
@@ -61,13 +61,15 @@ export const getTargetLuminanceViaHsl = ({
   });
 };
 
-export const getTargetContrastViaHsl = ({
+export const setColorByContrastWithHsl = ({
   attempt = 0,
   baseHex,
+  black,
   contrastRatio: targetContrastRatio,
   hex,
   initHsl,
   maxAttempts = 10,
+  white,
 }) => {
   const luminanceA = getLuminance(hex);
   const luminanceB = getLuminance(baseHex);
@@ -77,10 +79,26 @@ export const getTargetContrastViaHsl = ({
     return hex;
   }
 
-  let darken = (
+  let darken = false;
+
+  // Darken in these cases:
+  if (
+    // The current color is brighter than theme white.
+    luminanceA > getLuminance(white) ||
+    // The current color is brighter than the contrast base, and the contrast is too high.
     (luminanceA > luminanceB && contrastRatio > targetContrastRatio) ||
-    (luminanceA < luminanceB && contrastRatio < targetContrastRatio)
-  );
+    // The current color is darker than the contrast base, but the contrast is still too low.
+    (luminanceA < luminanceB && contrastRatio < targetContrastRatio) ||
+    // The current color and the contrast base are the same, and brighter than 50%;
+    (luminanceA === luminanceB && luminanceA > 0.5)
+  ) {
+    darken = true;
+  }
+
+  // But never darken if the current color is darker than theme black
+  if (luminanceA < getLuminance(black)) {
+    darken = false;
+  }
 
   const jumpSize = (darken ? -100 : 100) / Math.pow(2, attempt + 1);
   let prevHsl = colorConvert.hex.hsl(hex);
@@ -98,24 +116,26 @@ export const getTargetContrastViaHsl = ({
   const nextValues = {
     attempt: attempt + 1,
     baseHex,
+    black,
     contrastRatio: targetContrastRatio,
     hex: `#${colorConvert.hsl.hex(hsl)}`,
     initHsl: safeInitHsl,
     maxAttempts,
+    white,
   };
 
-  console.log(nextValues);
-
-  return getTargetContrastViaHsl(nextValues);
+  return setColorByContrastWithHsl(nextValues);
 };
 
 // TODO: Figure out a better algorithm for shifting brightness and saturation for hsv
-export const getTargetContrastViaHsv = ({
+export const setColorByContrastWithHsv = ({
   attempt = 0,
   baseHex,
+  black,
   contrastRatio: targetContrastRatio,
   hex,
   maxAttempts = 10,
+  white,
 }) => {
   console.warn("HSV color ramps aren't supported currently.");
   const luminanceA = getLuminance(hex);
@@ -144,17 +164,19 @@ export const getTargetContrastViaHsv = ({
       return hex;
     }
 
-    return getTargetContrastViaHsv({
+    return setColorByContrastWithHsv({
       attempt: attempt + 1,
       baseHex,
+      black,
       contrastRatio: targetContrastRatio,
       hex: `#${colorConvert.hsv.hex(hsv)}`,
       maxAttempts,
+      white,
     });
   }
 };
 
-export const getTargetContrastViaLab = ({
+export const setColorByContrastWithLab = ({
   attempt = 0,
   baseHex,
   contrastRatio: targetContrastRatio,
@@ -183,7 +205,7 @@ export const getTargetContrastViaLab = ({
       return hex;
     }
 
-    return getTargetContrastViaLab({
+    return setColorByContrastWithLab({
       attempt: attempt + 1,
       baseHex,
       contrastRatio: targetContrastRatio,
@@ -228,7 +250,7 @@ window.pxbColors = {
   getContrastRatio,
   getHexFromHexOrName,
   getLuminance,
-  getTargetContrastViaHsl,
+  setColorByContrastWithHsl,
   setHsl,
   setLab,
 };
@@ -237,7 +259,7 @@ export default {
   getContrastRatio,
   getHexFromHexOrName,
   getLuminance,
-  getTargetContrastViaHsl,
+  setColorByContrastWithHsl,
   setHsl,
   setLab,
 };

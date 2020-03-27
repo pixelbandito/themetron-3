@@ -8,10 +8,10 @@ import {
   getContrastRatio,
   getHexFromHexOrName,
   getLuminance,
-  getTargetContrastViaHsl,
-  getTargetContrastViaHsv,
-  getTargetContrastViaLab,
-  getTargetLuminanceViaHsl,
+  setColorByContrastWithHsl,
+  setColorByContrastWithHsv,
+  setColorByContrastWithLab,
+  setColorByLuminanceWithHsl,
 } from '../../utils/colors';
 
 import styles from './ColorRamp.module.css';
@@ -29,27 +29,27 @@ const ColorRamp = ({
   const black = useMemo(() => getHexFromHexOrName(themeContext.colors.black), [themeContext.colors.black]);
   const color = useMemo(() => getHexFromHexOrName(initColor), [initColor]);
 
-  let getTargetContrast = useMemo(() => {
-    let getter = getTargetContrastViaHsl;
-    getter = mode === 'lab' ? getTargetContrastViaLab : getter;
-    getter = mode === 'hsv' ? getTargetContrastViaHsv : getter;
+  let setColorByContrast = useMemo(() => {
+    let getter = setColorByContrastWithHsl;
+    getter = mode === 'lab' ? setColorByContrastWithLab : getter;
+    getter = mode === 'hsv' ? setColorByContrastWithHsv : getter;
     return getter;
   }, [mode]);
 
-  let getTargetLuminance = useMemo(() => {
+  let setColorByLuminance = useMemo(() => {
     let getter = null;
-    getter = mode === 'hsl' && luminances.length ? getTargetLuminanceViaHsl : getter;
+    getter = mode === 'hsl' && luminances.length ? setColorByLuminanceWithHsl : getter;
     return getter;
   }, [mode, luminances]);
 
   const colors = useMemo(() => {
     let colors;
 
-    if (getTargetLuminance) {
+    if (setColorByLuminance) {
       colors = [
         ...luminances.sort(),
       ].map((luminance, i) => {
-        return getTargetLuminance({
+        return setColorByLuminance({
           hex: color,
           luminance,
         })
@@ -59,10 +59,12 @@ const ColorRamp = ({
         ...contrastRatios.sort().reverse(),
         ...contrastRatios.sort(),
       ].map((contrastRatio, i) => {
-        return getTargetContrast({
+        return setColorByContrast({
           hex: color,
           baseHex: i < contrastRatios.length ? white : black,
           contrastRatio,
+          white,
+          black,
         })
       });
     }
@@ -78,7 +80,7 @@ const ColorRamp = ({
     colors.sort(({ luminance: a }, { luminance: b }) => a - b);
 
     return colors;
-  }, [black, color, contrastRatios, getTargetContrast, getTargetLuminance, luminances, white]);
+  }, [black, color, contrastRatios, setColorByContrast, setColorByLuminance, luminances, white]);
 
   return (
     <div

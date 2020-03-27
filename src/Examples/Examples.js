@@ -33,21 +33,9 @@ const ColorExample = ({
       </h3>
       <ColorRamp
         color={hex}
-        contrastRatios={[7, 4.5, 2]}
-        luminances={[0.0724, 0.0999, 0.1818, 0.2122, 0.3604, 0.4633]}
+        contrastRatios={[7, 4.5, 3, 1.2]}
         mode={mode}
       />
-      <ColorRamp
-        color={hex}
-        contrastRatios={[7, 4.5, 2]}
-        mode={mode}
-      />
-      {/*
-        contrastRatios={[7, 4.5, 1]}
-        luminances={[0.0086, 0.0999, 0.1818, 0.2122, 0.3604, 1] : undefined}
-        luminances={[0.0724, 0.0999, 0.1818, 0.2122, 0.3604, 0.4633]}
-        luminances={safeHex === '#ffffff' ? [0.0194, 0.1046, 0.1812, 0.2195, 0.3564, 0.6939] : undefined}
-      */}
       {isExpanded && (
         <div style={{ margin: '0.5rem 0' }}>
           <ColorViz color={hex} />
@@ -97,7 +85,7 @@ const Examples = () => {
       <div>
         <h2>Color ramps</h2>
         {Object.entries(themeContext.colors)
-          .filter(([key]) => true || ['primary', 'neutral'].indexOf(key) >= 0)
+          .filter(([key]) => ['white', 'black'].indexOf(key) < 0)
           .map(([key, value]) => (
             <ColorExample
               key={key}
