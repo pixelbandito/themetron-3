@@ -28,6 +28,7 @@ export const getLuminance = hex => {
 export const getTargetLuminanceViaHsl = ({
   attempt = 0,
   hex,
+  initHsl,
   luminance: targetLuminance,
   maxAttempts = 10,
 }) => {
@@ -39,19 +40,13 @@ export const getTargetLuminanceViaHsl = ({
 
   const darken = luminance > targetLuminance;
   const jumpSize = (darken ? -100 : 100) / Math.pow(2, attempt + 1);
-  let hsl = colorConvert.hex.hsl(hex);
-  hsl = setHsl({ hsl, l: hsl[2] + jumpSize});
+  let prevHsl = colorConvert.hex.hsl(hex);
+  let safeInitHsl = initHsl !== undefined ? initHsl : prevHsl;
 
-  if (targetLuminance === 0.0194) {
-    console.log({
-      attempt,
-      darken,
-      hex,
-      jumpSize,
-      luminance,
-      targetLuminance,
-    });
-  }
+  const hsl = setHsl({
+    hsl: safeInitHsl,
+    l: Math.max(0, Math.min(prevHsl[2] + jumpSize, 100)),
+  });
 
   if (`#${colorConvert.hsl.hex(hsl)}` === hex) {
     return hex;
@@ -60,6 +55,7 @@ export const getTargetLuminanceViaHsl = ({
   return getTargetLuminanceViaHsl({
     attempt: attempt + 1,
     hex: `#${colorConvert.hsl.hex(hsl)}`,
+    initHsl: safeInitHsl,
     luminance: targetLuminance,
     maxAttempts,
   });
@@ -70,6 +66,7 @@ export const getTargetContrastViaHsl = ({
   baseHex,
   contrastRatio: targetContrastRatio,
   hex,
+  initHsl,
   maxAttempts = 10,
 }) => {
   const luminanceA = getLuminance(hex);
@@ -79,38 +76,37 @@ export const getTargetContrastViaHsl = ({
   if (contrastRatio === targetContrastRatio || attempt >= maxAttempts) {
     return hex;
   }
-  let hsl = colorConvert.hex.hsl(hex);
 
   let darken = (
     (luminanceA > luminanceB && contrastRatio > targetContrastRatio) ||
     (luminanceA < luminanceB && contrastRatio < targetContrastRatio)
   );
 
-  let jumpSize = darken ? 0 - hsl[2] : 100 - hsl[2];
-  jumpSize = jumpSize / Math.pow(2, attempt + 1);
-  hsl = setHsl({ hsl, l: hsl[2] + jumpSize});
+  const jumpSize = (darken ? -100 : 100) / Math.pow(2, attempt + 1);
+  let prevHsl = colorConvert.hex.hsl(hex);
+  let safeInitHsl = initHsl !== undefined ? initHsl : prevHsl;
 
-  if (baseHex === '#ffffff') {
-    // console.log({
-    //   attempt,
-    //   darken,
-    //   jumpSize,
-    //   hex,
-    //   nextHex: `#${colorConvert.hsl.hex(hsl)}`,
-    // });
-  }
+  const hsl = setHsl({
+    hsl: safeInitHsl,
+    l: Math.max(0, Math.min(prevHsl[2] + jumpSize, 100)),
+  });
 
   if (`#${colorConvert.hsl.hex(hsl)}` === hex) {
     return hex;
   }
 
-  return getTargetContrastViaHsl({
+  const nextValues = {
     attempt: attempt + 1,
     baseHex,
     contrastRatio: targetContrastRatio,
     hex: `#${colorConvert.hsl.hex(hsl)}`,
+    initHsl: safeInitHsl,
     maxAttempts,
-  });
+  };
+
+  console.log(nextValues);
+
+  return getTargetContrastViaHsl(nextValues);
 };
 
 // TODO: Figure out a better algorithm for shifting brightness and saturation for hsv
