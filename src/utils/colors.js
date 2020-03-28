@@ -127,104 +127,10 @@ export const setColorByContrastWithHsl = ({
   return setColorByContrastWithHsl(nextValues);
 };
 
-// TODO: Figure out a better algorithm for shifting brightness and saturation for hsv
-export const setColorByContrastWithHsv = ({
-  attempt = 0,
-  baseHex,
-  black,
-  contrastRatio: targetContrastRatio,
-  hex,
-  maxAttempts = 10,
-  white,
-}) => {
-  console.warn("HSV color ramps aren't supported currently.");
-  const luminanceA = getLuminance(hex);
-  const luminanceB = getLuminance(baseHex);
-  const contrastRatio = getContrastRatio({ luminanceA, luminanceB });
-
-  if (contrastRatio === targetContrastRatio || attempt >= maxAttempts) {
-    return hex;
-  } else {
-    let hsv = colorConvert.hex.hsv(hex);
-
-    let darken = (
-      (luminanceA > luminanceB && contrastRatio > targetContrastRatio) ||
-      (luminanceA < luminanceB && contrastRatio < targetContrastRatio)
-    );
-
-    let jumpSize = darken ? 100 - hsv[2] : 100 - hsv[1];
-    jumpSize = jumpSize / Math.pow(2, attempt + 1);
-    hsv = setHsv({
-      hsv,
-      l: !darken ? hsv[1] + jumpSize : hsv[1],
-      v: darken ? hsv[2] + jumpSize : hsv[2],
-    });
-
-    if (`#${colorConvert.hsv.hex(hsv)}` === hex) {
-      return hex;
-    }
-
-    return setColorByContrastWithHsv({
-      attempt: attempt + 1,
-      baseHex,
-      black,
-      contrastRatio: targetContrastRatio,
-      hex: `#${colorConvert.hsv.hex(hsv)}`,
-      maxAttempts,
-      white,
-    });
-  }
-};
-
-export const setColorByContrastWithLab = ({
-  attempt = 0,
-  baseHex,
-  contrastRatio: targetContrastRatio,
-  hex,
-  maxAttempts = 10,
-}) => {
-  const luminanceA = getLuminance(hex);
-  const luminanceB = getLuminance(baseHex);
-  const contrastRatio = getContrastRatio({ luminanceA, luminanceB });
-
-  if (contrastRatio === targetContrastRatio || attempt >= maxAttempts) {
-    return hex;
-  } else {
-    let lab = colorConvert.hex.lab(hex);
-
-    let darken = (
-      (luminanceA > luminanceB && contrastRatio > targetContrastRatio) ||
-      (luminanceA < luminanceB && contrastRatio < targetContrastRatio)
-    );
-
-    let jumpSize = darken ? 0 - lab[0] : 100 - lab[0];
-    jumpSize = jumpSize / Math.pow(2, attempt + 1);
-    lab = setLab({ lab, l: lab[0] + jumpSize});
-
-    if (`#${colorConvert.lab.hex(lab)}` === hex) {
-      return hex;
-    }
-
-    return setColorByContrastWithLab({
-      attempt: attempt + 1,
-      baseHex,
-      contrastRatio: targetContrastRatio,
-      hex: `#${colorConvert.lab.hex(lab)}`,
-      maxAttempts,
-    });
-  }
-};
-
 export const setHsl = ({ hsl: [h, s, l], h: h2, s: s2, l: l2 }) => ([
   typeof h2 === 'number' ? h2 : h,
   typeof s2 === 'number' ? s2 : s,
   typeof l2 === 'number' ? l2 : l,
-]);
-
-export const setHsv = ({ hsv: [h, s, v], h: h2, s: s2, v: v2 }) => ([
-  typeof h2 === 'number' ? h2 : h,
-  typeof s2 === 'number' ? s2 : s,
-  typeof v2 === 'number' ? v2 : v,
 ]);
 
 export const setLab = ({ lab: [l, a, b], l: l2, a: a2, b: b2 }) => ([

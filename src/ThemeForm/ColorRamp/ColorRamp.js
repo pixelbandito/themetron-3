@@ -9,8 +9,6 @@ import {
   getHexFromHexOrName,
   getLuminance,
   setColorByContrastWithHsl,
-  setColorByContrastWithHsv,
-  setColorByContrastWithLab,
   setColorByLuminanceWithHsl,
 } from '../../utils/colors';
 
@@ -19,7 +17,6 @@ import styles from './ColorRamp.module.css';
 const ColorRamp = ({
   className,
   color: initColor,
-  mode,
   luminances = [],
   contrastRatios,
   ...passedProps
@@ -31,16 +28,14 @@ const ColorRamp = ({
 
   let setColorByContrast = useMemo(() => {
     let getter = setColorByContrastWithHsl;
-    getter = mode === 'lab' ? setColorByContrastWithLab : getter;
-    getter = mode === 'hsv' ? setColorByContrastWithHsv : getter;
     return getter;
-  }, [mode]);
+  }, []);
 
   let setColorByLuminance = useMemo(() => {
     let getter = null;
-    getter = mode === 'hsl' && luminances.length ? setColorByLuminanceWithHsl : getter;
+    getter = luminances.length ? setColorByLuminanceWithHsl : getter;
     return getter;
-  }, [mode, luminances]);
+  }, [luminances]);
 
   const colors = useMemo(() => {
     let colors;
