@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/themetron-3/static/css/main.6e33ced2.chunk.css",
-    "main.js": "/themetron-3/static/js/main.e5f1df2e.chunk.js",
-    "main.js.map": "/themetron-3/static/js/main.e5f1df2e.chunk.js.map",
+    "main.js": "/themetron-3/static/js/main.b1931239.chunk.js",
+    "main.js.map": "/themetron-3/static/js/main.b1931239.chunk.js.map",
     "runtime-main.js": "/themetron-3/static/js/runtime-main.d0eb32a4.js",
     "runtime-main.js.map": "/themetron-3/static/js/runtime-main.d0eb32a4.js.map",
-    "static/js/2.a6b5c5fc.chunk.js": "/themetron-3/static/js/2.a6b5c5fc.chunk.js",
-    "static/js/2.a6b5c5fc.chunk.js.map": "/themetron-3/static/js/2.a6b5c5fc.chunk.js.map",
+    "static/js/2.78b5d2a1.chunk.js": "/themetron-3/static/js/2.78b5d2a1.chunk.js",
+    "static/js/2.78b5d2a1.chunk.js.map": "/themetron-3/static/js/2.78b5d2a1.chunk.js.map",
     "index.html": "/themetron-3/index.html",
-    "precache-manifest.b2417270be48f6a66beac3354857ac92.js": "/themetron-3/precache-manifest.b2417270be48f6a66beac3354857ac92.js",
+    "precache-manifest.6083d3122aa89696ee161343f698389a.js": "/themetron-3/precache-manifest.6083d3122aa89696ee161343f698389a.js",
     "service-worker.js": "/themetron-3/service-worker.js",
     "static/css/main.6e33ced2.chunk.css.map": "/themetron-3/static/css/main.6e33ced2.chunk.css.map",
-    "static/js/2.a6b5c5fc.chunk.js.LICENSE.txt": "/themetron-3/static/js/2.a6b5c5fc.chunk.js.LICENSE.txt"
+    "static/js/2.78b5d2a1.chunk.js.LICENSE.txt": "/themetron-3/static/js/2.78b5d2a1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d0eb32a4.js",
-    "static/js/2.a6b5c5fc.chunk.js",
+    "static/js/2.78b5d2a1.chunk.js",
     "static/css/main.6e33ced2.chunk.css",
-    "static/js/main.e5f1df2e.chunk.js"
+    "static/js/main.b1931239.chunk.js"
   ]
 }
