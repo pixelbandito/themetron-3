@@ -1,4 +1,67 @@
-export const getButtons = ({ colors: customColors, fonts: customFonts, spacing: customSpacing }) => ({
+import { getHexFromHexOrName, setColorByContrastWithHsl } from './utils/colors';
+
+export const getColors = ({ baseColors }) => {
+	const bgStep = 1.1;
+	const contrastRatios = [7, 4.5, 3];
+
+	return Object.entries(baseColors).reduce((result, [key, unsafeColor]) => {
+		const color = getHexFromHexOrName(unsafeColor);
+		const white = getHexFromHexOrName(baseColors.white);
+		const black = getHexFromHexOrName(baseColors.black);
+		//
+		// if (key !== 'primary') {
+		// 	return result;
+		// }
+
+		result[key] = {};
+
+		result[key].base = color;
+
+		if (['white', 'black'].indexOf(key) >= 0) {
+			return result;
+		}
+
+    result[key]['lite-bg'] = setColorByContrastWithHsl({
+      hex: color,
+      baseHex: white,
+      contrastRatio: bgStep,
+    });
+
+		contrastRatios.forEach((contrastRatio, i) => {
+			// Large text
+	    result[key][`lite-${i + 1}`] = setColorByContrastWithHsl({
+	      hex: color,
+	      baseHex: result[key]['lite-bg'],
+	      contrastRatio,
+	      direction: 'desc',
+	    });
+		});
+
+		result[key]['dark-bg'] = setColorByContrastWithHsl({
+      hex: color,
+      baseHex: black,
+      contrastRatio: bgStep,
+    });
+
+		contrastRatios.forEach((contrastRatio, i) => {
+			// Large text
+	    result[key][`dark-${i + 1}`] = setColorByContrastWithHsl({
+	      hex: color,
+	      baseHex: result[key]['dark-bg'],
+	      contrastRatio: contrastRatio,
+	      direction: 'asc',
+	    });
+		});
+
+		return result;
+	}, {});
+}
+
+export const getButtons = ({
+	colors: customColors,
+	fonts: customFonts,
+	spacing: customSpacing,
+}) => ({
 	borderWidth: 1,
 	roundness: 0.2,
 	shine: 1, // Very shiny: glass, shiny: plastic, slightly shiny: paper, 0: flat
@@ -21,143 +84,143 @@ export const getButtons = ({ colors: customColors, fonts: customFonts, spacing: 
 	},
 	variants: {
 		default: {
-			backgroundColor: customColors.neutral,
-			color: customColors.white,
+			backgroundColor: customColors.neutral['lite-2'],
+			color: customColors.white.base,
 			hover: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-1'],
+				color: customColors.white.base,
 			},
 			focus: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-1'],
+				color: customColors.white.base,
 			},
 			active: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-1'],
+				color: customColors.white.base,
 			},
 			disabled: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-3'],
+				color: customColors.white.base,
 			},
 		},
 		primary: {
-			backgroundColor: customColors.primary,
-			color: customColors.white,
+			backgroundColor: customColors.primary['lite-2'],
+			color: customColors.white.base,
 			hover: {
-				backgroundColor: customColors.primary,
-				color: customColors.white,
+				backgroundColor: customColors.primary['lite-1'],
+				color: customColors.white.base,
 			},
 			focus: {
-				backgroundColor: customColors.primary,
-				color: customColors.white,
+				backgroundColor: customColors.primary['lite-1'],
+				color: customColors.white.base,
 			},
 			active: {
-				backgroundColor: customColors.primary,
-				color: customColors.white,
+				backgroundColor: customColors.primary['lite-1'],
+				color: customColors.white.base,
 			},
 			disabled: {
-				backgroundColor: customColors.primary,
-				color: customColors.white,
+				backgroundColor: customColors.primary['lite-3'],
+				color: customColors.white.base,
 			},
 		},
 		success: {
-			backgroundColor: customColors.success,
-			color: customColors.white,
+			backgroundColor: customColors.success['lite-2'],
+			color: customColors.white.base,
 			hover: {
-				backgroundColor: customColors.success,
-				color: customColors.white,
+				backgroundColor: customColors.success['lite-1'],
+				color: customColors.white.base,
 			},
 			focus: {
-				backgroundColor: customColors.success,
-				color: customColors.white,
+				backgroundColor: customColors.success['lite-1'],
+				color: customColors.white.base,
 			},
 			active: {
-				backgroundColor: customColors.success,
-				color: customColors.white,
+				backgroundColor: customColors.success['lite-1'],
+				color: customColors.white.base,
 			},
 			disabled: {
-				backgroundColor: customColors.success,
-				color: customColors.white,
+				backgroundColor: customColors.success['lite-3'],
+				color: customColors.white.base,
 			},
 		},
 		info: {
-			backgroundColor: customColors.info,
-			color: customColors.white,
+			backgroundColor: customColors.info['lite-2'],
+			color: customColors.white.base,
 			hover: {
-				backgroundColor: customColors.info,
-				color: customColors.white,
+				backgroundColor: customColors.info['lite-1'],
+				color: customColors.white.base,
 			},
 			focus: {
-				backgroundColor: customColors.info,
-				color: customColors.white,
+				backgroundColor: customColors.info['lite-1'],
+				color: customColors.white.base,
 			},
 			active: {
-				backgroundColor: customColors.info,
-				color: customColors.white,
+				backgroundColor: customColors.info['lite-1'],
+				color: customColors.white.base,
 			},
 			disabled: {
-				backgroundColor: customColors.info,
-				color: customColors.white,
+				backgroundColor: customColors.info['lite-3'],
+				color: customColors.white.base,
 			},
 		},
 		neutral: {
-			backgroundColor: customColors.neutral,
-			color: customColors.white,
+			backgroundColor: customColors.neutral['lite-2'],
+			color: customColors.white.base,
 			hover: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-1'],
+				color: customColors.white.base,
 			},
 			focus: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-1'],
+				color: customColors.white.base,
 			},
 			active: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-1'],
+				color: customColors.white.base,
 			},
 			disabled: {
-				backgroundColor: customColors.neutral,
-				color: customColors.white,
+				backgroundColor: customColors.neutral['lite-3'],
+				color: customColors.white.base,
 			},
 		},
 		warning: {
-			backgroundColor: customColors.warning,
-			color: customColors.white,
+			backgroundColor: customColors.warning['lite-2'],
+			color: customColors.white.base,
 			hover: {
-				backgroundColor: customColors.warning,
-				color: customColors.white,
+				backgroundColor: customColors.warning['lite-1'],
+				color: customColors.white.base,
 			},
 			focus: {
-				backgroundColor: customColors.warning,
-				color: customColors.white,
+				backgroundColor: customColors.warning['lite-1'],
+				color: customColors.white.base,
 			},
 			active: {
-				backgroundColor: customColors.warning,
-				color: customColors.white,
+				backgroundColor: customColors.warning['lite-1'],
+				color: customColors.white.base,
 			},
 			disabled: {
-				backgroundColor: customColors.warning,
-				color: customColors.white,
+				backgroundColor: customColors.warning['lite-3'],
+				color: customColors.white.base,
 			},
 		},
 		danger: {
-			backgroundColor: customColors.danger,
-			color: customColors.white,
+			backgroundColor: customColors.danger['lite-2'],
+			color: customColors.white.base,
 			hover: {
-				backgroundColor: customColors.danger,
-				color: customColors.white,
+				backgroundColor: customColors.danger['lite-1'],
+				color: customColors.white.base,
 			},
 			focus: {
-				backgroundColor: customColors.danger,
-				color: customColors.white,
+				backgroundColor: customColors.danger['lite-1'],
+				color: customColors.white.base,
 			},
 			active: {
-				backgroundColor: customColors.danger,
-				color: customColors.white,
+				backgroundColor: customColors.danger['lite-1'],
+				color: customColors.white.base,
 			},
 			disabled: {
-				backgroundColor: customColors.danger,
-				color: customColors.white,
+				backgroundColor: customColors.danger['lite-3'],
+				color: customColors.white.base,
 			},
 		},
 	},
