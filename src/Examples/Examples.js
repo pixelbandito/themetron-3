@@ -1,31 +1,42 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ThemeContext } from 'styled-components';
 
-import { getHexFromHexOrName, getLuminance } from '../utils/colors';
+import { getLuminance } from '../utils/colors';
 import Button from '../Button';
-import ColorRamp from '../ThemeForm/ColorRamp';
+import Swatch from '../Swatch';
 import styles from './Examples.module.css';
 
 const ColorExample = ({
   name,
-  hex,
+  value,
 }) => {
-  const safeHex = useMemo(() => getHexFromHexOrName(hex), [hex]);
-
   return (
     <div>
       <h3>
         <span
           className={styles.swatch}
-          style={{ backgroundColor: hex }}
+          style={{ backgroundColor: value.base }}
         />
       {name}{' '}
-        <small className={styles.subtitle}>{getLuminance(safeHex).toFixed(2)}</small>
+        <small className={styles.subtitle}>{getLuminance(value.base).toFixed(2)}</small>
       </h3>
-      <ColorRamp
-        color={hex}
-        contrastRatios={[7, 4.5, 3, 1.2]}
-      />
+      <div className={styles.ramp}>
+        {
+          Object.entries(value)
+          .sort(([,hexA], [,hexB]) => getLuminance(hexA) - getLuminance(hexB))
+          .filter(([key]) => key !== 'base')
+          .map(([key, hex], i) => (
+            <Swatch
+              key={key}
+              className={styles.rampSwatch}
+              color={getLuminance(hex) > 0.5 ? value['dark-bg'] : value['lite-bg']}
+              backgroundColor={hex}
+            >
+              {key}
+            </Swatch>
+          ))
+        }
+      </div>
     </div>
   );
 };
@@ -58,19 +69,21 @@ const Examples = () => {
           Card foot
         </div>
       </div>
-      <div>
-        <h2>Color ramps</h2>
-        {Object.entries(themeContext.colors)
-          .filter(([key]) => ['white', 'black'].indexOf(key) < 0)
-          .map(([key, value]) => (
-            <ColorExample
-              key={key}
-              name={key}
-              hex={value}
-            />
-          ))
-        }
-      </div>
+      {/*
+        <div>
+          <h2>Color ramps</h2>
+          {Object.entries(themeContext.colors)
+            .filter(([key]) => ['white', 'black'].indexOf(key) < 0)
+            .map(([key, value]) => (
+              <ColorExample
+                key={key}
+                name={key}
+                value={value}
+              />
+            ))
+          }
+        </div>
+      */}
     </>
   );
 };

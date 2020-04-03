@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
-import { getButtons, getSizes } from '../theme-utils.mjs';
+import { debounce } from 'lodash-es';
+import { getButtons, getColors, getSizes } from '../theme-utils.mjs';
+import { getLuminance } from '../utils/colors';
 import Button from '../Button';
+import Swatch from '../Swatch';
 import Control from './Control';
-import ContrastRatios from './ContrastRatios';
 import styles from './ThemeForm.module.css';
 
 export const getNumberOrDont = (string) => {
@@ -60,8 +62,8 @@ const ThemeForm = ({
   }, [initTheme]);
 
   // COLORS
-  const safeColors = useMemo(() => {
-    const safeColors =  Object.entries(themeForm.colors).reduce((result, [key, value]) => {
+  const safeBaseColors = useMemo(() => {
+    const safeColors =  Object.entries(themeForm.colors).reduce((result, [key, { base: value }]) => {
       let safeValue;
 
       try {
@@ -79,19 +81,19 @@ const ThemeForm = ({
     return safeColors;
   }, [themeForm.colors]);
 
-  const [colors, setColors] = useState(safeColors);
+  const [colors, setColors] = useState(safeBaseColors);
 
   useEffect(() => {
-    setColors(safeColors)
-  }, [safeColors]);
+    setColors(safeBaseColors)
+  }, [safeBaseColors]);
 
-  const handleChangeColor = useCallback(({ event, key }) => {
-    console.log({ key, value: event.target.value});
-
-    const nextColors = {
+  const handleChangeColor = useCallback(({ value, key }) => {
+    const baseColors = {
       ...colors,
-      [key]: getHexOrDont(event.target.value),
+      [key]: getHexOrDont(value),
     };
+
+    const nextColors = getColors({ baseColors });
 
     const nextTheme = {
       ...themeForm,
@@ -104,6 +106,8 @@ const ThemeForm = ({
 
     setThemeForm(nextTheme);
   }, [colors, themeForm]);
+
+  const debouncedHandleChangeColor = debounce(handleChangeColor, 100);
 
   // FONTS
 
@@ -135,7 +139,6 @@ const ThemeForm = ({
   }, [fontSizes, themeForm]);
 
   const handleChangeFontSizesCount = useCallback(e => {
-    console.log({ fontSizes });
     const nextFontSizesCount = getNumberOrDont(e.target.value);
     let nextSizes = getSizes({ count: nextFontSizesCount });
 
@@ -157,7 +160,11 @@ const ThemeForm = ({
 
     setThemeForm({
       ...themeForm,
-      buttons: getButtons({ colors: themeForm.colors, fonts: themeForm.fonts, spacing }),
+      buttons: getButtons({
+        colors: themeForm.colors,
+        fonts: themeForm.fonts,
+        spacing,
+      }),
       spacing,
     });
   }, [themeForm]);
@@ -172,22 +179,38 @@ const ThemeForm = ({
       />
       <section>
         <h4>Semantic colors</h4>
-        {Object.entries(colors).map(([key, value], i) => {
+        {Object.entries(colors).map(([key, color], i) => {
+          const value = color;
           return (
             <div key={key}>
               <Control
                 id={`semanticColor-${key}`}
                 key={key}
                 label={key}
-                onChange={event => handleChangeColor({ event, key })}
+                onChange={event => debouncedHandleChangeColor({ value: event.target.value, key })}
                 type="color"
                 value={`${value}`}
               />
-              <div className={styles.contrastRatios}>
-                <ContrastRatios
-                  color={value}
-                  colors={colors}
-                />
+              <div className={styles.swatches}>
+                {
+                  Object.entries(themeForm.colors[key])
+                  .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
+                  .filter(([variantKey]) => variantKey !== 'base')
+                  .map(([variantKey, hex], i) => (
+                    <Swatch
+                      key={variantKey}
+                      className={styles.swatch}
+                      color={
+                        getLuminance(hex) > 0.5 ?
+                          themeForm.colors[key]['dark-bg'] :
+                          themeForm.colors[key]['lite-bg']
+                      }
+                      backgroundColor={hex}
+                    >
+                      {variantKey}
+                    </Swatch>
+                  ))
+                }
               </div>
             </div>
             );

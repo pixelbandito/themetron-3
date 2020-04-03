@@ -1,19 +1,21 @@
-import { getButtons, getShared, getSizes } from './theme-utils';
+import { getButtons, getColors, getShared, getSizes } from './theme-utils';
 
 const baseSize = 4;
 
 const spacing = getSizes({ count: 5, mdSize: baseSize * 4 });
 
-const colors = {
+const baseColors = {
 	white: 'white',
 	black: '#16161d',
 	primary: 'blue',
 	success: 'green',
 	info: 'lightblue',
-	neutral: 'gray',
+	neutral: '#16161d',
 	warning: 'yellow',
 	danger: 'red',
 };
+
+const colors = getColors({ baseColors });
 
 const shared = getShared({ colors });
 
@@ -75,10 +77,13 @@ const buttons = getButtons({ colors, fonts, spacing });
 		- Edged for 3D realism
 */
 
-export default {
+const theme = {
+	baseColors,
 	buttons,
 	colors,
 	fonts,
 	shared,
 	spacing,
 };
+
+export default theme;
