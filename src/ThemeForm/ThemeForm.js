@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
@@ -48,6 +48,7 @@ const ThemeForm = ({
 }) => {
   const [mdSize, setMdSize] = useState(initTheme.spacing.md);
   const [themeForm, setThemeForm] = useState(initTheme);
+  const importInputFileRef = useRef();
 
   useEffect(() => {
     onChangeTheme(themeForm);
@@ -169,6 +170,25 @@ const ThemeForm = ({
     });
   }, [themeForm]);
 
+  const handleClickImport = useCallback(() => {
+    if (importInputFileRef.current) {
+      importInputFileRef.current.click();
+    }
+  }, []);
+
+  const handleChangeImport = useCallback(e => {
+    const reader = new FileReader();
+    reader.readAsText(e.target.files[0]);
+
+    reader.onload = e => {
+      try {
+        setThemeForm(JSON.parse(e.target.result))
+      } catch (e) {
+        console.warn('Couldn\'t read theme file.', e.message);
+      }
+    }
+  }, []);
+
   return (
     <form className={classNames(className, styles.ThemeForm)}>
       <Control
@@ -237,9 +257,8 @@ const ThemeForm = ({
       </section>
       <div>
         <Button
-          inverted
-          onClick={handleClickRevert}
           outline
+          onClick={handleClickRevert}
           type="button"
         >
           Revert
@@ -251,6 +270,45 @@ const ThemeForm = ({
           variant="primary"
         >
           Apply
+        </Button>
+        <br />
+        <br />
+        <Button
+          download="theme.json"
+          href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(themeForm))}`}
+          outline
+          size="sm"
+          style={{
+            display: 'inline-block',
+          }}
+          tag="a"
+        >
+          Export JSON
+        </Button>
+        {' '}
+        <input
+          onChange={handleChangeImport}
+          ref={importInputFileRef}
+          style={{
+            fontSize: '0',
+            height: '0',
+            left: '-100vw',
+            opacity: '0',
+            position: 'absolute',
+            top: '-100vh',
+            width: '0',
+            zIndex: '-1',
+          }}
+          tabIndex="-1"
+          type="file"
+        />
+        <Button
+          onClick={handleClickImport}
+          outline
+          size="sm"
+          type="button"
+        >
+          Import JSON ...
         </Button>
       </div>
     </form>
