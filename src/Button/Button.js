@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
 import { getMinLineHeight } from '../theme-utils';
+import { tagPropType } from '../prop-types';
 import styles from './Button.module.css';
 
 export const getButttonStyle = ({
@@ -68,9 +69,10 @@ const Button = ({
   className,
   inverted,
   outline,
+  tag: Tag,
   ...passedProps
 }) => (
-  <button
+  <Tag
     {...passedProps}
     className={classNames(className, styles.Button)}
   />
@@ -78,10 +80,12 @@ const Button = ({
 
 Button.propTypes = {
   className: PropTypes.string,
+  tag: tagPropType,
 };
 
 Button.defaultProps = {
   className: '',
+  tag: 'button',
 };
 
 const StyledButton = styled(Button)(
