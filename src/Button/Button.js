@@ -25,8 +25,11 @@ export const getButttonStyle = ({
   } = buttons;
 
   const {
+    active,
     backgroundColor,
     color,
+    disabled,
+    focus,
     hover,
   } = variants[variant];
 
@@ -57,10 +60,28 @@ export const getButttonStyle = ({
     paddingTop: paddingV - borderWidth,
     fontSize: fontSize,
     lineHeight: lineHeightRatio,
+    transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
     ':hover': {
       color: outline ? hover.backgroundColor : hover.color,
       backgroundColor: outline ? hover.color : hover.backgroundColor,
       borderColor: hover.backgroundColor,
+    },
+    ':focus': {
+      color: outline ? focus.backgroundColor : focus.color,
+      backgroundColor: outline ? focus.color : focus.backgroundColor,
+      borderColor: focus.backgroundColor,
+      outlineColor: outline ? color : backgroundColor,
+      outlineOffset: '3px',
+    },
+    ':active': {
+      color: outline ? active.backgroundColor : active.color,
+      backgroundColor: outline ? active.color : active.backgroundColor,
+      borderColor: active.backgroundColor,
+    },
+    ':disabled': {
+      color: outline ? disabled.backgroundColor : disabled.color,
+      backgroundColor: outline ? disabled.color : disabled.backgroundColor,
+      borderColor: disabled.backgroundColor,
     }
   })
 };

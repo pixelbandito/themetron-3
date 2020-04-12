@@ -12,6 +12,7 @@
 }
 
 .example {
-  padding: 16px;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
 }
