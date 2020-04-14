@@ -35,8 +35,6 @@ export const getButttonStyle = ({
     hover,
   } = variants[variant];
 
-  const ramp = colors[variant] || colors.neutral;
-
   let {
     fontSize,
     paddingH,
@@ -75,11 +73,6 @@ export const getButttonStyle = ({
       color: outline ? disabled.backgroundColor : disabled.color,
       backgroundColor: outline ? disabled.color : disabled.backgroundColor,
       borderColor: disabled.backgroundColor,
-    },
-    '@media (prefers-color-scheme: dark)': {
-      color: outline ? ramp['dark-2'] : colors.black.base,
-      background: outline ? 'transparent' : ramp['dark-2'],
-      borderColor: outline ? 'transparent' : ramp['dark-2'],
     },
   };
 
