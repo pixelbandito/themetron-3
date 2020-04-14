@@ -9,7 +9,7 @@ import styles from './Font.module.css';
 
 export const getFontStyle = ({
   color = 'neutral',
-  contrast = 'lite-1',
+  contrast = 'lite-2',
   family = 'sansSerif',
   size = 'md',
   weight = 'normal',

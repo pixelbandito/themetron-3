@@ -47,6 +47,7 @@ const ThemeForm = ({
   onApplyTheme,
 }) => {
   const [mdSize, setMdSize] = useState(initTheme.spacing.md);
+  const [roundness, setRoundness] = useState(initTheme.shared.roundness);
   const [themeForm, setThemeForm] = useState(initTheme);
   const importInputFileRef = useRef();
 
@@ -170,6 +171,19 @@ const ThemeForm = ({
     });
   }, [themeForm]);
 
+  const handleChangeRoundness = useCallback(e => {
+    const nextRoundness = getNumberOrDont(e.target.value);
+    setRoundness(nextRoundness);
+
+    setThemeForm({
+      ...themeForm,
+      shared: {
+        ...themeForm.shared,
+        roundness: nextRoundness,
+      }
+    })
+  }, [themeForm]);
+
   const handleClickImport = useCallback(() => {
     if (importInputFileRef.current) {
       importInputFileRef.current.click();
@@ -196,6 +210,15 @@ const ThemeForm = ({
         onChange={handleChangeMdSize}
         type="number"
         value={`${mdSize}`}
+      />
+      <Control
+        id="roundness"
+        onChange={handleChangeRoundness}
+        type="number"
+        min="0"
+        max="10"
+        step="1"
+        value={`${roundness}`}
       />
       <section>
         <h4>Semantic colors</h4>
