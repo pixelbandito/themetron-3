@@ -71,16 +71,10 @@ Examples.defaultProps = {
 const StyledExamples = styled(Examples)(
   ({
     theme,
-  }) => {
-    console.log({
-      backgroundColor: theme.colors.neutral['lite-bg'],
-      padding: theme.spacing.lg,
-    });
-    return ({
-      backgroundColor: theme.colors.neutral['lite-bg'],
-      padding: theme.spacing.lg,
-    });
-  }
+  }) => ({
+    backgroundColor: theme.colors.neutral['lite-bg'],
+    padding: theme.spacing.lg,
+  })
 );
 
 export default StyledExamples;
