@@ -72,8 +72,14 @@ const StyledExamples = styled(Examples)(
   ({
     theme,
   }) => ({
-    backgroundColor: theme.colors.neutral['lite-bg'],
+    backgroundColor: (theme.shared.mode === 'dark' && theme.colors.neutral['dark-bg']) || theme.colors.neutral['lite-bg'] ,
     padding: theme.spacing.lg,
+    '@media (prefers-color-scheme: dark)': !theme.shared.mode && {
+      backgroundColor: theme.colors.neutral['dark-bg'],
+    },
+    '@media (prefers-color-scheme: light)': !theme.shared.mode && {
+      backgroundColor: theme.colors.neutral['light-bg'],
+    },
   })
 );
 

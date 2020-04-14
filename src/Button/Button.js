@@ -14,6 +14,8 @@ export const getButttonStyle = ({
 }) => {
   const {
     buttons,
+    colors,
+    shared,
     spacing,
   } = theme;
 
@@ -47,20 +49,10 @@ export const getButttonStyle = ({
     spacing
   });
 
-  return ({
+  const lightModeStyle = {
     color: outline ? backgroundColor : color,
     backgroundColor: outline ? color : backgroundColor,
     borderColor: backgroundColor,
-    borderWidth,
-    borderStyle: 'solid',
-    borderRadius: roundness * (lineHeightPx / 2 + paddingV),
-    paddingBottom: paddingV - borderWidth,
-    paddingLeft: paddingH - borderWidth,
-    paddingRight: paddingH - borderWidth,
-    paddingTop: paddingV - borderWidth,
-    fontSize: fontSize,
-    lineHeight: lineHeightRatio,
-    transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
     ':hover': {
       color: outline ? hover.backgroundColor : hover.color,
       backgroundColor: outline ? hover.color : hover.backgroundColor,
@@ -71,7 +63,6 @@ export const getButttonStyle = ({
       backgroundColor: outline ? focus.color : focus.backgroundColor,
       borderColor: focus.backgroundColor,
       outlineColor: outline ? color : backgroundColor,
-      outlineOffset: '3px',
     },
     ':active': {
       color: outline ? active.backgroundColor : active.color,
@@ -82,13 +73,74 @@ export const getButttonStyle = ({
       color: outline ? disabled.backgroundColor : disabled.color,
       backgroundColor: outline ? disabled.color : disabled.backgroundColor,
       borderColor: disabled.backgroundColor,
-    }
+    },
+  };
+
+  const darkModeStyle = {
+    color: outline ? color : backgroundColor,
+    backgroundColor: outline ? backgroundColor : color,
+    borderColor: color,
+    ':hover': {
+      color: outline ? hover.color : hover.backgroundColor,
+      backgroundColor: outline ? hover.backgroundColor : hover.color,
+      borderColor: hover.color,
+    },
+    ':focus': {
+      color: outline ? focus.color : focus.backgroundColor,
+      backgroundColor: outline ? focus.backgroundColor : focus.color,
+      borderColor: focus.color,
+      outlineColor: outline ? backgroundColor : color,
+    },
+    ':active': {
+      color: outline ? active.color : active.backgroundColor,
+      backgroundColor: outline ? active.backgroundColor : active.color,
+      borderColor: active.color,
+    },
+    ':disabled': {
+      color: outline ? disabled.color : disabled.backgroundColor,
+      backgroundColor: outline ? disabled.backgroundColor : disabled.color,
+      borderColor: disabled.backgroundColor,
+    },
+  };
+
+  const defaultStyles = (shared.mode === 'dark' && darkModeStyle) || lightModeStyle;
+
+  return ({
+    borderWidth,
+    borderStyle: 'solid',
+    borderRadius: roundness * (lineHeightPx / 2 + paddingV),
+    paddingBottom: paddingV - borderWidth,
+    paddingLeft: paddingH - borderWidth,
+    paddingRight: paddingH - borderWidth,
+    paddingTop: paddingV - borderWidth,
+    fontSize: fontSize,
+    lineHeight: lineHeightRatio,
+    transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
+    ...defaultStyles,
+    ':hover': {
+      ...defaultStyles[':hover'],
+    },
+    ':focus': {
+      outlineOffset: '3px',
+      ...defaultStyles[':focus'],
+    },
+    ':active': {
+      ...defaultStyles[':active'],
+    },
+    ':disabled': {
+      ...defaultStyles[':disabled'],
+    },
+    '@media (prefers-color-scheme: light)': !shared.mode && {
+      ...lightModeStyle,
+    },
+    '@media (prefers-color-scheme: dark)': !shared.mode && {
+      ...darkModeStyle,
+    },
   })
 };
 
 const Button = ({
   className,
-  inverted,
   outline,
   tag: Tag,
   ...passedProps

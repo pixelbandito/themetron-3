@@ -243,7 +243,7 @@ export const getShared = ({ colors: customColors }) => ({
 	backgroundColor: customColors.white,
 	color: customColors.black,
 	elevation: 1,
-	inverted: false,
+	mode: undefined, // 'light', 'dark', undefined
 	roundness: 0,
 	shine: 0,
 });

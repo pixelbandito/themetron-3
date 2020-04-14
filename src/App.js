@@ -31,9 +31,29 @@ function App() {
           />
         </div>
         <div className={styles.example}>
-          <ThemeProvider theme={themePreview} >
-            <Examples />
-          </ThemeProvider>
+          <div>
+            <ThemeProvider theme={themePreview} >
+              <Examples />
+            </ThemeProvider>
+            <ThemeProvider theme={{
+                ...themePreview,
+                shared: {
+                  ...themePreview.shared,
+                  mode: 'dark',
+                },
+              }} >
+              <Examples />
+            </ThemeProvider>
+            <ThemeProvider theme={{
+                ...themePreview,
+                shared: {
+                  ...themePreview.shared,
+                  mode: 'light',
+                },
+              }} >
+              <Examples />
+            </ThemeProvider>
+          </div>
         </div>
       </div>
       <GridOverlay />
