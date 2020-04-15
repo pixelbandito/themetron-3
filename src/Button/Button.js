@@ -14,7 +14,6 @@ export const getButttonStyle = ({
 }) => {
   const {
     buttons,
-    colors,
     shared,
     spacing,
   } = theme;

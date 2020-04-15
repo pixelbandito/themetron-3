@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { ThemeProvider } from 'styled-components'
+import classNames from 'classnames';
 
 import './App.css';
 import styles from './App.module.css';
@@ -11,6 +12,7 @@ import GridOverlay from './GridOverlay';
 function App() {
   const [theme, setTheme] = useState(defaultTheme);
   const [themePreview, setThemePreview] = useState(theme);
+  const [sidebarIsExpanded, setSidebarIsExpanded] = useState(true);
 
   const handleChangeThemePreview = useCallback((theme) => {
     setThemePreview(theme);
@@ -22,13 +24,36 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={`App ${styles.App}`}>
-        <div className={styles.form}>
-          <ThemeForm
-            theme={theme}
-            onChangeTheme={handleChangeThemePreview}
-            onApplyTheme={handleApplyThemePreview}
+      <div className={classNames('App', styles.App, {
+        [styles.withSidebarExpanded]: sidebarIsExpanded,
+      })}>
+        <div className={styles.sidebar}>
+          <div className={styles.form}>
+            <ThemeForm
+              theme={theme}
+              onChangeTheme={handleChangeThemePreview}
+              onApplyTheme={handleApplyThemePreview}
+            />
+          </div>
+          <button
+            className={styles.sideBarToggleStripe}
+            onClick={() => setSidebarIsExpanded(prev => !prev)}
+            type="button"
+            style={{
+              backgroundColor: theme.colors.neutral['dark-1'],
+            }}
           />
+          <button
+            className={styles.sideBarToggleButton}
+            onClick={() => setSidebarIsExpanded(prev => !prev)}
+            type="button"
+            style={{
+              borderColor: theme.colors.neutral['dark-1'],
+              color: theme.colors.neutral['dark-3']
+            }}
+          >
+            ↔
+          </button>
         </div>
         <div className={styles.example}>
           <div>
