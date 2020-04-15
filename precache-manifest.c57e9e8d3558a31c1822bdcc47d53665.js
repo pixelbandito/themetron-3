@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "67296888698e530e25c2d70aa421ef64",
+    "revision": "cd3f68d272e4c9c6f087c806b76e1fe1",
     "url": "/themetron-3/index.html"
   },
   {
-    "revision": "cba51f645fa62c159f9a",
-    "url": "/themetron-3/static/css/main.b56f1b65.chunk.css"
+    "revision": "5be7c7368c433a797af1",
+    "url": "/themetron-3/static/css/main.23fee5e5.chunk.css"
   },
   {
     "revision": "cd8fcfa46ec482bc834c",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/themetron-3/static/js/2.6f258a40.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "cba51f645fa62c159f9a",
-    "url": "/themetron-3/static/js/main.5300259c.chunk.js"
+    "revision": "5be7c7368c433a797af1",
+    "url": "/themetron-3/static/js/main.66d7cff7.chunk.js"
   },
   {
     "revision": "e4ef42243a8ff63962ab",
