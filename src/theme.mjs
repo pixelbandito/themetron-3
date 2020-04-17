@@ -4,7 +4,18 @@ const baseSize = 4;
 
 const spacing = getSizes({ count: 5, mdSize: baseSize * 4 });
 
-const baseColors = {
+// export const BaseColors = {
+// 	black: '#16161d',
+// 	primary: 'blue',
+// 	danger: 'red',
+// 	info: 'neutral',
+// 	neutral: 'black',
+// 	success: 'primary',
+// 	warning: 'danger',
+// 	white: 'white',
+// };
+
+export const baseColors = {
 	white: 'white',
 	black: '#16161d',
 	primary: 'blue',
