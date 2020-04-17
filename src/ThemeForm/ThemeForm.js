@@ -55,6 +55,15 @@ const ThemeForm = ({
     onChangeTheme(themeForm);
   }, [onChangeTheme, themeForm]);
 
+  useEffect(() => {
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      buttons: getButtons({
+        ...prevThemeForm,
+      }),
+    }));
+  }, [themeForm.colors,  themeForm.fonts, themeForm.shared.roundness,  themeForm.spacing]);
+
   const handleClickApply = useCallback(() => {
     onApplyTheme(themeForm);
   }, [onApplyTheme, themeForm]);
@@ -95,19 +104,14 @@ const ThemeForm = ({
       [key]: getHexOrDont(value),
     };
 
-    const nextColors = getColors({ baseColors });
-
-    const nextTheme = {
-      ...themeForm,
-      colors: nextColors,
-      buttons: getButtons({
-        ...themeForm,
-        colors: nextColors,
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      colors: getColors({
+        baseColors,
       }),
-    };
+    }));
+  }, [colors]);
 
-    setThemeForm(nextTheme);
-  }, [colors, themeForm]);
 
   const debouncedHandleChangeColor = debounce(handleChangeColor, 100);
 
@@ -122,23 +126,17 @@ const ThemeForm = ({
       [key]: getNumberOrDont(event.target.value),
     };
 
-    const nextFonts = {
-      ...themeForm.fonts,
-      sizes: nextSizes,
-    };
-
-    const nextTheme = {
-      ...themeForm,
-      buttons: getButtons({
-        ...themeForm,
-        fonts: nextFonts,
-      }),
-      fonts: nextFonts,
-    };
-
     setFontSizes(nextSizes);
-    setThemeForm(nextTheme);
+
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      fonts: {
+        ...themeForm.fonts,
+        sizes: nextSizes,
+      },
+    }));
   }, [fontSizes, themeForm]);
+
 
   const handleChangeFontSizesCount = useCallback(e => {
     const nextFontSizesCount = getNumberOrDont(e.target.value);
@@ -155,34 +153,40 @@ const ThemeForm = ({
     setFontSizesCount(nextFontSizesCount);
   }, [fontSizes]);
 
-  const handleChangeMdSize = useCallback(e => {
+  const handleChangeMdSize = e => {
     const nextMdSize = getNumberOrDont(e.target.value);
-    const spacing = getSizes({ count: 5, mdSize: nextMdSize });
+
     setMdSize(nextMdSize);
 
-    setThemeForm({
-      ...themeForm,
-      buttons: getButtons({
-        colors: themeForm.colors,
-        fonts: themeForm.fonts,
-        spacing,
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      spacing: getSizes({
+        count: 5,
+        mdSize: nextMdSize,
       }),
-      spacing,
-    });
-  }, [themeForm]);
+    }));
+  };
 
-  const handleChangeRoundness = useCallback(e => {
-    const nextRoundness = getNumberOrDont(e.target.value);
+
+  const roundnessMax = 10;
+  const roundnessMin = 0;
+
+  const handleChangeRoundness = e => {
+    let nextRoundness = getNumberOrDont(e.target.value)
+    nextRoundness = Math.min(nextRoundness, roundnessMax);
+    nextRoundness = Math.max(nextRoundness, roundnessMin);
+
     setRoundness(nextRoundness);
 
-    setThemeForm({
-      ...themeForm,
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
       shared: {
-        ...themeForm.shared,
+        ...prevThemeForm.shared,
         roundness: nextRoundness,
-      }
-    })
-  }, [themeForm]);
+      },
+    }));
+  };
+
 
   const handleClickImport = useCallback(() => {
     if (importInputFileRef.current) {
