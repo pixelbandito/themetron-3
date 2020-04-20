@@ -1,17 +1,39 @@
 import { getHexFromHexOrName, setColorByContrastWithHsl } from './utils/colors';
 
+export const getInheritedBaseColor = ({
+	attempt = 0,
+	baseColors,
+	maxAttempts: initMaxAttempts,
+	unsafeColor,
+}) => {
+	let maxAttempts = initMaxAttempts;
+
+	if (initMaxAttempts === undefined) {
+		maxAttempts = Object.keys(baseColors).length;
+	}
+
+	if (attempt > maxAttempts || !baseColors[unsafeColor]) {
+		return unsafeColor;
+	}
+
+	return getInheritedBaseColor({
+		attempt: attempt + 1,
+		baseColors,
+		maxAttempts,
+		unsafeColor: baseColors[unsafeColor],
+	})
+}
+
 export const getColors = ({ baseColors }) => {
 	const bgStep = 1.1;
 	const contrastRatios = [7, 4.5, 3];
 
-	return Object.entries(baseColors).reduce((result, [key, unsafeColor]) => {
-		const color = getHexFromHexOrName(unsafeColor);
+	const colors = Object.entries(baseColors).reduce((result, [key, unsafeColor]) => {
+		let color = getInheritedBaseColor({ baseColors, unsafeColor });
+
+		color = getHexFromHexOrName(color);
 		const white = getHexFromHexOrName(baseColors.white);
 		const black = getHexFromHexOrName(baseColors.black);
-		//
-		// if (key !== 'primary') {
-		// 	return result;
-		// }
 
 		result[key] = {};
 
@@ -55,6 +77,8 @@ export const getColors = ({ baseColors }) => {
 
 		return result;
 	}, {});
+
+	return colors;
 }
 
 export const getButtons = ({
@@ -240,8 +264,6 @@ export const getMinLineHeight = ({ size, spacing }) => {
 };
 
 export const getShared = ({ colors: customColors }) => ({
-	backgroundColor: customColors.white,
-	color: customColors.black,
 	elevation: 1,
 	mode: undefined, // 'light', 'dark', undefined
 	roundness: 0,

@@ -20,7 +20,6 @@ export const getButttonStyle = ({
 
   const {
     borderWidth,
-    roundness,
     sizes,
     variants,
   } = buttons;
@@ -107,7 +106,7 @@ export const getButttonStyle = ({
   return ({
     borderWidth,
     borderStyle: 'solid',
-    borderRadius: roundness * (lineHeightPx / 2 + paddingV),
+    borderRadius: theme.shared.roundness * (lineHeightPx / 2 + paddingV) / 10,
     paddingBottom: paddingV - borderWidth,
     paddingLeft: paddingH - borderWidth,
     paddingRight: paddingH - borderWidth,
