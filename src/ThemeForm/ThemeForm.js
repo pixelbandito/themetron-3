@@ -77,12 +77,22 @@ const ThemeForm = ({
 
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
-      baseColors: getColors({
-        nextBaseColors,
-      }),
+      baseColors: {
+        ...prevThemeForm.baseColors,
+        ...nextBaseColors,
+      },
     }));
 
     console.log({ baseColors, nextBaseColors });
+  }, [baseColors]);
+
+  useEffect(() => {
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      colors: getColors({
+        ...prevThemeForm,
+      }),
+    }));
   }, [baseColors]);
 
 

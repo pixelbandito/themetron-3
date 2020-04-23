@@ -10,7 +10,7 @@ export const baseColors = {
 	primary: 'blue',
 	success: 'green',
 	info: 'lightblue',
-	neutral: '#16161d',
+	default: '#16161d',
 	warning: 'yellow',
 	danger: 'red',
 };

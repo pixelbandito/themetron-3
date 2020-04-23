@@ -109,22 +109,22 @@ export const getButtons = ({
 	},
 	variants: {
 		default: {
-			backgroundColor: colors.neutral['lite-2'],
+			backgroundColor: colors.default['lite-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.neutral['lite-1'],
+				backgroundColor: colors.default['lite-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.neutral['lite-1'],
+				backgroundColor: colors.default['lite-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.neutral['lite-1'],
+				backgroundColor: colors.default['lite-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.neutral['lite-3'],
+				backgroundColor: colors.default['lite-3'],
 				color: baseColors.white,
 			},
 		},
@@ -188,23 +188,23 @@ export const getButtons = ({
 				color: baseColors.white,
 			},
 		},
-		neutral: {
-			backgroundColor: colors.neutral['lite-2'],
+		default: {
+			backgroundColor: colors.default['lite-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.neutral['lite-1'],
+				backgroundColor: colors.default['lite-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.neutral['lite-1'],
+				backgroundColor: colors.default['lite-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.neutral['lite-1'],
+				backgroundColor: colors.default['lite-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.neutral['lite-3'],
+				backgroundColor: colors.default['lite-3'],
 				color: baseColors.white,
 			},
 		},

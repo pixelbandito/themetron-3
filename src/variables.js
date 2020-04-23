@@ -5,7 +5,7 @@ module.exports = {
 		'--color-primary': 'blue',
 		'--color-success': 'green',
 		'--color-info': 'lightBlue',
-		'--color-neutral': 'gray',
+		'--color-default': 'gray',
 		'--color-warning': 'yellow',
 		'--color-danger': 'red',
 		sharedTheme: {
