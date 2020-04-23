@@ -35,13 +35,13 @@ export const getColors = ({ baseColors }) => {
 		const white = getHexFromHexOrName(baseColors.white);
 		const black = getHexFromHexOrName(baseColors.black);
 
-		result[key] = {};
-
-		result[key].base = color;
-
 		if (['white', 'black'].indexOf(key) >= 0) {
 			return result;
 		}
+
+		result[key] = {};
+
+		result[key].base = color;
 
     result[key]['lite-bg'] = setColorByContrastWithHsl({
       hex: color,
@@ -82,169 +82,170 @@ export const getColors = ({ baseColors }) => {
 }
 
 export const getButtons = ({
-	colors: customColors,
-	fonts: customFonts,
-	spacing: customSpacing,
+	baseColors,
+	colors,
+	fonts,
+	spacing,
 }) => ({
 	borderWidth: 1,
 	roundness: 0.2,
 	shine: 1, // Very shiny: glass, shiny: plastic, slightly shiny: paper, 0: flat
 	sizes: {
 		sm: {
-			fontSize: customFonts.sizes.sm,
-			paddingH: customSpacing.sm,
-			paddingV: customSpacing.xs,
+			fontSize: fonts.sizes.sm,
+			paddingH: spacing.sm,
+			paddingV: spacing.xs,
 		},
 		md: {
-			fontSize: customFonts.sizes.md,
-			paddingH: customSpacing.md,
-			paddingV: customSpacing.sm,
+			fontSize: fonts.sizes.md,
+			paddingH: spacing.md,
+			paddingV: spacing.sm,
 		},
 		lg: {
-			fontSize: customFonts.sizes.lg,
-			paddingH: customSpacing.md,
-			paddingV: customSpacing.sm,
+			fontSize: fonts.sizes.lg,
+			paddingH: spacing.md,
+			paddingV: spacing.sm,
 		},
 	},
 	variants: {
 		default: {
-			backgroundColor: customColors.neutral['lite-2'],
-			color: customColors.white.base,
+			backgroundColor: colors.neutral['lite-2'],
+			color: baseColors.white,
 			hover: {
-				backgroundColor: customColors.neutral['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-1'],
+				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: customColors.neutral['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-1'],
+				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: customColors.neutral['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-1'],
+				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: customColors.neutral['lite-3'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-3'],
+				color: baseColors.white,
 			},
 		},
 		primary: {
-			backgroundColor: customColors.primary['lite-2'],
-			color: customColors.white.base,
+			backgroundColor: colors.primary['lite-2'],
+			color: baseColors.white,
 			hover: {
-				backgroundColor: customColors.primary['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.primary['lite-1'],
+				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: customColors.primary['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.primary['lite-1'],
+				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: customColors.primary['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.primary['lite-1'],
+				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: customColors.primary['lite-3'],
-				color: customColors.white.base,
+				backgroundColor: colors.primary['lite-3'],
+				color: baseColors.white,
 			},
 		},
 		success: {
-			backgroundColor: customColors.success['lite-2'],
-			color: customColors.white.base,
+			backgroundColor: colors.success['lite-2'],
+			color: baseColors.white,
 			hover: {
-				backgroundColor: customColors.success['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.success['lite-1'],
+				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: customColors.success['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.success['lite-1'],
+				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: customColors.success['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.success['lite-1'],
+				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: customColors.success['lite-3'],
-				color: customColors.white.base,
+				backgroundColor: colors.success['lite-3'],
+				color: baseColors.white,
 			},
 		},
 		info: {
-			backgroundColor: customColors.info['lite-2'],
-			color: customColors.white.base,
+			backgroundColor: colors.info['lite-2'],
+			color: baseColors.white,
 			hover: {
-				backgroundColor: customColors.info['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.info['lite-1'],
+				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: customColors.info['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.info['lite-1'],
+				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: customColors.info['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.info['lite-1'],
+				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: customColors.info['lite-3'],
-				color: customColors.white.base,
+				backgroundColor: colors.info['lite-3'],
+				color: baseColors.white,
 			},
 		},
 		neutral: {
-			backgroundColor: customColors.neutral['lite-2'],
-			color: customColors.white.base,
+			backgroundColor: colors.neutral['lite-2'],
+			color: baseColors.white,
 			hover: {
-				backgroundColor: customColors.neutral['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-1'],
+				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: customColors.neutral['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-1'],
+				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: customColors.neutral['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-1'],
+				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: customColors.neutral['lite-3'],
-				color: customColors.white.base,
+				backgroundColor: colors.neutral['lite-3'],
+				color: baseColors.white,
 			},
 		},
 		warning: {
-			backgroundColor: customColors.warning['lite-2'],
-			color: customColors.white.base,
+			backgroundColor: colors.warning['lite-2'],
+			color: baseColors.white,
 			hover: {
-				backgroundColor: customColors.warning['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.warning['lite-1'],
+				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: customColors.warning['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.warning['lite-1'],
+				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: customColors.warning['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.warning['lite-1'],
+				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: customColors.warning['lite-3'],
-				color: customColors.white.base,
+				backgroundColor: colors.warning['lite-3'],
+				color: baseColors.white,
 			},
 		},
 		danger: {
-			backgroundColor: customColors.danger['lite-2'],
-			color: customColors.white.base,
+			backgroundColor: colors.danger['lite-2'],
+			color: baseColors.white,
 			hover: {
-				backgroundColor: customColors.danger['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.danger['lite-1'],
+				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: customColors.danger['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.danger['lite-1'],
+				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: customColors.danger['lite-1'],
-				color: customColors.white.base,
+				backgroundColor: colors.danger['lite-1'],
+				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: customColors.danger['lite-3'],
-				color: customColors.white.base,
+				backgroundColor: colors.danger['lite-3'],
+				color: baseColors.white,
 			},
 		},
 	},
@@ -263,7 +264,7 @@ export const getMinLineHeight = ({ size, spacing }) => {
 	}
 };
 
-export const getShared = ({ colors: customColors }) => ({
+export const getShared = () => ({
 	elevation: 1,
 	mode: undefined, // 'light', 'dark', undefined
 	roundness: 0,
@@ -331,10 +332,13 @@ export const getSizes = ({
 		return size;
 	});
 
-	return sizes.reduce((result, size) => ({
-		...result,
-		[size.label]: size.size,
-	}), {});
+	return {
+		...sizes.reduce((result, size) => ({
+			...result,
+			[size.label]: size.size,
+		}), {}),
+		...customSizes,
+	};
 }
 
 export default {

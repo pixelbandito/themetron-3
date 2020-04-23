@@ -7,38 +7,9 @@ import { getButtons, getColors, getSizes } from '../theme-utils.mjs';
 import { getLuminance } from '../utils/colors';
 import Button from '../Button';
 import Swatch from '../Swatch';
+import { getHexOrDont, getNumberOrDont } from './utils';
 import Control from './Control';
 import styles from './ThemeForm.module.css';
-
-export const getNumberOrDont = (string) => {
-  let number;
-
-  try {
-    number = parseInt(string, 10);
-
-    if (isNaN(number)) {
-      throw new Error('not a number');
-    }
-  } catch(e) {
-    number = null;
-  }
-
-  return number
-};
-
-export const getHexOrDont = string => string;
-
-export const getJsonOrDont = (string) => {
-  let json;
-
-  try {
-    json = JSON.parse(string);
-  } catch(e) {
-    json =  {};
-  }
-
-  return json;
-};
 
 const ThemeForm = ({
   className,
@@ -74,7 +45,7 @@ const ThemeForm = ({
 
   // COLORS
   const safeBaseColors = useMemo(() => {
-    const safeColors =  Object.entries(themeForm.colors).reduce((result, [key, { base: value }]) => {
+    const baseColors =  Object.entries(themeForm.baseColors).reduce((result, [key, value]) => {
       let safeValue;
 
       try {
@@ -89,28 +60,30 @@ const ThemeForm = ({
       }
     }, {});
 
-    return safeColors;
-  }, [themeForm.colors]);
+    return baseColors;
+  }, [themeForm.baseColors]);
 
-  const [colors, setColors] = useState(safeBaseColors);
+  const [baseColors, setSafeBaseColors] = useState(safeBaseColors);
 
   useEffect(() => {
-    setColors(safeBaseColors)
+    setSafeBaseColors(safeBaseColors)
   }, [safeBaseColors]);
 
   const handleChangeColor = useCallback(({ value, key }) => {
-    const baseColors = {
-      ...colors,
+    const nextBaseColors = {
+      ...baseColors,
       [key]: getHexOrDont(value),
     };
 
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
-      colors: getColors({
-        baseColors,
+      baseColors: getColors({
+        nextBaseColors,
       }),
     }));
-  }, [colors]);
+
+    console.log({ baseColors, nextBaseColors });
+  }, [baseColors]);
 
 
   const debouncedHandleChangeColor = debounce(handleChangeColor, 100);
@@ -226,7 +199,7 @@ const ThemeForm = ({
       />
       <section>
         <h4>Semantic colors</h4>
-        {Object.entries(colors).map(([key, color], i) => {
+        {Object.entries(baseColors).map(([key, color], i) => {
           const value = color;
           return (
             <div key={key}>
@@ -238,27 +211,29 @@ const ThemeForm = ({
                 type="color"
                 value={`${value}`}
               />
-              <div className={styles.swatches}>
-                {
-                  Object.entries(themeForm.colors[key])
-                  .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
-                  .filter(([variantKey]) => variantKey !== 'base')
-                  .map(([variantKey, hex], i) => (
-                    <Swatch
-                      key={variantKey}
-                      className={styles.swatch}
-                      color={
-                        getLuminance(hex) > 0.5 ?
-                          themeForm.colors[key]['dark-bg'] :
-                          themeForm.colors[key]['lite-bg']
-                      }
-                      backgroundColor={hex}
-                    >
-                      {variantKey}
-                    </Swatch>
-                  ))
-                }
-              </div>
+              {themeForm.colors[key] && (
+                <div className={styles.swatches}>
+                  {
+                    Object.entries(themeForm.colors[key])
+                    .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
+                    .filter(([variantKey]) => variantKey !== 'base')
+                    .map(([variantKey, hex], i) => (
+                      <Swatch
+                        key={variantKey}
+                        className={styles.swatch}
+                        color={
+                          getLuminance(hex) > 0.5 ?
+                            themeForm.colors[key]['dark-bg'] :
+                            themeForm.colors[key]['lite-bg']
+                        }
+                        backgroundColor={hex}
+                      >
+                        {variantKey}
+                      </Swatch>
+                    ))
+                  }
+                </div>
+              )}
             </div>
             );
         })}

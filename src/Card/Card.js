@@ -25,7 +25,7 @@ export const getCardHeadStyles = ({
 export const getCardBodyStyles = ({
   theme,
 }) => ({
-  background: theme.colors.white.base,
+  background: theme.baseColors.white,
   padding: `${theme.spacing.md}px`,
 });
 
