@@ -91,150 +91,61 @@ export const getButtons = ({
 	colors,
 	fonts,
 	spacing,
-}) => ({
-	borderWidth: 1,
-	roundness: 0.2,
-	shine: 1, // Very shiny: glass, shiny: plastic, slightly shiny: paper, 0: flat
-	sizes: {
-		sm: {
-			fontSize: fonts.sizes.sm,
-			paddingH: spacing.sm,
-			paddingV: spacing.xs,
-		},
-		md: {
-			fontSize: fonts.sizes.md,
-			paddingH: spacing.md,
-			paddingV: spacing.sm,
-		},
-		lg: {
-			fontSize: fonts.sizes.lg,
-			paddingH: spacing.md,
-			paddingV: spacing.sm,
-		},
-	},
-	variants: {
-		default: {
-			backgroundColor: colors.default['light-2'],
-			color: baseColors.white,
-			hover: {
-				backgroundColor: colors.default['light-1'],
-				color: baseColors.white,
+}) => {
+	const variants = Object.keys(baseColors)
+		.filter(key => !['black', 'white'].includes(key))
+		.reduce((result, key) => {
+			return ({
+				...result,
+				[key]: {
+					backgroundColor: colors[key]['light-2'],
+					color: baseColors.white,
+					hover: {
+						backgroundColor: colors[key]['light-1'],
+						color: baseColors.white,
+					},
+					focus: {
+						backgroundColor: colors[key]['light-1'],
+						color: baseColors.white,
+					},
+					active: {
+						backgroundColor: colors[key]['light-1'],
+						color: baseColors.white,
+					},
+					disabled: {
+						backgroundColor: colors[key]['light-3'],
+						color: baseColors.white,
+					},
+				},
+			});
+		}, {});
+
+	console.log({ variants });
+
+	return ({
+		borderWidth: 1,
+		roundness: 0.2,
+		shine: 1, // Very shiny: glass, shiny: plastic, slightly shiny: paper, 0: flat
+		sizes: {
+			sm: {
+				fontSize: fonts.sizes.sm,
+				paddingH: spacing.sm,
+				paddingV: spacing.xs,
 			},
-			focus: {
-				backgroundColor: colors.default['light-1'],
-				color: baseColors.white,
+			md: {
+				fontSize: fonts.sizes.md,
+				paddingH: spacing.md,
+				paddingV: spacing.sm,
 			},
-			active: {
-				backgroundColor: colors.default['light-1'],
-				color: baseColors.white,
-			},
-			disabled: {
-				backgroundColor: colors.default['light-3'],
-				color: baseColors.white,
-			},
-		},
-		primary: {
-			backgroundColor: colors.primary['light-2'],
-			color: baseColors.white,
-			hover: {
-				backgroundColor: colors.primary['light-1'],
-				color: baseColors.white,
-			},
-			focus: {
-				backgroundColor: colors.primary['light-1'],
-				color: baseColors.white,
-			},
-			active: {
-				backgroundColor: colors.primary['light-1'],
-				color: baseColors.white,
-			},
-			disabled: {
-				backgroundColor: colors.primary['light-3'],
-				color: baseColors.white,
+			lg: {
+				fontSize: fonts.sizes.lg,
+				paddingH: spacing.md,
+				paddingV: spacing.sm,
 			},
 		},
-		success: {
-			backgroundColor: colors.success['light-2'],
-			color: baseColors.white,
-			hover: {
-				backgroundColor: colors.success['light-1'],
-				color: baseColors.white,
-			},
-			focus: {
-				backgroundColor: colors.success['light-1'],
-				color: baseColors.white,
-			},
-			active: {
-				backgroundColor: colors.success['light-1'],
-				color: baseColors.white,
-			},
-			disabled: {
-				backgroundColor: colors.success['light-3'],
-				color: baseColors.white,
-			},
-		},
-		info: {
-			backgroundColor: colors.info['light-2'],
-			color: baseColors.white,
-			hover: {
-				backgroundColor: colors.info['light-1'],
-				color: baseColors.white,
-			},
-			focus: {
-				backgroundColor: colors.info['light-1'],
-				color: baseColors.white,
-			},
-			active: {
-				backgroundColor: colors.info['light-1'],
-				color: baseColors.white,
-			},
-			disabled: {
-				backgroundColor: colors.info['light-3'],
-				color: baseColors.white,
-			},
-		},
-		warning: {
-			backgroundColor: colors.warning['light-2'],
-			color: baseColors.white,
-			hover: {
-				backgroundColor: colors.warning['light-1'],
-				color: baseColors.white,
-			},
-			focus: {
-				backgroundColor: colors.warning['light-1'],
-				color: baseColors.white,
-			},
-			active: {
-				backgroundColor: colors.warning['light-1'],
-				color: baseColors.white,
-			},
-			disabled: {
-				backgroundColor: colors.warning['light-3'],
-				color: baseColors.white,
-			},
-		},
-		danger: {
-			backgroundColor: colors.danger['light-2'],
-			color: baseColors.white,
-			hover: {
-				backgroundColor: colors.danger['light-1'],
-				color: baseColors.white,
-			},
-			focus: {
-				backgroundColor: colors.danger['light-1'],
-				color: baseColors.white,
-			},
-			active: {
-				backgroundColor: colors.danger['light-1'],
-				color: baseColors.white,
-			},
-			disabled: {
-				backgroundColor: colors.danger['light-3'],
-				color: baseColors.white,
-			},
-		},
-	},
-});
+		variants,
+	});
+};
 
 export const getMinLineHeight = ({ size, spacing }) => {
 	const idealSize = size * 1.4;

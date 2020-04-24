@@ -67,7 +67,7 @@ const ThemeForm = ({
     return baseColors;
   }, [themeForm.baseColors]);
 
-  const handleChangeColor = useCallback(({ value, key }) => {
+  const handleChangeBaseColorHex = useCallback(({ value, key }) => {
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
       baseColors: {
@@ -87,7 +87,7 @@ const ThemeForm = ({
   }, [safeBaseColors]);
 
 
-  const debouncedHandleChangeColor = debounce(handleChangeColor, 100);
+  const debouncedHandleChangeBaseColorHex = debounce(handleChangeBaseColorHex, 100);
 
   // FONTS
 
@@ -140,7 +140,6 @@ const ThemeForm = ({
       }),
     }));
   };
-
 
   const roundnessMax = 10;
   const roundnessMin = 0;
@@ -204,7 +203,7 @@ const ThemeForm = ({
           <Control
             id="white"
             label="white"
-            onChange={event => debouncedHandleChangeColor({ value: event.target.value, key: 'white' })}
+            onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: 'white' })}
             type="color"
             value={safeBaseColors.white}
           />
@@ -213,7 +212,7 @@ const ThemeForm = ({
           <Control
             id="black"
             label="black"
-            onChange={event => debouncedHandleChangeColor({ value: event.target.value, key: 'black' })}
+            onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: 'black' })}
             type="color"
             value={safeBaseColors.black}
           />
@@ -251,7 +250,7 @@ const ThemeForm = ({
                 id={`semanticColor-${key}`}
                 key={key}
                 label={key}
-                onChange={event => debouncedHandleChangeColor({ value: event.target.value, key })}
+                onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key })}
                 type="color"
                 value={`${value.base}`}
               />
