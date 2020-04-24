@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/themetron-3/static/css/main.23fee5e5.chunk.css",
-    "main.js": "/themetron-3/static/js/main.66d7cff7.chunk.js",
-    "main.js.map": "/themetron-3/static/js/main.66d7cff7.chunk.js.map",
+    "main.js": "/themetron-3/static/js/main.cadb4196.chunk.js",
+    "main.js.map": "/themetron-3/static/js/main.cadb4196.chunk.js.map",
     "runtime-main.js": "/themetron-3/static/js/runtime-main.d0eb32a4.js",
     "runtime-main.js.map": "/themetron-3/static/js/runtime-main.d0eb32a4.js.map",
     "static/js/2.6f258a40.chunk.js": "/themetron-3/static/js/2.6f258a40.chunk.js",
     "static/js/2.6f258a40.chunk.js.map": "/themetron-3/static/js/2.6f258a40.chunk.js.map",
     "index.html": "/themetron-3/index.html",
-    "precache-manifest.c57e9e8d3558a31c1822bdcc47d53665.js": "/themetron-3/precache-manifest.c57e9e8d3558a31c1822bdcc47d53665.js",
+    "precache-manifest.4dc868fd5625f2b397a6f72268d172b3.js": "/themetron-3/precache-manifest.4dc868fd5625f2b397a6f72268d172b3.js",
     "service-worker.js": "/themetron-3/service-worker.js",
     "static/css/main.23fee5e5.chunk.css.map": "/themetron-3/static/css/main.23fee5e5.chunk.css.map",
     "static/js/2.6f258a40.chunk.js.LICENSE.txt": "/themetron-3/static/js/2.6f258a40.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.d0eb32a4.js",
     "static/js/2.6f258a40.chunk.js",
     "static/css/main.23fee5e5.chunk.css",
-    "static/js/main.66d7cff7.chunk.js"
+    "static/js/main.cadb4196.chunk.js"
   ]
 }
