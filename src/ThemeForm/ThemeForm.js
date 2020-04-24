@@ -20,6 +20,9 @@ const ThemeForm = ({
   const [mdSize, setMdSize] = useState(initTheme.spacing.md);
   const [roundness, setRoundness] = useState(initTheme.shared.roundness);
   const [themeForm, setThemeForm] = useState(initTheme);
+  const [isAddingBaseColor, setIsAddingBaseColor] = useState(false);
+  const [newBaseColor, setNewBaseColor] = useState(initTheme.colors.default['light-1']);
+  const [newBaseColorName, setNewBaseColorName] = useState('');
   const importInputFileRef = useRef();
 
   useEffect(() => {
@@ -67,7 +70,24 @@ const ThemeForm = ({
     return baseColors;
   }, [themeForm.baseColors]);
 
+  const handleDeleteBaseColor = useCallback(({ key }) => {
+    setThemeForm(prevThemeForm => {
+      const nextBaseColors = { ...prevThemeForm.baseColors };
+      delete nextBaseColors[key];
+
+      return ({
+        ...prevThemeForm,
+        baseColors: nextBaseColors,
+      });
+    });
+  }, []);
+
   const handleChangeBaseColorHex = useCallback(({ value, key }) => {
+    if (key === '_new') {
+      setNewBaseColor(value);
+      return;
+    }
+
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
       baseColors: {
@@ -88,6 +108,24 @@ const ThemeForm = ({
 
 
   const debouncedHandleChangeBaseColorHex = debounce(handleChangeBaseColorHex, 100);
+
+  const handleClickAddBaseColor = (event) => {
+    if (!newBaseColor || !newBaseColorName) {
+      return;
+    }
+
+    setIsAddingBaseColor(false);
+
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      baseColors: {
+        ...prevThemeForm.baseColors,
+        [newBaseColorName.replace(' ', '_')]: getHexOrDont(newBaseColor),
+      },
+    }));
+
+    setNewBaseColorName('');
+  }
 
   // FONTS
 
@@ -159,7 +197,6 @@ const ThemeForm = ({
       },
     }));
   };
-
 
   const handleClickImport = useCallback(() => {
     if (importInputFileRef.current) {
@@ -251,6 +288,7 @@ const ThemeForm = ({
                 key={key}
                 label={key}
                 onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key })}
+                onDelete={event => handleDeleteBaseColor({ key })}
                 type="color"
                 value={`${value.base}`}
               />
@@ -280,6 +318,46 @@ const ThemeForm = ({
             </div>
             );
         })}
+        <div>
+          <Button
+            onClick={() => setIsAddingBaseColor(true)}
+            type="button"
+          >
+            Add another color
+          </Button>
+          {isAddingBaseColor && (
+            <>
+              <Control
+                id="_newBaseColorName"
+                onChange={event => setNewBaseColorName(event.target.value)}
+                type="text"
+                value={newBaseColorName}
+              />
+              <Control
+                id="_newBaseColor"
+                label="Color"
+                onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: '_new' })}
+                type="color"
+                value={newBaseColor}
+              />
+              <Button
+                disabled={Object.keys(themeForm.baseColors).includes(newBaseColorName)}
+                onClick={handleClickAddBaseColor}
+                type="button"
+              >
+                Confirm
+              </Button>
+              {' '}
+              <Button
+                onClick={() => setIsAddingBaseColor(false)}
+                outline
+                type="button"
+              >
+                Cancel
+              </Button>
+            </>
+          )}
+        </div>
       </section>
       <Control
         id="fontSizesCount"
@@ -300,7 +378,7 @@ const ThemeForm = ({
           />
         ))}
       </section>
-      <div>
+      <div className={styles.actions}>
         <Button
           outline
           onClick={handleClickRevert}

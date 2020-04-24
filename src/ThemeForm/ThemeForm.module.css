@@ -1,4 +1,5 @@
 .ThemeForm {
+  padding: 16px;
 }
 
 .swatches {
@@ -9,4 +10,8 @@
 
 .swatch {
   flex: 0 0 25%;
+}
+
+.actions {
+  margin-top: 16px;
 }

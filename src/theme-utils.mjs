@@ -120,8 +120,6 @@ export const getButtons = ({
 			});
 		}, {});
 
-	console.log({ variants });
-
 	return ({
 		borderWidth: 1,
 		roundness: 0.2,
