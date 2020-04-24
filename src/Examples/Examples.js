@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext, useMemo, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -10,6 +10,26 @@ import { A } from '../Link';
 import styles from './Examples.module.css';
 
 const Examples = ({ className }) => {
+  const theme = useContext(ThemeContext);
+  const [buttonVariantIndex, setButtonVariantIndex] = useState(0);
+  const [cardVariantIndex, setCardVariantIndex] = useState(0);
+
+  const availableVariants = useMemo(
+    () => Object.keys(theme.baseColors).filter(key => !['black', 'white'].includes(key)),
+    [theme.baseColors],
+  );
+
+  const handleIncrementButtonVariantIndex = () => {
+    setButtonVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableVariants.length);
+  }
+
+  const handleIncrementCardVariantIndex = () => {
+    setCardVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableVariants.length);
+  }
+
+  const buttonVariant = availableVariants[buttonVariantIndex];
+  const cardVariant = availableVariants[cardVariantIndex];
+
   return (
     <div className={classNames(className, styles.Examples)}>
       <A href="#heading">Link</A>
@@ -17,11 +37,28 @@ const Examples = ({ className }) => {
       <H2 id="heading">Heading 2</H2>
       <H3 id="heading">Heading 3</H3>
       <H4 id="heading">Heading 4</H4>
-      <Button size="sm">Button</Button>
+      <Button
+        onClick={handleIncrementButtonVariantIndex}
+        size="sm"
+        variant={buttonVariant}
+      >
+        Button ({buttonVariant})
+      </Button>
       {' '}
-      <Button>Button</Button>
+      <Button
+        onClick={handleIncrementButtonVariantIndex}
+        variant={buttonVariant}
+      >
+        Button ({buttonVariant})
+      </Button>
       {' '}
-      <Button size="lg">Button</Button>
+      <Button
+        onClick={handleIncrementButtonVariantIndex}
+        size="lg"
+        variant={buttonVariant}
+      >
+        Button ({buttonVariant})
+      </Button>
       {' '}
       <input value="Input" onChange={() => {}}></input>
       <P>
@@ -32,26 +69,17 @@ const Examples = ({ className }) => {
       </P>
       <Font tag="div">
         <A href="#heading">Link</A>
-        <Card>
-          <Card.Head>
-            Card head
+        <Card
+          onClick={handleIncrementCardVariantIndex}
+          variant={cardVariant}
+        >
+          <Card.Head variant={cardVariant}>
+            Card head ({cardVariant})
           </Card.Head>
-          <Card.Body>
+          <Card.Body variant={cardVariant}>
             Card body
           </Card.Body>
-          <Card.Foot>
-            Card foot
-          </Card.Foot>
-        </Card>
-        <br/>
-        <Card variant="info">
-          <Card.Head variant="info">
-            Card head
-          </Card.Head>
-          <Card.Body variant="info">
-            Card body
-          </Card.Body>
-          <Card.Foot variant="info">
+          <Card.Foot variant={cardVariant}>
             Card foot
           </Card.Foot>
         </Card>

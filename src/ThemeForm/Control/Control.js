@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Button from '../../Button';
 import styles from './Control.module.css';
 
 const Control = ({
@@ -8,6 +9,7 @@ const Control = ({
   id,
   label,
   onChange,
+  onDelete,
   type,
   value,
   ...passedProps
@@ -22,6 +24,17 @@ const Control = ({
     >
       {label || id}
     </label>
+    {' '}
+    {onDelete && (
+      <Button
+        className={styles.delete}
+        onClick={onDelete}
+        outline
+        size="sm"
+      >
+        Ⓧ
+      </Button>
+    )}
     <input
       className={styles.input}
       id={id}
@@ -37,6 +50,7 @@ Control.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   type: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
