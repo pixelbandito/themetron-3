@@ -8,7 +8,7 @@ import Font, { getFontStyle } from '../Font';
 import styles from './Heading.module.css';
 
 export const getHeadingFontStyle = ({
-  color = 'neutral',
+  color = 'default',
   size = 'md',
   weight = 'normal',
   level = 1,
@@ -16,22 +16,22 @@ export const getHeadingFontStyle = ({
 }) => {
   const levels = {
     1: {
-      contrast: 'lite-3',
+      contrast: 'light-3',
       size: 'xl',
       weight: 'normal',
     },
     2: {
-      contrast: 'lite-3',
+      contrast: 'light-3',
       size: 'lg',
       weight: 'normal',
     },
     3: {
-      contrast: 'lite-3',
+      contrast: 'light-3',
       size: 'md',
       weight: 'bold',
     },
     4: {
-      contrast: 'lite-2',
+      contrast: 'light-2',
       size: 'sm',
       weight: 'bold',
     },

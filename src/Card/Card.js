@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import styles from './Card.module.css';
 
 export const getCardStyles = ({
-  variant = 'neutral',
+  variant = 'default',
   theme,
 }) => ({
   borderColor: theme.colors[variant]['dark-1'],
@@ -13,10 +13,10 @@ export const getCardStyles = ({
 });
 
 export const getCardHeadStyles = ({
-  variant = 'neutral',
+  variant = 'default',
   theme,
 }) => ({
-  background: theme.colors[variant]['lite-bg'],
+  background: theme.colors[variant]['light-bg'],
   borderColor: theme.colors[variant]['dark-1'],
   borderRadius: `${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px 0 0`,
   padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
@@ -25,15 +25,15 @@ export const getCardHeadStyles = ({
 export const getCardBodyStyles = ({
   theme,
 }) => ({
-  background: theme.colors.white.base,
+  background: theme.baseColors.white,
   padding: `${theme.spacing.md}px`,
 });
 
 export const getCardFootStyles = ({
-  variant = 'neutral',
+  variant = 'default',
   theme,
 }) => ({
-  background: theme.colors[variant]['lite-bg'],
+  background: theme.colors[variant]['light-bg'],
   borderColor: theme.colors[variant]['dark-1'],
   borderRadius: `0 0 ${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px`,
   padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,

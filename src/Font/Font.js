@@ -8,8 +8,8 @@ import { tagPropType } from '../prop-types';
 import styles from './Font.module.css';
 
 export const getFontStyle = ({
-  color = 'neutral',
-  contrast = 'lite-2',
+  color = 'default',
+  contrast = 'light-2',
   family = 'sansSerif',
   size = 'md',
   weight = 'normal',

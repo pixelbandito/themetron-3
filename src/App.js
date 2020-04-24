@@ -40,7 +40,7 @@ function App() {
             onClick={() => setSidebarIsExpanded(prev => !prev)}
             type="button"
             style={{
-              backgroundColor: theme.colors.neutral['dark-1'],
+              backgroundColor: theme.colors.default['dark-1'],
             }}
           />
           <button
@@ -48,8 +48,8 @@ function App() {
             onClick={() => setSidebarIsExpanded(prev => !prev)}
             type="button"
             style={{
-              borderColor: theme.colors.neutral['dark-1'],
-              color: theme.colors.neutral['dark-3']
+              borderColor: theme.colors.default['dark-1'],
+              color: theme.colors.default['dark-3']
             }}
           >
             ↔
