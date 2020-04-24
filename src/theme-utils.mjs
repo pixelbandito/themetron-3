@@ -30,13 +30,18 @@ export const getColors = ({ baseColors }) => {
 
 	const colors = Object.entries(baseColors).reduce((result, [key, unsafeColor]) => {
 		let color = getInheritedBaseColor({ baseColors, unsafeColor });
-
 		color = getHexFromHexOrName(color);
 		const white = getHexFromHexOrName(baseColors.white);
 		const black = getHexFromHexOrName(baseColors.black);
 
 		if (['white', 'black'].indexOf(key) >= 0) {
 			return result;
+		}
+
+		// Default is a special range from white to black,
+		// but with user configured options for white and black
+		if (key === 'default') {
+			color = black;
 		}
 
 		result[key] = {};
@@ -185,26 +190,6 @@ export const getButtons = ({
 			},
 			disabled: {
 				backgroundColor: colors.info['lite-3'],
-				color: baseColors.white,
-			},
-		},
-		default: {
-			backgroundColor: colors.default['lite-2'],
-			color: baseColors.white,
-			hover: {
-				backgroundColor: colors.default['lite-1'],
-				color: baseColors.white,
-			},
-			focus: {
-				backgroundColor: colors.default['lite-1'],
-				color: baseColors.white,
-			},
-			active: {
-				backgroundColor: colors.default['lite-1'],
-				color: baseColors.white,
-			},
-			disabled: {
-				backgroundColor: colors.default['lite-3'],
 				color: baseColors.white,
 			},
 		},

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
 import { debounce } from 'lodash-es';
-import { getButtons, getColors, getSizes } from '../theme-utils.mjs';
+import { getButtons, getColors, getInheritedBaseColor, getSizes } from '../theme-utils.mjs';
 import { getLuminance } from '../utils/colors';
 import Button from '../Button';
 import Swatch from '../Swatch';
@@ -46,12 +46,16 @@ const ThemeForm = ({
   // COLORS
   const safeBaseColors = useMemo(() => {
     const baseColors =  Object.entries(themeForm.baseColors).reduce((result, [key, value]) => {
-      let safeValue;
+      // When base colors inherit from each other, this resolves to a hex code or css color name
+      let safeValue = getInheritedBaseColor({
+        baseColors: themeForm.baseColors,
+        unsafeColor: value,
+      });
 
       try {
-        safeValue = colorConvert.keyword.hex(value).toLowerCase();
+        safeValue = colorConvert.keyword.hex(safeValue).toLowerCase();
       } catch(e) {
-        safeValue = value[0] === '#' ? value.substr(1) : value;
+        safeValue = safeValue[0] === '#' ? safeValue.substr(1) : value;
       }
 
       return {
@@ -63,28 +67,15 @@ const ThemeForm = ({
     return baseColors;
   }, [themeForm.baseColors]);
 
-  const [baseColors, setSafeBaseColors] = useState(safeBaseColors);
-
-  useEffect(() => {
-    setSafeBaseColors(safeBaseColors)
-  }, [safeBaseColors]);
-
   const handleChangeColor = useCallback(({ value, key }) => {
-    const nextBaseColors = {
-      ...baseColors,
-      [key]: getHexOrDont(value),
-    };
-
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
       baseColors: {
         ...prevThemeForm.baseColors,
-        ...nextBaseColors,
+        [key]: getHexOrDont(value)
       },
     }));
-
-    console.log({ baseColors, nextBaseColors });
-  }, [baseColors]);
+  }, []);
 
   useEffect(() => {
     setThemeForm(prevThemeForm => ({
@@ -93,7 +84,7 @@ const ThemeForm = ({
         ...prevThemeForm,
       }),
     }));
-  }, [baseColors]);
+  }, [safeBaseColors]);
 
 
   const debouncedHandleChangeColor = debounce(handleChangeColor, 100);
@@ -208,9 +199,52 @@ const ThemeForm = ({
         value={`${roundness}`}
       />
       <section>
+        <h4>Neutral colors</h4>
+        {safeBaseColors.white && (
+          <Control
+            id="white"
+            label="white"
+            onChange={event => debouncedHandleChangeColor({ value: event.target.value, key: 'white' })}
+            type="color"
+            value={safeBaseColors.white}
+          />
+        )}
+        {safeBaseColors.black && (
+          <Control
+            id="black"
+            label="black"
+            onChange={event => debouncedHandleChangeColor({ value: event.target.value, key: 'black' })}
+            type="color"
+            value={safeBaseColors.black}
+          />
+        )}
+        {themeForm.colors.default && (
+          <div className={styles.swatches}>
+            {
+              Object.entries(themeForm.colors.default)
+              .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
+              .filter(([variantKey]) => variantKey !== 'base')
+              .map(([variantKey, hex], i) => (
+                <Swatch
+                  key={variantKey}
+                  className={styles.swatch}
+                  color={
+                    getLuminance(hex) > 0.5 ?
+                      themeForm.colors.default['dark-bg'] :
+                      themeForm.colors.default['lite-bg']
+                  }
+                  backgroundColor={hex}
+                >
+                  {variantKey}
+                </Swatch>
+              ))
+            }
+          </div>
+        )}
+      </section>
+      <section>
         <h4>Semantic colors</h4>
-        {Object.entries(baseColors).map(([key, color], i) => {
-          const value = color;
+        {Object.entries(themeForm.colors).filter(([key, value]) => key !== 'default').map(([key, value], i) => {
           return (
             <div key={key}>
               <Control
@@ -219,7 +253,7 @@ const ThemeForm = ({
                 label={key}
                 onChange={event => debouncedHandleChangeColor({ value: event.target.value, key })}
                 type="color"
-                value={`${value}`}
+                value={`${value.base}`}
               />
               {themeForm.colors[key] && (
                 <div className={styles.swatches}>
