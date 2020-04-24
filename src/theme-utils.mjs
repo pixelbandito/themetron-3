@@ -48,7 +48,7 @@ export const getColors = ({ baseColors }) => {
 
 		result[key].base = color;
 
-    result[key]['lite-bg'] = setColorByContrastWithHsl({
+    result[key]['light-bg'] = setColorByContrastWithHsl({
       hex: color,
       baseHex: white,
       contrastRatio: bgStep,
@@ -56,9 +56,9 @@ export const getColors = ({ baseColors }) => {
 
 		contrastRatios.forEach((contrastRatio, i) => {
 			// Large text
-	    result[key][`lite-${i + 1}`] = setColorByContrastWithHsl({
+	    result[key][`light-${i + 1}`] = setColorByContrastWithHsl({
 	      hex: color,
-	      baseHex: result[key]['lite-bg'],
+	      baseHex: result[key]['light-bg'],
 	      contrastRatio,
 	      direction: 'desc',
 	    });
@@ -114,122 +114,122 @@ export const getButtons = ({
 	},
 	variants: {
 		default: {
-			backgroundColor: colors.default['lite-2'],
+			backgroundColor: colors.default['light-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.default['lite-1'],
+				backgroundColor: colors.default['light-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.default['lite-1'],
+				backgroundColor: colors.default['light-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.default['lite-1'],
+				backgroundColor: colors.default['light-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.default['lite-3'],
+				backgroundColor: colors.default['light-3'],
 				color: baseColors.white,
 			},
 		},
 		primary: {
-			backgroundColor: colors.primary['lite-2'],
+			backgroundColor: colors.primary['light-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.primary['lite-1'],
+				backgroundColor: colors.primary['light-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.primary['lite-1'],
+				backgroundColor: colors.primary['light-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.primary['lite-1'],
+				backgroundColor: colors.primary['light-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.primary['lite-3'],
+				backgroundColor: colors.primary['light-3'],
 				color: baseColors.white,
 			},
 		},
 		success: {
-			backgroundColor: colors.success['lite-2'],
+			backgroundColor: colors.success['light-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.success['lite-1'],
+				backgroundColor: colors.success['light-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.success['lite-1'],
+				backgroundColor: colors.success['light-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.success['lite-1'],
+				backgroundColor: colors.success['light-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.success['lite-3'],
+				backgroundColor: colors.success['light-3'],
 				color: baseColors.white,
 			},
 		},
 		info: {
-			backgroundColor: colors.info['lite-2'],
+			backgroundColor: colors.info['light-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.info['lite-1'],
+				backgroundColor: colors.info['light-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.info['lite-1'],
+				backgroundColor: colors.info['light-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.info['lite-1'],
+				backgroundColor: colors.info['light-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.info['lite-3'],
+				backgroundColor: colors.info['light-3'],
 				color: baseColors.white,
 			},
 		},
 		warning: {
-			backgroundColor: colors.warning['lite-2'],
+			backgroundColor: colors.warning['light-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.warning['lite-1'],
+				backgroundColor: colors.warning['light-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.warning['lite-1'],
+				backgroundColor: colors.warning['light-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.warning['lite-1'],
+				backgroundColor: colors.warning['light-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.warning['lite-3'],
+				backgroundColor: colors.warning['light-3'],
 				color: baseColors.white,
 			},
 		},
 		danger: {
-			backgroundColor: colors.danger['lite-2'],
+			backgroundColor: colors.danger['light-2'],
 			color: baseColors.white,
 			hover: {
-				backgroundColor: colors.danger['lite-1'],
+				backgroundColor: colors.danger['light-1'],
 				color: baseColors.white,
 			},
 			focus: {
-				backgroundColor: colors.danger['lite-1'],
+				backgroundColor: colors.danger['light-1'],
 				color: baseColors.white,
 			},
 			active: {
-				backgroundColor: colors.danger['lite-1'],
+				backgroundColor: colors.danger['light-1'],
 				color: baseColors.white,
 			},
 			disabled: {
-				backgroundColor: colors.danger['lite-3'],
+				backgroundColor: colors.danger['light-3'],
 				color: baseColors.white,
 			},
 		},

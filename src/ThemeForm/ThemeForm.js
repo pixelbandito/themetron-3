@@ -231,7 +231,7 @@ const ThemeForm = ({
                   color={
                     getLuminance(hex) > 0.5 ?
                       themeForm.colors.default['dark-bg'] :
-                      themeForm.colors.default['lite-bg']
+                      themeForm.colors.default['light-bg']
                   }
                   backgroundColor={hex}
                 >
@@ -268,7 +268,7 @@ const ThemeForm = ({
                         color={
                           getLuminance(hex) > 0.5 ?
                             themeForm.colors[key]['dark-bg'] :
-                            themeForm.colors[key]['lite-bg']
+                            themeForm.colors[key]['light-bg']
                         }
                         backgroundColor={hex}
                       >

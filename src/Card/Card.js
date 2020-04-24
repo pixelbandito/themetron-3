@@ -16,7 +16,7 @@ export const getCardHeadStyles = ({
   variant = 'default',
   theme,
 }) => ({
-  background: theme.colors[variant]['lite-bg'],
+  background: theme.colors[variant]['light-bg'],
   borderColor: theme.colors[variant]['dark-1'],
   borderRadius: `${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px 0 0`,
   padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
@@ -33,7 +33,7 @@ export const getCardFootStyles = ({
   variant = 'default',
   theme,
 }) => ({
-  background: theme.colors[variant]['lite-bg'],
+  background: theme.colors[variant]['light-bg'],
   borderColor: theme.colors[variant]['dark-1'],
   borderRadius: `0 0 ${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px`,
   padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,

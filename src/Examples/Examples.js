@@ -28,7 +28,7 @@ const Examples = ({ className }) => {
         This paragraph has <Strong>strong</Strong>, <Em>emphasized</Em>, and <Small>small</Small> text in it.
       </P>
       <P>
-        <Font contrast="lite-2" tag="span">Lower contrast text!</Font>
+        <Font contrast="light-2" tag="span">Lower contrast text!</Font>
       </P>
       <Font tag="div">
         <A href="#heading">Link</A>
@@ -72,7 +72,7 @@ const StyledExamples = styled(Examples)(
   ({
     theme,
   }) => ({
-    backgroundColor: (theme.shared.mode === 'dark' && theme.colors.default['dark-bg']) || theme.colors.default['lite-bg'] ,
+    backgroundColor: (theme.shared.mode === 'dark' && theme.colors.default['dark-bg']) || theme.colors.default['light-bg'] ,
     padding: theme.spacing.lg,
     '@media (prefers-color-scheme: dark)': !theme.shared.mode && {
       backgroundColor: theme.colors.default['dark-bg'],
