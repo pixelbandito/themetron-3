@@ -288,7 +288,7 @@ const ThemeForm = ({
                 key={key}
                 label={key}
                 onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key })}
-                onDelete={event => handleDeleteBaseColor({ key })}
+                onDelete={key !== 'primary' ? event => handleDeleteBaseColor({ key }) : undefined}
                 type="color"
                 value={`${value.base}`}
               />

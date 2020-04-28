@@ -10,10 +10,11 @@ export const getButttonStyle = ({
   outline = false,
   size = 'md',
   theme,
-  variant = 'default',
+  variant: variantKey = 'default',
 }) => {
   const {
     buttons,
+    colors,
     shared,
     spacing,
   } = theme;
@@ -24,14 +25,28 @@ export const getButttonStyle = ({
     variants,
   } = buttons;
 
-  const {
-    active,
-    backgroundColor,
-    color,
-    disabled,
-    focus,
-    hover,
-  } = variants[variant];
+  let variant = { ...variants[variantKey] };
+
+  const getVariantColors = ({ contrast, mode, outline, styles }) => {
+    let backgroundColorKey = styles.keyColor || 'default';
+    let backgroundColor = colors[backgroundColorKey] || backgroundColorKey;
+    let colorKey = styles.color || (mode === 'dark' ? 'black' : 'white');
+    let color = colors[colorKey] || colorKey;
+
+    if (outline) {
+      return {
+        color: backgroundColor?.[`${mode}-${contrast}`] ?? backgroundColor,
+        backgroundColor: 'transparent',
+        borderColor: backgroundColor?.[`${mode}-${contrast}`] ?? backgroundColor,
+      };
+    }
+
+    return  {
+      backgroundColor: backgroundColor?.[`${mode}-${contrast}`] ?? backgroundColor,
+      color: color?.[`${mode}-bg`] ?? colorKey,
+      borderColor: backgroundColor?.[`${mode}-${contrast}`] ?? backgroundColor,
+    };
+  };
 
   let {
     fontSize,
@@ -48,60 +63,92 @@ export const getButttonStyle = ({
   });
 
   const lightModeStyle = {
-    color: outline ? backgroundColor : color,
-    backgroundColor: outline ? color : backgroundColor,
-    borderColor: backgroundColor,
+    'default': {
+      ...getVariantColors({
+        contrast: '1',
+        mode: 'light',
+        outline,
+        styles: variant['default'],
+      }),
+    },
     ':hover': {
-      color: outline ? hover.backgroundColor : hover.color,
-      backgroundColor: outline ? hover.color : hover.backgroundColor,
-      borderColor: hover.backgroundColor,
+      ...getVariantColors({
+        contrast: '2',
+        mode: 'light',
+        outline,
+        styles: variant[':hover'],
+      }),
     },
     ':focus': {
-      color: outline ? focus.backgroundColor : focus.color,
-      backgroundColor: outline ? focus.color : focus.backgroundColor,
-      borderColor: focus.backgroundColor,
-      outlineColor: outline ? color : backgroundColor,
+      ...getVariantColors({
+        contrast: '2',
+        mode: 'light',
+        outline,
+        styles: variant[':focus'],
+      }),
     },
     ':active': {
-      color: outline ? active.backgroundColor : active.color,
-      backgroundColor: outline ? active.color : active.backgroundColor,
-      borderColor: active.backgroundColor,
+      ...getVariantColors({
+        contrast: '2',
+        mode: 'light',
+        outline,
+        styles: variant[':active'],
+      }),
     },
     ':disabled': {
-      color: outline ? disabled.backgroundColor : disabled.color,
-      backgroundColor: outline ? disabled.color : disabled.backgroundColor,
-      borderColor: disabled.backgroundColor,
+      color: getVariantColors({
+        contrast: '3',
+        mode: 'light',
+        outline,
+        styles: variant[':disabled'],
+      }),
     },
   };
 
   const darkModeStyle = {
-    color: outline ? color : backgroundColor,
-    backgroundColor: outline ? backgroundColor : color,
-    borderColor: color,
+    'default': {
+      ...getVariantColors({
+        contrast: '1',
+        mode: 'dark',
+        outline,
+        styles: variant['default'],
+      }),
+    },
     ':hover': {
-      color: outline ? hover.color : hover.backgroundColor,
-      backgroundColor: outline ? hover.backgroundColor : hover.color,
-      borderColor: hover.color,
+      ...getVariantColors({
+        contrast: '2',
+        mode: 'dark',
+        outline,
+        styles: variant[':hover'],
+      }),
     },
     ':focus': {
-      color: outline ? focus.color : focus.backgroundColor,
-      backgroundColor: outline ? focus.backgroundColor : focus.color,
-      borderColor: focus.color,
-      outlineColor: outline ? backgroundColor : color,
+      ...getVariantColors({
+        contrast: '2',
+        mode: 'dark',
+        outline,
+        styles: variant[':focus'],
+      }),
     },
     ':active': {
-      color: outline ? active.color : active.backgroundColor,
-      backgroundColor: outline ? active.backgroundColor : active.color,
-      borderColor: active.color,
+      ...getVariantColors({
+        contrast: '2',
+        mode: 'dark',
+        outline,
+        styles: variant[':active'],
+      }),
     },
     ':disabled': {
-      color: outline ? disabled.color : disabled.backgroundColor,
-      backgroundColor: outline ? disabled.backgroundColor : disabled.color,
-      borderColor: disabled.backgroundColor,
+      ...getVariantColors({
+        contrast: '3',
+        mode: 'dark',
+        outline,
+        styles: variant[':disabled'],
+      }),
     },
   };
 
-  const defaultStyles = (shared.mode === 'dark' && darkModeStyle) || lightModeStyle;
+  const modeStyles = (shared.mode === 'dark' && darkModeStyle) || lightModeStyle;
 
   return ({
     borderWidth,
@@ -114,19 +161,21 @@ export const getButttonStyle = ({
     fontSize: fontSize,
     lineHeight: lineHeightRatio,
     transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
-    ...defaultStyles,
+    ...modeStyles.default,
     ':hover': {
-      ...defaultStyles[':hover'],
+      ...modeStyles[':hover'],
     },
     ':focus': {
-      outlineOffset: '3px',
-      ...defaultStyles[':focus'],
+      outlineStyle: 'none',
+      outlineColor: modeStyles.default.borderColor,
+      boxShadow: `0 0 0 1px ${modeStyles.default.borderColor}, 0 0 4px 0px ${modeStyles[':focus'].borderColor}`,
+      ...modeStyles[':focus'],
     },
     ':active': {
-      ...defaultStyles[':active'],
+      ...modeStyles[':active'],
     },
     ':disabled': {
-      ...defaultStyles[':disabled'],
+      ...modeStyles[':disabled'],
     },
     '@media (prefers-color-scheme: light)': !shared.mode && {
       ...lightModeStyle,
@@ -139,7 +188,6 @@ export const getButttonStyle = ({
 
 const Button = ({
   className,
-  outline,
   tag: Tag,
   ...passedProps
 }) => (

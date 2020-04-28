@@ -19,16 +19,22 @@ const Examples = ({ className }) => {
     [theme.baseColors],
   );
 
-  const handleIncrementButtonVariantIndex = () => {
-    setButtonVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableVariants.length);
-  }
+  const cardVariant = availableVariants[cardVariantIndex];
 
   const handleIncrementCardVariantIndex = () => {
     setCardVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableVariants.length);
   }
 
-  const buttonVariant = availableVariants[buttonVariantIndex];
-  const cardVariant = availableVariants[cardVariantIndex];
+  const availableButtonVariants = useMemo(
+    () => Object.keys(theme.buttons.variants),
+    [theme.buttons.variants],
+  );
+
+  const buttonVariant = availableButtonVariants[buttonVariantIndex];
+
+  const handleIncrementButtonVariantIndex = () => {
+    setButtonVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableButtonVariants.length);
+  }
 
   return (
     <div className={classNames(className, styles.Examples)}>
