@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import Accordion from '../Accordion';
 import Button from '../Button';
 import Card from '../Card';
 import Font, { Em, H1, H2, H3, H4, P, Small, Strong } from '../Font';
@@ -89,6 +90,10 @@ const Examples = ({ className }) => {
             Card foot
           </Card.Foot>
         </Card>
+        <br/><br/>
+        <Accordion>
+          Accordion contents
+        </Accordion>
       </Font>
     </div>
   );

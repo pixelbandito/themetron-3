@@ -188,6 +188,7 @@ export const getButttonStyle = ({
 
 const Button = ({
   className,
+  outline,
   tag: Tag,
   ...passedProps
 }) => (

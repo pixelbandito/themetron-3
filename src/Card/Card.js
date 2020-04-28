@@ -39,15 +39,16 @@ export const getCardFootStyles = ({
   padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
 });
 
-const Card = ({
+const Card = React.forwardRef(({
   className,
   ...passedProps
-}) => (
+}, forwardedRef) => (
   <div
     className={classNames(className, styles.Card)}
+    ref={forwardedRef}
     {...passedProps}
   />
-);
+));
 
 Card.propTypes = {
   className: PropTypes.string,
@@ -95,15 +96,16 @@ const StyledCardHead = styled(CardHead)(
   }),
 );
 
-export const CardBody = ({
+export const CardBody = React.forwardRef(({
   className,
   ...passedProps
-}) => (
+}, forwardRef) => (
   <div
     className={classNames(className, styles.Body)}
+    ref={forwardRef}
     {...passedProps}
   />
-);
+));
 
 CardBody.propTypes = {
   className: PropTypes.string,
