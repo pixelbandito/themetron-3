@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import Accordion from '../Accordion';
 import Button from '../Button';
 import Card from '../Card';
 import Font, { Em, H1, H2, H3, H4, P, Small, Strong } from '../Font';
@@ -19,16 +20,24 @@ const Examples = ({ className }) => {
     [theme.baseColors],
   );
 
-  const handleIncrementButtonVariantIndex = () => {
-    setButtonVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableVariants.length);
-  }
+  const availableCardVariants = useMemo(() => [...availableVariants, undefined], [availableVariants]);
+
+  const cardVariant = availableCardVariants[cardVariantIndex];
 
   const handleIncrementCardVariantIndex = () => {
-    setCardVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableVariants.length);
+    setCardVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableCardVariants.length);
   }
 
-  const buttonVariant = availableVariants[buttonVariantIndex];
-  const cardVariant = availableVariants[cardVariantIndex];
+  const availableButtonVariants = useMemo(
+    () => Object.keys(theme.buttons.variants),
+    [theme.buttons.variants],
+  );
+
+  const buttonVariant = availableButtonVariants[buttonVariantIndex];
+
+  const handleIncrementButtonVariantIndex = () => {
+    setButtonVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableButtonVariants.length);
+  }
 
   return (
     <div className={classNames(className, styles.Examples)}>
@@ -65,7 +74,9 @@ const Examples = ({ className }) => {
         This paragraph has <Strong>strong</Strong>, <Em>emphasized</Em>, and <Small>small</Small> text in it.
       </P>
       <P>
-        <Font contrast="light-2" tag="span">Lower contrast text!</Font>
+        <Font contrast="1" tag="span">High contrast text!</Font>{' '}
+        <Font contrast="2" tag="span">Medium contrast text!</Font>{' '}
+        <Font contrast="3" tag="span">Lower contrast text!</Font>
       </P>
       <Font tag="div">
         <A href="#heading">Link</A>
@@ -74,7 +85,7 @@ const Examples = ({ className }) => {
           variant={cardVariant}
         >
           <Card.Head variant={cardVariant}>
-            Card head ({cardVariant})
+            Card head {cardVariant && (<>({cardVariant})</>)}
           </Card.Head>
           <Card.Body variant={cardVariant}>
             Card body
@@ -83,6 +94,10 @@ const Examples = ({ className }) => {
             Card foot
           </Card.Foot>
         </Card>
+        <br/><br/>
+        <Accordion>
+          Accordion contents
+        </Accordion>
       </Font>
     </div>
   );

@@ -4,6 +4,8 @@ export const getInheritedBaseColor = ({
 	attempt = 0,
 	baseColors,
 	maxAttempts: initMaxAttempts,
+	prevUnsafeColor,
+	resolveCssColors = true,
 	unsafeColor,
 }) => {
 	let maxAttempts = initMaxAttempts;
@@ -12,14 +14,20 @@ export const getInheritedBaseColor = ({
 		maxAttempts = Object.keys(baseColors).length;
 	}
 
-	if (attempt > maxAttempts || !baseColors[unsafeColor]) {
+	if (attempt > maxAttempts) {
 		return unsafeColor;
+	}
+
+	if (!baseColors[unsafeColor]) {
+		return resolveCssColors ? unsafeColor : prevUnsafeColor;
 	}
 
 	return getInheritedBaseColor({
 		attempt: attempt + 1,
 		baseColors,
 		maxAttempts,
+		prevUnsafeColor: unsafeColor,
+		resolveCssColors,
 		unsafeColor: baseColors[unsafeColor],
 	})
 }
@@ -89,6 +97,7 @@ export const getColors = ({ baseColors }) => {
 export const getButtons = ({
 	baseColors,
 	colors,
+	customButtons,
 	fonts,
 	spacing,
 }) => {
@@ -98,23 +107,20 @@ export const getButtons = ({
 			return ({
 				...result,
 				[key]: {
-					backgroundColor: colors[key]['light-2'],
-					color: baseColors.white,
-					hover: {
-						backgroundColor: colors[key]['light-1'],
-						color: baseColors.white,
+					'default': {
+						keyColor: key
 					},
-					focus: {
-						backgroundColor: colors[key]['light-1'],
-						color: baseColors.white,
+					':hover': {
+						keyColor: key,
 					},
-					active: {
-						backgroundColor: colors[key]['light-1'],
-						color: baseColors.white,
+					':focus': {
+						keyColor: key,
 					},
-					disabled: {
-						backgroundColor: colors[key]['light-3'],
-						color: baseColors.white,
+					':active': {
+						keyColor: key,
+					},
+					':disabled': {
+						keyColor: 'neutral',
 					},
 				},
 			});
@@ -158,11 +164,11 @@ export const getMinLineHeight = ({ size, spacing }) => {
 	}
 };
 
-export const getShared = () => ({
-	elevation: 1,
+export const getShared = ({ elevation = 1, roundness = 3, shine = 0 }) => ({
+	elevation,
 	mode: undefined, // 'light', 'dark', undefined
-	roundness: 0,
-	shine: 0,
+	roundness,
+	shine,
 });
 
 export const getSizeLabelFromIndex = sizeIndex => {
