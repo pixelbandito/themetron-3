@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
@@ -20,10 +21,14 @@ const Accordion = ({
 
   useEffect(() => {
     if (isOpen && cardRef.current) {
-      console.log(cardRef.current.scrollHeight, cardRef.current.offsetHeight);
       setExpandedHeight(cardRef.current.scrollHeight);
     }
   }, [isOpen]);
+
+  const transitionStyles = {
+    exiting:  { borderBottomWidth: 1 },
+    exited:  { borderBottomWidth: 0 },
+  };
 
   return (
     <Card
@@ -31,26 +36,37 @@ const Accordion = ({
       className={classNames(className, styles.Accordion)}
       variant={variant}
     >
-      <Card.Head
-        variant={variant}
-        onClick={() => setIsOpen(prevIsOpen => !prevIsOpen)}
+      <Transition
+        in={isOpen}
+        timeout={200}
       >
-        {head}
-      </Card.Head>
-      <Card.Body
-        className={styles.body}
-        ref={cardRef}
-        style={{
-          boxSizing: 'content-box',
-          maxHeight: !isOpen ? '0px' : `${expandedHeight}px`,
-          paddingBottom: !isOpen ? '0px' : undefined,
-          paddingTop: !isOpen ? '0px' : undefined,
-          marginTop: !isOpen ? '-1px' : undefined,
-        }}
-        variant={variant}
-      >
-        {children}
-      </Card.Body>
+        {state => (
+          <>
+            <Card.Head
+              variant={variant}
+              onClick={() => setIsOpen(prevIsOpen => !prevIsOpen)}
+              style={{
+                ...transitionStyles[state],
+              }}
+            >
+              {head}
+            </Card.Head>
+            <Card.Body
+              className={styles.body}
+              ref={cardRef}
+              style={{
+                boxSizing: 'content-box',
+                maxHeight: !isOpen ? '0px' : `${expandedHeight}px`,
+                paddingBottom: !isOpen ? '0px' : undefined,
+                paddingTop: !isOpen ? '0px' : undefined,
+              }}
+              variant={variant}
+            >
+              {children}
+            </Card.Body>
+          </>
+        )}
+      </Transition>
     </Card>
   )
 };
@@ -75,7 +91,6 @@ const StyledAccordion = styled(Accordion)(
     theme,
   }) => {
     return {
-      backgroundColor: 'pink',
       color: theme.color,
     };
   }

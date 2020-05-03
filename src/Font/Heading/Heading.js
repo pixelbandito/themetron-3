@@ -16,22 +16,22 @@ export const getHeadingFontStyle = ({
 }) => {
   const levels = {
     1: {
-      contrast: 'light-3',
+      contrast: '3',
       size: 'xl',
       weight: 'normal',
     },
     2: {
-      contrast: 'light-3',
+      contrast: '3',
       size: 'lg',
       weight: 'normal',
     },
     3: {
-      contrast: 'light-3',
+      contrast: '3',
       size: 'md',
       weight: 'bold',
     },
     4: {
-      contrast: 'light-2',
+      contrast: '2',
       size: 'sm',
       weight: 'bold',
     },

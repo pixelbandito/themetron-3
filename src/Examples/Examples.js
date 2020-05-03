@@ -20,10 +20,12 @@ const Examples = ({ className }) => {
     [theme.baseColors],
   );
 
-  const cardVariant = availableVariants[cardVariantIndex];
+  const availableCardVariants = useMemo(() => [...availableVariants, undefined], [availableVariants]);
+
+  const cardVariant = availableCardVariants[cardVariantIndex];
 
   const handleIncrementCardVariantIndex = () => {
-    setCardVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableVariants.length);
+    setCardVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableCardVariants.length);
   }
 
   const availableButtonVariants = useMemo(
@@ -72,7 +74,9 @@ const Examples = ({ className }) => {
         This paragraph has <Strong>strong</Strong>, <Em>emphasized</Em>, and <Small>small</Small> text in it.
       </P>
       <P>
-        <Font contrast="light-2" tag="span">Lower contrast text!</Font>
+        <Font contrast="1" tag="span">High contrast text!</Font>{' '}
+        <Font contrast="2" tag="span">Medium contrast text!</Font>{' '}
+        <Font contrast="3" tag="span">Lower contrast text!</Font>
       </P>
       <Font tag="div">
         <A href="#heading">Link</A>
@@ -81,7 +85,7 @@ const Examples = ({ className }) => {
           variant={cardVariant}
         >
           <Card.Head variant={cardVariant}>
-            Card head ({cardVariant})
+            Card head {cardVariant && (<>({cardVariant})</>)}
           </Card.Head>
           <Card.Body variant={cardVariant}>
             Card body

@@ -2,42 +2,103 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
+import { getModeStyles } from '../component-utils';
 import styles from './Card.module.css';
 
 export const getCardStyles = ({
   variant = 'default',
   theme,
-}) => ({
-  borderColor: theme.colors[variant]['dark-1'],
-  borderRadius: `${theme.shared.roundness * 2}px`,
-});
+}) => {
+  const darkModeStyle = {
+    background: theme.baseColors.black,
+    borderColor: theme.colors[variant]['light-1'],
+  };
+
+  const lightModeStyle = {
+    background: theme.baseColors.white,
+    borderColor: theme.colors[variant]['dark-1'],
+  };
+
+  return {
+    borderRadius: `${theme.shared.roundness * 2}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme?.shared?.mode,
+    }),
+  };
+};
 
 export const getCardHeadStyles = ({
-  variant = 'default',
+  variant,
   theme,
-}) => ({
-  background: theme.colors[variant]['light-bg'],
-  borderColor: theme.colors[variant]['dark-1'],
-  borderRadius: `${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px 0 0`,
-  padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
-});
+}) => {
+  const lightModeStyle = {
+    background: theme.colors[variant]?.['light-bg'] || 'transparent',
+    borderColor: theme.colors[variant]?.['dark-1'] || 'transparent',
+  };
+
+  const darkModeStyle = {
+    background: theme.colors[variant]?.['dark-bg'] || 'transparent',
+    borderColor: theme.colors[variant]?.['light-1'] || 'transparent',
+  };
+
+  return {
+    borderRadius: `${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px 0 0`,
+    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme?.shared?.mode,
+    }),
+  };
+};
 
 export const getCardBodyStyles = ({
   theme,
-}) => ({
-  background: theme.baseColors.white,
-  padding: `${theme.spacing.md}px`,
-});
+}) => {
+  const darkModeStyle = {
+    background: theme.baseColors.black,
+  };
+
+  const lightModeStyle = {
+    background: theme.baseColors.white,
+  };
+
+  return {
+    padding: `${theme.spacing.md}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme?.shared?.mode,
+    }),
+  };
+};
 
 export const getCardFootStyles = ({
-  variant = 'default',
+  variant,
   theme,
-}) => ({
-  background: theme.colors[variant]['light-bg'],
-  borderColor: theme.colors[variant]['dark-1'],
-  borderRadius: `0 0 ${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px`,
-  padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
-});
+}) => {
+  const darkModeStyle = {
+    background: theme.colors[variant]?.['dark-bg'] || 'transparent',
+    borderColor: theme.colors[variant]?.['light-1'] || 'transparent',
+  };
+
+  const lightModeStyle = {
+    background: theme.colors[variant]?.['light-bg'] || 'transparent',
+    borderColor: theme.colors[variant]?.['dark-1'] || 'transparent',
+  };
+
+  return {
+    borderRadius: `0 0 ${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px`,
+    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme?.shared?.mode,
+    }),
+  };
+};
 
 const Card = React.forwardRef(({
   className,

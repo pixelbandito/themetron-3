@@ -164,11 +164,11 @@ export const getMinLineHeight = ({ size, spacing }) => {
 	}
 };
 
-export const getShared = () => ({
-	elevation: 1,
+export const getShared = ({ elevation = 1, roundness = 3, shine = 0 }) => ({
+	elevation,
 	mode: undefined, // 'light', 'dark', undefined
-	roundness: 0,
-	shine: 0,
+	roundness,
+	shine,
 });
 
 export const getSizeLabelFromIndex = sizeIndex => {

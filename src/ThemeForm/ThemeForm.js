@@ -225,7 +225,10 @@ const ThemeForm = ({
       <Accordion
         defaultIsOpen
         head="Shared styles"
-        style={{ borderBottomWidth: '0' }}
+        style={{
+          borderBottomWidth: '0',
+          borderRadius: '0',
+        }}
       >
         <Control
           id="mdSize"
@@ -246,7 +249,10 @@ const ThemeForm = ({
       <Accordion
         defaultIsOpen
         head="Colors"
-        style={{ borderBottomWidth: '0' }}
+        style={{
+          borderBottomWidth: '0',
+          borderRadius: '0',
+        }}
       >
         <section>
           <h4>Neutral colors</h4>
@@ -377,6 +383,10 @@ const ThemeForm = ({
       <Accordion
         defaultIsOpen
         head="Shared styles"
+        style={{
+          borderBottomWidth: '0',
+          borderRadius: '0',
+        }}
       >
         <Control
           id="fontSizesCount"
@@ -398,64 +408,66 @@ const ThemeForm = ({
           ))}
         </section>
       </Accordion>
-      <Card.Head variant="default">
-        <div className={styles.actions}>
-          <Button
-            outline
-            onClick={handleClickRevert}
-            type="button"
-          >
-            Revert
-          </Button>
-          {' '}
-          <Button
-            onClick={handleClickApply}
-            type="button"
-            variant="primary"
-          >
-            Apply
-          </Button>
-          <br />
-          <br />
-          <Button
-            download="theme.json"
-            href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(themeForm))}`}
-            outline
-            size="sm"
-            style={{
-              display: 'inline-block',
-            }}
-            tag="a"
-          >
-            Export JSON
-          </Button>
-          {' '}
-          <input
-            onChange={handleChangeImport}
-            ref={importInputFileRef}
-            style={{
-              fontSize: '0',
-              height: '0',
-              left: '-100vw',
-              opacity: '0',
-              position: 'absolute',
-              top: '-100vh',
-              width: '0',
-              zIndex: '-1',
-            }}
-            tabIndex="-1"
-            type="file"
-          />
-          <Button
-            onClick={handleClickImport}
-            outline
-            size="sm"
-            type="button"
-          >
-            Import JSON ...
-          </Button>
-        </div>
-      </Card.Head>
+      <Card style={{ borderRadius: '0' }}>
+        <Card.Head variant="default">
+          <div className={styles.actions}>
+            <Button
+              outline
+              onClick={handleClickRevert}
+              type="button"
+            >
+              Revert
+            </Button>
+            {' '}
+            <Button
+              onClick={handleClickApply}
+              type="button"
+              variant="primary"
+            >
+              Apply
+            </Button>
+            <br />
+            <br />
+            <Button
+              download="theme.json"
+              href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(themeForm))}`}
+              outline
+              size="sm"
+              style={{
+                display: 'inline-block',
+              }}
+              tag="a"
+            >
+              Export JSON
+            </Button>
+            {' '}
+            <input
+              onChange={handleChangeImport}
+              ref={importInputFileRef}
+              style={{
+                fontSize: '0',
+                height: '0',
+                left: '-100vw',
+                opacity: '0',
+                position: 'absolute',
+                top: '-100vh',
+                width: '0',
+                zIndex: '-1',
+              }}
+              tabIndex="-1"
+              type="file"
+            />
+            <Button
+              onClick={handleClickImport}
+              outline
+              size="sm"
+              type="button"
+            >
+              Import JSON ...
+            </Button>
+          </div>
+        </Card.Head>
+      </Card>
     </form>
   );
 }

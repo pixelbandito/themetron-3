@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
 
+import { getModeStyles } from '../component-utils';
 import { getMinLineHeight } from '../theme-utils';
 import { tagPropType } from '../prop-types';
 import styles from './Font.module.css';
 
 export const getFontStyle = ({
   color = 'default',
-  contrast = 'light-2',
+  contrast = '2',
   family = 'sansSerif',
   size = 'md',
   weight = 'normal',
@@ -25,12 +26,19 @@ export const getFontStyle = ({
     },
   });
 
+  const darkModeStyle = { color: theme.colors[color][`dark-${contrast}`] };
+  const lightModeStyle = { color: theme.colors[color][`light-${contrast}`] };
+
   return ({
-    color: theme.colors[color][contrast],
     fontFamily: theme.fonts[family],
     fontSize: theme.fonts.sizes[size],
     fontWeight: theme.fonts.weights[weight],
     lineHeight: lineHeightRatio,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme?.shared?.mode,
+    }),
   })
 };
 
