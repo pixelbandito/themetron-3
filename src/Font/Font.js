@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
+import { margin } from 'styled-system';
 
 import { getModeStyles } from '../component-utils';
 import { getMinLineHeight } from '../theme-utils';
@@ -20,9 +21,9 @@ export const getFontStyle = ({
     ratio: lineHeightRatio,
   } = getMinLineHeight({
     size: theme.fonts.sizes[size],
-    spacing: {
-      ...theme.spacing,
-      xs: theme.spacing.sm,
+    space: {
+      ...theme.space,
+      xs: theme.space.sm,
     },
   });
 
@@ -64,21 +65,8 @@ Font.defaultProps = {
 };
 
 const StyledFont = styled(Font)(
-  ({
-    color,
-    contrast,
-    family,
-    size,
-    theme,
-    weight,
-  }) => getFontStyle({
-    color,
-    contrast,
-    family,
-    size,
-    theme,
-    weight,
-  }),
+  props => getFontStyle(props),
+  margin,
 );
 
 export const P = props => (
