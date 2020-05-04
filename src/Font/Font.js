@@ -20,9 +20,9 @@ export const getFontStyle = ({
     ratio: lineHeightRatio,
   } = getMinLineHeight({
     size: theme.fonts.sizes[size],
-    spacing: {
-      ...theme.spacing,
-      xs: theme.spacing.sm,
+    space: {
+      ...theme.space,
+      xs: theme.space.sm,
     },
   });
 

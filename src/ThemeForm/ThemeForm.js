@@ -21,7 +21,7 @@ const ThemeForm = ({
   onChangeTheme,
   onApplyTheme,
 }) => {
-  const [mdSize, setMdSize] = useState(initTheme.spacing.md);
+  const [mdSize, setMdSize] = useState(initTheme.space.md);
   const [roundness, setRoundness] = useState(initTheme.shared.roundness);
   const [themeForm, setThemeForm] = useState(initTheme);
   const [isAddingBaseColor, setIsAddingBaseColor] = useState(false);
@@ -40,7 +40,7 @@ const ThemeForm = ({
         ...prevThemeForm,
       }),
     }));
-  }, [themeForm.colors,  themeForm.fonts, themeForm.shared.roundness,  themeForm.spacing]);
+  }, [themeForm.colors,  themeForm.fonts, themeForm.shared.roundness,  themeForm.space]);
 
   const handleClickApply = useCallback(() => {
     onApplyTheme(themeForm);
@@ -175,7 +175,7 @@ const ThemeForm = ({
 
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
-      spacing: getSizes({
+      space: getSizes({
         count: 5,
         mdSize: nextMdSize,
       }),

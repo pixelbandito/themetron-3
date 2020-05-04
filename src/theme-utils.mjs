@@ -99,7 +99,7 @@ export const getButtons = ({
 	colors,
 	customButtons,
 	fonts,
-	spacing,
+	space,
 }) => {
 	const variants = Object.keys(baseColors)
 		.filter(key => !['black', 'white'].includes(key))
@@ -133,28 +133,28 @@ export const getButtons = ({
 		sizes: {
 			sm: {
 				fontSize: fonts.sizes.sm,
-				paddingH: spacing.sm,
-				paddingV: spacing.xs,
+				paddingH: space.sm,
+				paddingV: space.xs,
 			},
 			md: {
 				fontSize: fonts.sizes.md,
-				paddingH: spacing.md,
-				paddingV: spacing.sm,
+				paddingH: space.md,
+				paddingV: space.sm,
 			},
 			lg: {
 				fontSize: fonts.sizes.lg,
-				paddingH: spacing.md,
-				paddingV: spacing.sm,
+				paddingH: space.md,
+				paddingV: space.sm,
 			},
 		},
 		variants,
 	});
 };
 
-export const getMinLineHeight = ({ size, spacing }) => {
+export const getMinLineHeight = ({ size, space }) => {
 	const idealSize = size * 1.4;
-	const floor = Math.floor(idealSize / spacing.xs) * spacing.xs;
-	const ceil = Math.ceil(idealSize / spacing.xs) * spacing.xs;
+	const floor = Math.floor(idealSize / space.xs) * space.xs;
+	const ceil = Math.ceil(idealSize / space.xs) * space.xs;
 	const px = Math.abs(idealSize - floor) <= Math.abs(idealSize - ceil) ? floor : ceil;
 	const ratio = px / size;
 

@@ -2,7 +2,7 @@ import { getButtons, getColors, getShared, getSizes } from './theme-utils';
 
 const baseSize = 4;
 
-const spacing = getSizes({ count: 5, mdSize: baseSize * 4 });
+const space = getSizes({ count: 5, mdSize: baseSize * 4 });
 
 export const baseColors = {
 	white: 'white',
@@ -39,7 +39,7 @@ const buttons = getButtons({
 	baseColors,
 	colors,
 	fonts,
-	spacing,
+	space,
 });
 
 	/*
@@ -88,7 +88,7 @@ const theme = {
 	colors,
 	fonts,
 	shared,
-	spacing,
+	space,
 };
 
 export default theme;

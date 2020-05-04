@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
+import { margin } from 'styled-system'
 import { getMinLineHeight } from '../theme-utils';
 import { tagPropType } from '../prop-types';
 import styles from './Button.module.css';
@@ -16,7 +17,7 @@ export const getButttonStyle = ({
     buttons,
     colors,
     shared,
-    spacing,
+    space,
   } = theme;
 
   const {
@@ -59,7 +60,7 @@ export const getButttonStyle = ({
     px: lineHeightPx,
   } = getMinLineHeight({
     size: fontSize,
-    spacing
+    space,
   });
 
   const lightModeStyle = {
@@ -222,8 +223,11 @@ const StyledButton = styled(Button)(
       variant,
     });
 
-    return buttonStyle;
-  }
+    return {
+      ...buttonStyle,
+    };
+  }, 
+  margin,
 );
 
 export default StyledButton;

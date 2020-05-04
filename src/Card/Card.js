@@ -45,7 +45,7 @@ export const getCardHeadStyles = ({
 
   return {
     borderRadius: `${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px 0 0`,
-    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    padding: `${theme.space.sm}px ${theme.space.md}px`,
     ...getModeStyles({
       darkModeStyle,
       lightModeStyle,
@@ -66,7 +66,7 @@ export const getCardBodyStyles = ({
   };
 
   return {
-    padding: `${theme.spacing.md}px`,
+    padding: `${theme.space.md}px`,
     ...getModeStyles({
       darkModeStyle,
       lightModeStyle,
@@ -91,7 +91,7 @@ export const getCardFootStyles = ({
 
   return {
     borderRadius: `0 0 ${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px`,
-    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    padding: `${theme.space.sm}px ${theme.space.md}px`,
     ...getModeStyles({
       darkModeStyle,
       lightModeStyle,

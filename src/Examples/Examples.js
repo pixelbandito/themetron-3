@@ -47,6 +47,8 @@ const Examples = ({ className }) => {
       <H3 id="heading">Heading 3</H3>
       <H4 id="heading">Heading 4</H4>
       <Button
+        mb="md"
+        mr="md"
         onClick={handleIncrementButtonVariantIndex}
         size="sm"
         variant={buttonVariant}
@@ -55,6 +57,8 @@ const Examples = ({ className }) => {
       </Button>
       {' '}
       <Button
+        mb="md"
+        mr="md"
         onClick={handleIncrementButtonVariantIndex}
         variant={buttonVariant}
       >
@@ -62,6 +66,8 @@ const Examples = ({ className }) => {
       </Button>
       {' '}
       <Button
+        mb="md"
+        mr="md"
         onClick={handleIncrementButtonVariantIndex}
         size="lg"
         variant={buttonVariant}
@@ -116,7 +122,7 @@ const StyledExamples = styled(Examples)(
     theme,
   }) => ({
     backgroundColor: (theme.shared.mode === 'dark' && theme.colors.default['dark-bg']) || theme.colors.default['light-bg'] ,
-    padding: theme.spacing.lg,
+    padding: theme.space.lg,
     '@media (prefers-color-scheme: dark)': !theme.shared.mode && {
       backgroundColor: theme.colors.default['dark-bg'],
     },
