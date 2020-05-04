@@ -210,23 +210,9 @@ Button.defaultProps = {
 };
 
 const StyledButton = styled(Button)(
-  ({
-    outline,
-    size,
-    theme,
-    variant,
-  }) => {
-    const buttonStyle = getButttonStyle({
-      outline,
-      size,
-      theme,
-      variant,
-    });
-
-    return {
-      ...buttonStyle,
-    };
-  }, 
+  props => ({
+    ...getButttonStyle(props),
+  }),
   margin,
 );
 

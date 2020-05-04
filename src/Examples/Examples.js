@@ -42,10 +42,30 @@ const Examples = ({ className }) => {
   return (
     <div className={classNames(className, styles.Examples)}>
       <A href="#heading">Link</A>
-      <H1 id="heading">Heading 1</H1>
-      <H2 id="heading">Heading 2</H2>
-      <H3 id="heading">Heading 3</H3>
-      <H4 id="heading">Heading 4</H4>
+      <H1
+        id="heading-1"
+        mb="md"
+      >
+        Heading 1
+      </H1>
+      <H2
+        id="heading-2"
+        mb="md"
+      >
+        Heading 2
+      </H2>
+      <H3
+        id="heading-3"
+        mb="md"
+      >
+        Heading 3
+      </H3>
+      <H4
+        id="heading-4"
+        mb="md"
+      >
+        Heading 4
+      </H4>
       <Button
         mb="md"
         mr="md"
@@ -76,10 +96,16 @@ const Examples = ({ className }) => {
       </Button>
       {' '}
       <input value="Input" onChange={() => {}}></input>
-      <P>
+      <P
+        mb="md"
+        mt="md"
+      >
         This paragraph has <Strong>strong</Strong>, <Em>emphasized</Em>, and <Small>small</Small> text in it.
       </P>
-      <P>
+      <P
+        mb="md"
+        mt="md"
+      >
         <Font contrast="1" tag="span">High contrast text!</Font>{' '}
         <Font contrast="2" tag="span">Medium contrast text!</Font>{' '}
         <Font contrast="3" tag="span">Lower contrast text!</Font>
@@ -87,6 +113,8 @@ const Examples = ({ className }) => {
       <Font tag="div">
         <A href="#heading">Link</A>
         <Card
+          mb="md"
+          mt="md"
           onClick={handleIncrementCardVariantIndex}
           variant={cardVariant}
         >
@@ -100,8 +128,10 @@ const Examples = ({ className }) => {
             Card foot
           </Card.Foot>
         </Card>
-        <br/><br/>
-        <Accordion>
+        <Accordion
+          mb="md"
+          mt="md"
+        >
           Accordion contents
         </Accordion>
       </Font>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
+import { margin } from 'styled-system'
 import { getModeStyles } from '../component-utils';
 import styles from './Card.module.css';
 
@@ -120,13 +121,8 @@ Card.defaultProps = {
 };
 
 const StyledCard = styled(Card)(
-  ({
-    variant,
-    theme,
-  }) => getCardStyles({
-    variant,
-    theme,
-  }),
+  props => getCardStyles(props),
+  margin,
 );
 
 export const CardHead = ({
