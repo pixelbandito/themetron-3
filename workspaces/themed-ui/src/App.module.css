@@ -1,0 +1,69 @@
+.App {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 320px 1fr;
+  width: auto;
+  transition: margin-left linear 200ms;
+}
+
+.App.withSidebarExpanded {
+}
+
+.App:not(.withSidebarExpanded) {
+  margin-left: -300px;
+}
+
+.sidebar {
+  position: relative;
+}
+
+
+.form {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.example {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+  overflow: auto;
+}
+
+.sideBarToggleStripe {
+  position:absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  width: 3px;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: transparent none;
+  border: 0 solid transparent;
+  border-radius: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.sideBarToggleButton {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  margin-right: -11px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  font-size: 12px;
+  line-height: 20px;
+  z-index: 2;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.sideBarToggleButton:focus {
+  outline: none;
+}

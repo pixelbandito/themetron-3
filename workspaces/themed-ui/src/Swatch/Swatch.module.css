@@ -1,0 +1,7 @@
+.Swatch {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  min-height: 3rem;
+  padding: .5rem;
+  display: block;
+}

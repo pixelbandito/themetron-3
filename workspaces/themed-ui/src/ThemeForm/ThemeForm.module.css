@@ -1,0 +1,17 @@
+.ThemeForm {
+  /* padding: 16px; */
+}
+
+.swatches {
+  margin: 16px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.swatch {
+  flex: 0 0 25%;
+}
+
+.actions {
+  margin-top: 16px;
+}
