@@ -1,0 +1,28 @@
+._Accordion-module__Accordion__1bSEf {
+  visibility: visible;
+}
+
+._Accordion-module__body__2uO1G {
+  overflow: hidden;
+  transition:
+    0.3s ease-in-out max-height,
+    0.3s ease-in-out padding-bottom,
+    0.3s ease-in-out padding-top;
+}
+
+._Card-module__Card__3_bG_ {
+  border-style: solid;
+  border-width: 1px;
+  border-color: inherit;
+  visibility: visible;
+}
+
+._Card-module__Head__2QnXP {
+  border-style: solid;
+  border-width: 0 0 1px;
+}
+
+._Card-module__Foot__2HgvM {
+  border-style: solid;
+  border-width: 1px 0 0;
+}

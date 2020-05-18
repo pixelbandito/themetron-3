@@ -11,5 +11,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "workspaces": ["workspaces/theme-editor", "workspaces/themed-ui"]
+  "workspaces": [
+    "workspaces/theme-editor",
+    "workspaces/themed-ui-2"
+  ]
 }
