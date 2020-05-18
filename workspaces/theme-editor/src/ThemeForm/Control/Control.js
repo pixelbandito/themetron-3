@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '../../Button';
+import { Button } from '@pixelbandito/themed-ui-2';
 import styles from './Control.module.css';
 
 const Control = ({

@@ -3,8 +3,12 @@ import styled, { ThemeContext } from 'styled-components';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { Accordion, Card } from '@pixelbandito/themed-ui-2';
-import Button from '../Button';
+import {
+  Accordion,
+  Button,
+  Card,
+} from '@pixelbandito/themed-ui-2';
+
 import Font, { Em, H1, H2, H3, H4, P, Small, Strong } from '../Font';
 import { A } from '../Link';
 import styles from './Examples.module.css';

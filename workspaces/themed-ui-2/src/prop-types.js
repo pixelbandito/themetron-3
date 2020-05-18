@@ -1,4 +1,3 @@
-// TODO: Delete when all components are moved
 import PropTypes from 'prop-types';
 
 export const tagPropType = PropTypes.oneOfType([
