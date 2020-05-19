@@ -1,7 +1,20 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components';
 
-import { Accordion, Card } from 'themed-ui-2';
+import {
+  A,
+  Accordion,
+  Card,
+  Font,
+  Em,
+  H1,
+  H2,
+  H3,
+  H4,
+  P,
+  Small,
+  Strong,
+} from 'themed-ui-2';
 import 'themed-ui-2/dist/index.css';
 import defaultTheme from '@pixelbandito/theme-editor/src/theme.mjs';
 
@@ -21,6 +34,30 @@ const App = () => {
             Card foot
           </Card.Foot>
         </Card>
+        <H1 mb="md">
+          Heading 1
+        </H1>
+        <H2 mb="md">
+          Heading 2
+        </H2>
+        <H3 mb="md">
+          Heading 3
+        </H3>
+        <H4 mb="md">
+          Heading 4
+        </H4>
+        <P
+          mb="md"
+          mt="md"
+        >
+          <Font contrast="1" tag="span">High contrast text!</Font>{' '}
+          <Font contrast="2" tag="span">Medium contrast text!</Font>{' '}
+          <Font contrast="3" tag="span">Lower contrast text!</Font>
+          <Em>Emphasized</Em>
+          <Small>Small text</Small>
+          <Strong>Strong text</Strong>
+          <A>Link</A>
+        </P>
       </ThemeProvider>
     </div>
   );

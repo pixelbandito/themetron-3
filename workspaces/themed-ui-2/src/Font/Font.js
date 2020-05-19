@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { margin } from 'styled-system';
 
 import { getModeStyles } from '../component-utils';
-import { getMinLineHeight } from '../theme-utils';
+import { getMinLineHeight } from '../theme-utils.mjs';
 import { tagPropType } from '../prop-types';
 import styles from './Font.module.css';
 
@@ -40,7 +40,7 @@ export const getFontStyle = ({
       lightModeStyle,
       mode: theme?.shared?.mode,
     }),
-  })
+  });
 };
 
 const Font = ({

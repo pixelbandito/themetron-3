@@ -8,9 +8,6 @@ import Font, { getFontStyle } from '../Font';
 import styles from './Heading.module.css';
 
 export const getHeadingFontStyle = ({
-  color = 'default',
-  size = 'md',
-  weight = 'normal',
   level = 1,
   theme,
 }) => {
@@ -87,7 +84,7 @@ const StyledHeading = styled(Heading)(
   }) => getHeadingFontStyle({
     level,
     theme,
-  })
+  }),
 );
 
 export const H1 = props => <StyledHeading {...props} level={1} />;

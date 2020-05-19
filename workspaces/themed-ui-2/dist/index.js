@@ -41,7 +41,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   return target;
 }
 
-var styles = {"Accordion":"_Accordion-module__Accordion__1bSEf","body":"_Accordion-module__body__2uO1G"};
+var styles = {"Accordion":"_1bSEf","body":"_2uO1G"};
 
 var getModeStyles = function getModeStyles(_ref) {
   var mode = _ref.mode,
@@ -53,7 +53,7 @@ var getModeStyles = function getModeStyles(_ref) {
   });
 };
 
-var styles$1 = {"Card":"_Card-module__Card__3_bG_","Head":"_Card-module__Head__2QnXP","Foot":"_Card-module__Foot__2HgvM"};
+var styles$1 = {"Card":"_3_bG_","Head":"_2QnXP","Foot":"_2HgvM"};
 
 var getCardStyles = function getCardStyles(_ref) {
   var _theme$shared;
@@ -1672,7 +1672,7 @@ var tagPropType = PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTyp
   render: PropTypes.func
 })]))]);
 
-var styles$2 = {"Button":"_Button-module__Button__3hPPe"};
+var styles$2 = {"Button":"_3hPPe"};
 
 var getButttonStyle = function getButttonStyle(_ref) {
   var _ref$outline = _ref.outline,
@@ -1847,7 +1847,226 @@ var StyledButton = styled(Button)(function (props) {
   return _extends({}, getButttonStyle(props));
 }, styledSystem.margin);
 
+var styles$3 = {"Font":"_3FImO","P":"_1a9Im"};
+
+var getFontStyle = function getFontStyle(_ref) {
+  var _theme$shared;
+
+  var _ref$color = _ref.color,
+      color = _ref$color === void 0 ? 'default' : _ref$color,
+      _ref$contrast = _ref.contrast,
+      contrast = _ref$contrast === void 0 ? '2' : _ref$contrast,
+      _ref$family = _ref.family,
+      family = _ref$family === void 0 ? 'sansSerif' : _ref$family,
+      _ref$size = _ref.size,
+      size = _ref$size === void 0 ? 'md' : _ref$size,
+      _ref$weight = _ref.weight,
+      weight = _ref$weight === void 0 ? 'normal' : _ref$weight,
+      theme = _ref.theme;
+
+  var _getMinLineHeight = getMinLineHeight({
+    size: theme.fonts.sizes[size],
+    space: _extends(_extends({}, theme.space), {}, {
+      xs: theme.space.sm
+    })
+  }),
+      lineHeightRatio = _getMinLineHeight.ratio;
+
+  var darkModeStyle = {
+    color: theme.colors[color]["dark-" + contrast]
+  };
+  var lightModeStyle = {
+    color: theme.colors[color]["light-" + contrast]
+  };
+  return _extends({
+    fontFamily: theme.fonts[family],
+    fontSize: theme.fonts.sizes[size],
+    fontWeight: theme.fonts.weights[weight],
+    lineHeight: lineHeightRatio
+  }, getModeStyles({
+    darkModeStyle: darkModeStyle,
+    lightModeStyle: lightModeStyle,
+    mode: theme === null || theme === void 0 ? void 0 : (_theme$shared = theme.shared) === null || _theme$shared === void 0 ? void 0 : _theme$shared.mode
+  }));
+};
+
+var Font = function Font(_ref2) {
+  var className = _ref2.className,
+      CustomTag = _ref2.tag,
+      passedProps = _objectWithoutPropertiesLoose(_ref2, ["className", "tag"]);
+
+  return /*#__PURE__*/React__default.createElement(CustomTag, _extends({}, passedProps, {
+    className: classNames(className, styles$3.Font)
+  }));
+};
+
+Font.propTypes = {
+  className: PropTypes.string,
+  tag: tagPropType
+};
+Font.defaultProps = {
+  className: '',
+  tag: 'div'
+};
+var StyledFont = styled(Font)(function (props) {
+  return getFontStyle(props);
+}, styledSystem.margin);
+var P = function P(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    className: styles$3.P,
+    tag: "p"
+  }, props));
+};
+var Small = function Small(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    size: "sm",
+    tag: "small"
+  }, props));
+};
+var Strong = function Strong(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    tag: "strong",
+    weight: "bold"
+  }, props));
+};
+var Em = function Em(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    tag: "em"
+  }, props));
+};
+var U = function U(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    tag: "u"
+  }, props));
+};
+var I = function I(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    tag: "i"
+  }, props));
+};
+var B = function B(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    tag: "b",
+    weight: "bold"
+  }, props));
+};
+
+var styles$4 = {"Heading":"_3T98U"};
+
+var getHeadingFontStyle = function getHeadingFontStyle(_ref) {
+  var _ref$level = _ref.level,
+      level = _ref$level === void 0 ? 1 : _ref$level,
+      theme = _ref.theme;
+  var levels = {
+    1: {
+      contrast: '3',
+      size: 'xl',
+      weight: 'normal'
+    },
+    2: {
+      contrast: '3',
+      size: 'lg',
+      weight: 'normal'
+    },
+    3: {
+      contrast: '3',
+      size: 'md',
+      weight: 'bold'
+    },
+    4: {
+      contrast: '2',
+      size: 'sm',
+      weight: 'bold'
+    }
+  };
+  return _extends({}, getFontStyle(_extends(_extends({}, levels["" + level]), {}, {
+    theme: theme
+  })));
+};
+
+var Heading = function Heading(_ref2) {
+  var className = _ref2.className,
+      level = _ref2.level,
+      CustomTag = _ref2.tag,
+      passedProps = _objectWithoutPropertiesLoose(_ref2, ["className", "level", "tag"]);
+
+  var Tag = React.useMemo(function () {
+    if (CustomTag) {
+      return CustomTag;
+    }
+
+    return "h" + level;
+  }, [CustomTag, level]);
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({}, passedProps, {
+    className: classNames(className, styles$4.Heading),
+    tag: Tag
+  }));
+};
+
+Heading.propTypes = {
+  className: PropTypes.string,
+  level: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  tag: tagPropType
+};
+Heading.defaultProps = {
+  className: '',
+  level: 1,
+  tag: null
+};
+var StyledHeading = styled(Heading)(function (_ref3) {
+  var level = _ref3.level,
+      theme = _ref3.theme;
+  return getHeadingFontStyle({
+    level: level,
+    theme: theme
+  });
+});
+var H1 = function H1(props) {
+  return /*#__PURE__*/React__default.createElement(StyledHeading, _extends({}, props, {
+    level: 1
+  }));
+};
+var H2 = function H2(props) {
+  return /*#__PURE__*/React__default.createElement(StyledHeading, _extends({}, props, {
+    level: 2
+  }));
+};
+var H3 = function H3(props) {
+  return /*#__PURE__*/React__default.createElement(StyledHeading, _extends({}, props, {
+    level: 3
+  }));
+};
+var H4 = function H4(props) {
+  return /*#__PURE__*/React__default.createElement(StyledHeading, _extends({}, props, {
+    level: 4
+  }));
+};
+
+var Heading$1 = StyledHeading;
+
 exports.Accordion = StyledAccordion;
+exports.B = B;
 exports.Button = StyledButton;
 exports.Card = StyledCard;
+exports.CardBody = CardBody;
+exports.CardFoot = CardFoot;
+exports.CardHead = CardHead;
+exports.Em = Em;
+exports.Font = StyledFont;
+exports.H1 = H1;
+exports.H2 = H2;
+exports.H3 = H3;
+exports.H4 = H4;
+exports.Heading = Heading$1;
+exports.I = I;
+exports.P = P;
+exports.Small = Small;
+exports.Strong = Strong;
+exports.U = U;
+exports.getCardBodyStyles = getCardBodyStyles;
+exports.getCardFootStyles = getCardFootStyles;
+exports.getCardHeadStyles = getCardHeadStyles;
+exports.getCardStyles = getCardStyles;
+exports.getFontStyle = getFontStyle;
+exports.getHeadingFontStyle = getHeadingFontStyle;
 //# sourceMappingURL=index.js.map
