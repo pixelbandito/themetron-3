@@ -17,7 +17,7 @@ import {
   P,
   Small,
   Strong,
-} from '@pixelbandito/themed-ui-2';
+} from '@pixelbandito/themed-ui';
 
 import styles from './Examples.module.css';
 

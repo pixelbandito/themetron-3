@@ -6,7 +6,7 @@ import { debounce } from 'lodash-es';
 import { getButtons, getColors, getInheritedBaseColor, getSizes } from '../theme-utils.mjs';
 import { getLuminance } from '../utils/colors';
 
-import { Accordion, Button, Card } from '@pixelbandito/themed-ui-2';
+import { Accordion, Button, Card } from '@pixelbandito/themed-ui';
 import Swatch from '../Swatch';
 
 import { getHexOrDont, getNumberOrDont } from './utils';

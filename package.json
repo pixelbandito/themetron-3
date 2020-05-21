@@ -13,6 +13,6 @@
   },
   "workspaces": [
     "workspaces/theme-editor",
-    "workspaces/themed-ui-2"
+    "workspaces/themed-ui"
   ]
 }
