@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 workspaces/**/node_modules
+workspaces/**/dist
 /.pnp
 .pnp.js
 
