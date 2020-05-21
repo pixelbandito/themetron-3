@@ -4,13 +4,21 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import {
+  A,
   Accordion,
   Button,
   Card,
+  Font,
+  Em,
+  H1,
+  H2,
+  H3,
+  H4,
+  P,
+  Small,
+  Strong,
 } from '@pixelbandito/themed-ui-2';
 
-import Font, { Em, H1, H2, H3, H4, P, Small, Strong } from '../Font';
-import { A } from '../Link';
 import styles from './Examples.module.css';
 
 const Examples = ({ className }) => {

@@ -1,8 +1,8 @@
-._1bSEf {
+._Accordion-module__Accordion__1bSEf {
   visibility: visible;
 }
 
-._2uO1G {
+._Accordion-module__body__2uO1G {
   overflow: hidden;
   transition:
     0.3s ease-in-out max-height,
@@ -10,35 +10,35 @@
     0.3s ease-in-out padding-top;
 }
 
-._3_bG_ {
+._Card-module__Card__3_bG_ {
   border-style: solid;
   border-width: 1px;
   border-color: inherit;
   visibility: visible;
 }
 
-._2QnXP {
+._Card-module__Head__2QnXP {
   border-style: solid;
   border-width: 0 0 1px;
 }
 
-._2HgvM {
+._Card-module__Foot__2HgvM {
   border-style: solid;
   border-width: 1px 0 0;
 }
 
-._3hPPe {
+._Button-module__Button__3hPPe {
   visibility: visible;
 }
 
-._3FImO {
+._Font-module__Font__3FImO {
   visibility: visible;
 }
 
-._1a9Im {
+._Font-module__P__1a9Im {
   margin: 0;
 }
 
-._3T98U {
+._Heading-module__Heading__3T98U {
   margin: 0;
 }

@@ -41,7 +41,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   return target;
 }
 
-var styles = {"Accordion":"_1bSEf","body":"_2uO1G"};
+var styles = {"Accordion":"_Accordion-module__Accordion__1bSEf","body":"_Accordion-module__body__2uO1G"};
 
 var getModeStyles = function getModeStyles(_ref) {
   var mode = _ref.mode,
@@ -53,7 +53,7 @@ var getModeStyles = function getModeStyles(_ref) {
   });
 };
 
-var styles$1 = {"Card":"_3_bG_","Head":"_2QnXP","Foot":"_2HgvM"};
+var styles$1 = {"Card":"_Card-module__Card__3_bG_","Head":"_Card-module__Head__2QnXP","Foot":"_Card-module__Foot__2HgvM"};
 
 var getCardStyles = function getCardStyles(_ref) {
   var _theme$shared;
@@ -1672,7 +1672,7 @@ var tagPropType = PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTyp
   render: PropTypes.func
 })]))]);
 
-var styles$2 = {"Button":"_3hPPe"};
+var styles$2 = {"Button":"_Button-module__Button__3hPPe"};
 
 var getButttonStyle = function getButttonStyle(_ref) {
   var _ref$outline = _ref.outline,
@@ -1847,7 +1847,7 @@ var StyledButton = styled(Button)(function (props) {
   return _extends({}, getButttonStyle(props));
 }, styledSystem.margin);
 
-var styles$3 = {"Font":"_3FImO","P":"_1a9Im"};
+var styles$3 = {"Font":"_Font-module__Font__3FImO","P":"_Font-module__P__1a9Im"};
 
 var getFontStyle = function getFontStyle(_ref) {
   var _theme$shared;
@@ -1951,7 +1951,7 @@ var B = function B(props) {
   }, props));
 };
 
-var styles$4 = {"Heading":"_3T98U"};
+var styles$4 = {"Heading":"_Heading-module__Heading__3T98U"};
 
 var getHeadingFontStyle = function getHeadingFontStyle(_ref) {
   var _ref$level = _ref.level,
@@ -2044,6 +2044,16 @@ var H4 = function H4(props) {
 
 var Heading$1 = StyledHeading;
 
+var Link = function Link(props) {
+  return /*#__PURE__*/React__default.createElement(StyledFont, _extends({
+    tag: "a",
+    color: "primary"
+  }, props));
+};
+
+var A = Link;
+
+exports.A = A;
 exports.Accordion = StyledAccordion;
 exports.B = B;
 exports.Button = StyledButton;
@@ -2059,6 +2069,7 @@ exports.H3 = H3;
 exports.H4 = H4;
 exports.Heading = Heading$1;
 exports.I = I;
+exports.Link = Link;
 exports.P = P;
 exports.Small = Small;
 exports.Strong = Strong;

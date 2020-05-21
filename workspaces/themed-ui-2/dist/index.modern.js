@@ -5,250 +5,206 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 import { margin } from 'styled-system';
 
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
+var styles = {"Accordion":"_Accordion-module__Accordion__1bSEf","body":"_Accordion-module__body__2uO1G"};
 
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+const getModeStyles = ({
+  mode,
+  lightModeStyle,
+  darkModeStyle
+}) => ({ ...(mode === 'dark' ? darkModeStyle : lightModeStyle),
+  '@media (prefers-color-scheme: light)': !mode && { ...lightModeStyle
+  },
+  '@media (prefers-color-scheme: dark)': !mode && { ...darkModeStyle
   }
+});
 
-  return target;
-}
+var styles$1 = {"Card":"_Card-module__Card__3_bG_","Head":"_Card-module__Head__2QnXP","Foot":"_Card-module__Foot__2HgvM"};
 
-var styles = {"Accordion":"_1bSEf","body":"_2uO1G"};
-
-var getModeStyles = function getModeStyles(_ref) {
-  var mode = _ref.mode,
-      lightModeStyle = _ref.lightModeStyle,
-      darkModeStyle = _ref.darkModeStyle;
-  return _extends(_extends({}, mode === 'dark' ? darkModeStyle : lightModeStyle), {}, {
-    '@media (prefers-color-scheme: light)': !mode && _extends({}, lightModeStyle),
-    '@media (prefers-color-scheme: dark)': !mode && _extends({}, darkModeStyle)
-  });
-};
-
-var styles$1 = {"Card":"_3_bG_","Head":"_2QnXP","Foot":"_2HgvM"};
-
-var getCardStyles = function getCardStyles(_ref) {
+const getCardStyles = ({
+  variant: _variant = 'default',
+  theme
+}) => {
   var _theme$shared;
 
-  var _ref$variant = _ref.variant,
-      variant = _ref$variant === void 0 ? 'default' : _ref$variant,
-      theme = _ref.theme;
-  var darkModeStyle = {
+  const darkModeStyle = {
     background: theme.baseColors.black,
-    borderColor: theme.colors[variant]['light-1']
+    borderColor: theme.colors[_variant]['light-1']
   };
-  var lightModeStyle = {
+  const lightModeStyle = {
     background: theme.baseColors.white,
-    borderColor: theme.colors[variant]['dark-1']
+    borderColor: theme.colors[_variant]['dark-1']
   };
-  return _extends({
-    borderRadius: theme.shared.roundness * 2 + "px"
-  }, getModeStyles({
-    darkModeStyle: darkModeStyle,
-    lightModeStyle: lightModeStyle,
-    mode: theme === null || theme === void 0 ? void 0 : (_theme$shared = theme.shared) === null || _theme$shared === void 0 ? void 0 : _theme$shared.mode
-  }));
+  return {
+    borderRadius: `${theme.shared.roundness * 2}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme === null || theme === void 0 ? void 0 : (_theme$shared = theme.shared) === null || _theme$shared === void 0 ? void 0 : _theme$shared.mode
+    })
+  };
 };
-var getCardHeadStyles = function getCardHeadStyles(_ref2) {
+const getCardHeadStyles = ({
+  variant,
+  theme
+}) => {
   var _theme$colors$variant, _theme$colors$variant2, _theme$colors$variant3, _theme$colors$variant4, _theme$shared2;
 
-  var variant = _ref2.variant,
-      theme = _ref2.theme;
-  var lightModeStyle = {
+  const lightModeStyle = {
     background: ((_theme$colors$variant = theme.colors[variant]) === null || _theme$colors$variant === void 0 ? void 0 : _theme$colors$variant['light-bg']) || 'transparent',
     borderColor: ((_theme$colors$variant2 = theme.colors[variant]) === null || _theme$colors$variant2 === void 0 ? void 0 : _theme$colors$variant2['dark-1']) || 'transparent'
   };
-  var darkModeStyle = {
+  const darkModeStyle = {
     background: ((_theme$colors$variant3 = theme.colors[variant]) === null || _theme$colors$variant3 === void 0 ? void 0 : _theme$colors$variant3['dark-bg']) || 'transparent',
     borderColor: ((_theme$colors$variant4 = theme.colors[variant]) === null || _theme$colors$variant4 === void 0 ? void 0 : _theme$colors$variant4['light-1']) || 'transparent'
   };
-  return _extends({
-    borderRadius: theme.shared.roundness * 2 + "px " + theme.shared.roundness * 2 + "px 0 0",
-    padding: theme.space.sm + "px " + theme.space.md + "px"
-  }, getModeStyles({
-    darkModeStyle: darkModeStyle,
-    lightModeStyle: lightModeStyle,
-    mode: theme === null || theme === void 0 ? void 0 : (_theme$shared2 = theme.shared) === null || _theme$shared2 === void 0 ? void 0 : _theme$shared2.mode
-  }));
+  return {
+    borderRadius: `${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px 0 0`,
+    padding: `${theme.space.sm}px ${theme.space.md}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme === null || theme === void 0 ? void 0 : (_theme$shared2 = theme.shared) === null || _theme$shared2 === void 0 ? void 0 : _theme$shared2.mode
+    })
+  };
 };
-var getCardBodyStyles = function getCardBodyStyles(_ref3) {
+const getCardBodyStyles = ({
+  theme
+}) => {
   var _theme$shared3;
 
-  var theme = _ref3.theme;
-  var darkModeStyle = {
+  const darkModeStyle = {
     background: theme.baseColors.black
   };
-  var lightModeStyle = {
+  const lightModeStyle = {
     background: theme.baseColors.white
   };
-  return _extends({
-    padding: theme.space.md + "px"
-  }, getModeStyles({
-    darkModeStyle: darkModeStyle,
-    lightModeStyle: lightModeStyle,
-    mode: theme === null || theme === void 0 ? void 0 : (_theme$shared3 = theme.shared) === null || _theme$shared3 === void 0 ? void 0 : _theme$shared3.mode
-  }));
+  return {
+    padding: `${theme.space.md}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme === null || theme === void 0 ? void 0 : (_theme$shared3 = theme.shared) === null || _theme$shared3 === void 0 ? void 0 : _theme$shared3.mode
+    })
+  };
 };
-var getCardFootStyles = function getCardFootStyles(_ref4) {
+const getCardFootStyles = ({
+  variant,
+  theme
+}) => {
   var _theme$colors$variant5, _theme$colors$variant6, _theme$colors$variant7, _theme$colors$variant8, _theme$shared4;
 
-  var variant = _ref4.variant,
-      theme = _ref4.theme;
-  var darkModeStyle = {
+  const darkModeStyle = {
     background: ((_theme$colors$variant5 = theme.colors[variant]) === null || _theme$colors$variant5 === void 0 ? void 0 : _theme$colors$variant5['dark-bg']) || 'transparent',
     borderColor: ((_theme$colors$variant6 = theme.colors[variant]) === null || _theme$colors$variant6 === void 0 ? void 0 : _theme$colors$variant6['light-1']) || 'transparent'
   };
-  var lightModeStyle = {
+  const lightModeStyle = {
     background: ((_theme$colors$variant7 = theme.colors[variant]) === null || _theme$colors$variant7 === void 0 ? void 0 : _theme$colors$variant7['light-bg']) || 'transparent',
     borderColor: ((_theme$colors$variant8 = theme.colors[variant]) === null || _theme$colors$variant8 === void 0 ? void 0 : _theme$colors$variant8['dark-1']) || 'transparent'
   };
-  return _extends({
-    borderRadius: "0 0 " + theme.shared.roundness * 2 + "px " + theme.shared.roundness * 2 + "px",
-    padding: theme.space.sm + "px " + theme.space.md + "px"
-  }, getModeStyles({
-    darkModeStyle: darkModeStyle,
-    lightModeStyle: lightModeStyle,
-    mode: theme === null || theme === void 0 ? void 0 : (_theme$shared4 = theme.shared) === null || _theme$shared4 === void 0 ? void 0 : _theme$shared4.mode
-  }));
+  return {
+    borderRadius: `0 0 ${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px`,
+    padding: `${theme.space.sm}px ${theme.space.md}px`,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme === null || theme === void 0 ? void 0 : (_theme$shared4 = theme.shared) === null || _theme$shared4 === void 0 ? void 0 : _theme$shared4.mode
+    })
+  };
 };
-var Card = React.forwardRef(function (_ref5, forwardedRef) {
-  var className = _ref5.className,
-      passedProps = _objectWithoutPropertiesLoose(_ref5, ["className"]);
-
-  return /*#__PURE__*/React.createElement("div", _extends({
-    className: classNames(className, styles$1.Card),
-    ref: forwardedRef
-  }, passedProps));
-});
+const Card = React.forwardRef(({
+  className,
+  ...passedProps
+}, forwardedRef) => /*#__PURE__*/React.createElement("div", Object.assign({
+  className: classNames(className, styles$1.Card),
+  ref: forwardedRef
+}, passedProps)));
 Card.propTypes = {
   className: PropTypes.string
 };
 Card.defaultProps = {
   className: ''
 };
-var StyledCard = styled(Card)(function (props) {
-  return getCardStyles(props);
-}, margin);
-var CardHead = function CardHead(_ref6) {
-  var className = _ref6.className,
-      passedProps = _objectWithoutPropertiesLoose(_ref6, ["className"]);
-
-  return /*#__PURE__*/React.createElement("div", _extends({
-    className: classNames(className, styles$1.Head)
-  }, passedProps));
-};
+const StyledCard = styled(Card)(props => getCardStyles(props), margin);
+const CardHead = ({
+  className,
+  ...passedProps
+}) => /*#__PURE__*/React.createElement("div", Object.assign({
+  className: classNames(className, styles$1.Head)
+}, passedProps));
 CardHead.propTypes = {
   className: PropTypes.string
 };
 CardHead.defaultProps = {
   className: ''
 };
-var StyledCardHead = styled(CardHead)(function (_ref7) {
-  var variant = _ref7.variant,
-      theme = _ref7.theme;
-  return getCardHeadStyles({
-    variant: variant,
-    theme: theme
-  });
-});
-var CardBody = React.forwardRef(function (_ref8, forwardRef) {
-  var className = _ref8.className,
-      passedProps = _objectWithoutPropertiesLoose(_ref8, ["className"]);
-
-  return /*#__PURE__*/React.createElement("div", _extends({
-    className: classNames(className, styles$1.Body),
-    ref: forwardRef
-  }, passedProps));
-});
+const StyledCardHead = styled(CardHead)(({
+  variant,
+  theme
+}) => getCardHeadStyles({
+  variant,
+  theme
+}));
+const CardBody = React.forwardRef(({
+  className,
+  ...passedProps
+}, forwardRef) => /*#__PURE__*/React.createElement("div", Object.assign({
+  className: classNames(className, styles$1.Body),
+  ref: forwardRef
+}, passedProps)));
 CardBody.propTypes = {
   className: PropTypes.string
 };
 CardBody.defaultProps = {
   className: ''
 };
-var StyledCardBody = styled(CardBody)(function (_ref9) {
-  var variant = _ref9.variant,
-      theme = _ref9.theme;
-  return getCardBodyStyles({
-    variant: variant,
-    theme: theme
-  });
-});
-var CardFoot = function CardFoot(_ref10) {
-  var className = _ref10.className,
-      passedProps = _objectWithoutPropertiesLoose(_ref10, ["className"]);
-
-  return /*#__PURE__*/React.createElement("div", _extends({
-    className: classNames(className, styles$1.Foot)
-  }, passedProps));
-};
+const StyledCardBody = styled(CardBody)(({
+  variant,
+  theme
+}) => getCardBodyStyles({
+  variant,
+  theme
+}));
+const CardFoot = ({
+  className,
+  ...passedProps
+}) => /*#__PURE__*/React.createElement("div", Object.assign({
+  className: classNames(className, styles$1.Foot)
+}, passedProps));
 CardFoot.propTypes = {
   className: PropTypes.string
 };
 CardFoot.defaultProps = {
   className: ''
 };
-var StyledCardFoot = styled(CardFoot)(function (_ref11) {
-  var variant = _ref11.variant,
-      theme = _ref11.theme;
-  return getCardFootStyles({
-    variant: variant,
-    theme: theme
-  });
-});
+const StyledCardFoot = styled(CardFoot)(({
+  variant,
+  theme
+}) => getCardFootStyles({
+  variant,
+  theme
+}));
 StyledCard.Head = StyledCardHead;
 StyledCard.Body = StyledCardBody;
 StyledCard.Foot = StyledCardFoot;
 
-var Accordion = function Accordion(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      defaultIsOpen = _ref.defaultIsOpen,
-      customHead = _ref.head,
-      variant = _ref.variant,
-      passedProps = _objectWithoutPropertiesLoose(_ref, ["children", "className", "defaultIsOpen", "head", "variant"]);
-
-  var _useState = useState(defaultIsOpen),
-      isOpen = _useState[0],
-      setIsOpen = _useState[1];
-
-  var _useState2 = useState(),
-      expandedHeight = _useState2[0],
-      setExpandedHeight = _useState2[1];
-
-  var cardRef = useRef();
-  var head = customHead || (isOpen ? 'Show less' : 'Show more');
-  useEffect(function () {
+const Accordion = ({
+  children,
+  className,
+  defaultIsOpen,
+  head: customHead,
+  variant,
+  ...passedProps
+}) => {
+  const [isOpen, setIsOpen] = useState(defaultIsOpen);
+  const [expandedHeight, setExpandedHeight] = useState();
+  const cardRef = useRef();
+  const head = customHead || (isOpen ? 'Show less' : 'Show more');
+  useEffect(() => {
     if (isOpen && cardRef.current) {
       setExpandedHeight(cardRef.current.scrollHeight);
     }
   }, [isOpen]);
-  var transitionStyles = {
+  const transitionStyles = {
     exiting: {
       borderBottomWidth: 1
     },
@@ -256,33 +212,28 @@ var Accordion = function Accordion(_ref) {
       borderBottomWidth: 0
     }
   };
-  return /*#__PURE__*/React.createElement(StyledCard, _extends({}, passedProps, {
+  return /*#__PURE__*/React.createElement(StyledCard, Object.assign({}, passedProps, {
     className: classNames(className, styles.Accordion),
     variant: variant
   }), /*#__PURE__*/React.createElement(Transition, {
-    "in": isOpen,
+    in: isOpen,
     timeout: 200
-  }, function (state) {
-    return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(StyledCard.Head, {
-      variant: variant,
-      onClick: function onClick() {
-        return setIsOpen(function (prevIsOpen) {
-          return !prevIsOpen;
-        });
-      },
-      style: _extends({}, transitionStyles[state])
-    }, head), /*#__PURE__*/React.createElement(StyledCard.Body, {
-      className: styles.body,
-      ref: cardRef,
-      style: {
-        boxSizing: 'content-box',
-        maxHeight: !isOpen ? '0px' : expandedHeight + "px",
-        paddingBottom: !isOpen ? '0px' : undefined,
-        paddingTop: !isOpen ? '0px' : undefined
-      },
-      variant: variant
-    }, children));
-  }));
+  }, state => /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(StyledCard.Head, {
+    variant: variant,
+    onClick: () => setIsOpen(prevIsOpen => !prevIsOpen),
+    style: { ...transitionStyles[state]
+    }
+  }, head), /*#__PURE__*/React.createElement(StyledCard.Body, {
+    className: styles.body,
+    ref: cardRef,
+    style: {
+      boxSizing: 'content-box',
+      maxHeight: !isOpen ? '0px' : `${expandedHeight}px`,
+      paddingBottom: !isOpen ? '0px' : undefined,
+      paddingTop: !isOpen ? '0px' : undefined
+    },
+    variant: variant
+  }, children))));
 };
 
 Accordion.propTypes = {
@@ -299,12 +250,11 @@ Accordion.defaultProps = {
   head: null,
   variant: 'default'
 };
-var StyledAccordion = styled(Accordion)(function (_ref2) {
-  var theme = _ref2.theme;
-  return {
-    color: theme.color
-  };
-});
+const StyledAccordion = styled(Accordion)(({
+  theme
+}) => ({
+  color: theme.color
+}));
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -612,7 +562,7 @@ var conversions = createCommonjsModule(function (module) {
     var v = Math.max(r, g, b);
     var diff = v - Math.min(r, g, b);
 
-    var diffc = function diffc(c) {
+    var diffc = function (c) {
       return (v - c) / 6 / diff + 1 / 2;
     };
 
@@ -1119,8 +1069,8 @@ var conversions = createCommonjsModule(function (module) {
     var colorString = match[0];
 
     if (match[0].length === 3) {
-      colorString = colorString.split('').map(function (_char) {
-        return _char + _char;
+      colorString = colorString.split('').map(function (char) {
+        return char + char;
       }).join('');
     }
 
@@ -1399,7 +1349,7 @@ function wrapConversion(toModel, graph) {
   return fn;
 }
 
-var route = function route(fromModel) {
+var route = function (fromModel) {
   var graph = deriveBFS(fromModel);
   var conversion = {};
   var models = Object.keys(graph);
@@ -1422,7 +1372,7 @@ var convert = {};
 var models = Object.keys(conversions);
 
 function wrapRaw(fn) {
-  var wrappedFn = function wrappedFn(args) {
+  var wrappedFn = function (args) {
     if (args === undefined || args === null) {
       return args;
     }
@@ -1442,7 +1392,7 @@ function wrapRaw(fn) {
 }
 
 function wrapRounded(fn) {
-  var wrappedFn = function wrappedFn(args) {
+  var wrappedFn = function (args) {
     if (args === undefined || args === null) {
       return args;
     }
@@ -1487,35 +1437,30 @@ models.forEach(function (fromModel) {
 });
 var colorConvert = convert;
 
-var getContrastRatio = function getContrastRatio(_ref) {
-  var hexA = _ref.hexA,
-      hexB = _ref.hexB,
-      luminanceA = _ref.luminanceA,
-      luminanceB = _ref.luminanceB;
+const getContrastRatio = ({
+  hexA,
+  hexB,
+  luminanceA,
+  luminanceB
+}) => {
   luminanceA = luminanceA || luminanceA === 0 ? luminanceA : getLuminance(hexA);
   luminanceB = luminanceB || luminanceB === 0 ? luminanceB : getLuminance(hexB);
-
-  var _sort = [luminanceA, luminanceB].sort(),
-      darker = _sort[0],
-      lighter = _sort[1];
-
-  var contrastRatio = ((lighter + 0.05) / (darker + 0.05)).toFixed(2);
+  const [darker, lighter] = [luminanceA, luminanceB].sort();
+  const contrastRatio = ((lighter + 0.05) / (darker + 0.05)).toFixed(2);
   return contrastRatio;
 };
-var getNextLuminanceByContrastRatio = function getNextLuminanceByContrastRatio(_ref2) {
-  var luminance = _ref2.luminance,
-      contrastRatio = _ref2.contrastRatio;
-  return luminance * contrastRatio + contrastRatio / 20 - 1 / 20;
-};
-var getPrevLuminanceByContrastRatio = function getPrevLuminanceByContrastRatio(_ref3) {
-  var luminance = _ref3.luminance,
-      contrastRatio = _ref3.contrastRatio;
-  return (luminance + 1 / 20) / contrastRatio - 1 / 20;
-};
-var getLuminance = function getLuminance(hex) {
-  var rgb = colorConvert.hex.rgb(hex);
-  var rgb2 = rgb.map(function (channel, i) {
-    var c = channel / 255;
+const getNextLuminanceByContrastRatio = ({
+  luminance,
+  contrastRatio
+}) => luminance * contrastRatio + contrastRatio / 20 - 1 / 20;
+const getPrevLuminanceByContrastRatio = ({
+  luminance,
+  contrastRatio
+}) => (luminance + 1 / 20) / contrastRatio - 1 / 20;
+const getLuminance = hex => {
+  const rgb = colorConvert.hex.rgb(hex);
+  let rgb2 = rgb.map((channel, i) => {
+    let c = channel / 255;
 
     if (c <= 0.03928) {
       return c / 12.92;
@@ -1523,55 +1468,53 @@ var getLuminance = function getLuminance(hex) {
       return Math.pow((c + 0.055) / 1.055, 2.4);
     }
   });
-  var luminance = 0.2126 * rgb2[0] + 0.7152 * rgb2[1] + 0.0722 * rgb2[2];
+  const luminance = 0.2126 * rgb2[0] + 0.7152 * rgb2[1] + 0.0722 * rgb2[2];
   return luminance;
 };
-var setColorByLuminanceWithHsl = function setColorByLuminanceWithHsl(_ref4) {
-  var _ref4$attempt = _ref4.attempt,
-      attempt = _ref4$attempt === void 0 ? 0 : _ref4$attempt,
-      hex = _ref4.hex,
-      initHsl = _ref4.initHsl,
-      targetLuminance = _ref4.luminance,
-      _ref4$maxAttempts = _ref4.maxAttempts,
-      maxAttempts = _ref4$maxAttempts === void 0 ? 10 : _ref4$maxAttempts;
-  var luminance = getLuminance(hex);
+const setColorByLuminanceWithHsl = ({
+  attempt: _attempt = 0,
+  hex,
+  initHsl,
+  luminance: targetLuminance,
+  maxAttempts: _maxAttempts = 10
+}) => {
+  const luminance = getLuminance(hex);
 
-  if (luminance === targetLuminance || attempt >= maxAttempts) {
+  if (luminance === targetLuminance || _attempt >= _maxAttempts) {
     return hex;
   }
 
-  var darken = luminance > targetLuminance;
-  var jumpSize = (darken ? -100 : 100) / Math.pow(2, attempt + 1);
-  var prevHsl = colorConvert.hex.hsl(hex);
-  var safeInitHsl = initHsl !== undefined ? initHsl : prevHsl;
-  var hsl = setHsl({
+  const darken = luminance > targetLuminance;
+  const jumpSize = (darken ? -100 : 100) / Math.pow(2, _attempt + 1);
+  let prevHsl = colorConvert.hex.hsl(hex);
+  let safeInitHsl = initHsl !== undefined ? initHsl : prevHsl;
+  const hsl = setHsl({
     hsl: safeInitHsl,
     l: Math.max(0, Math.min(prevHsl[2] + jumpSize, 100))
   });
 
-  if ("#" + colorConvert.hsl.hex(hsl) === hex) {
+  if (`#${colorConvert.hsl.hex(hsl)}` === hex) {
     return hex;
   }
 
   return setColorByLuminanceWithHsl({
-    attempt: attempt + 1,
-    hex: "#" + colorConvert.hsl.hex(hsl),
+    attempt: _attempt + 1,
+    hex: `#${colorConvert.hsl.hex(hsl)}`,
     initHsl: safeInitHsl,
     luminance: targetLuminance,
-    maxAttempts: maxAttempts
+    maxAttempts: _maxAttempts
   });
 };
-var setColorByContrastWithHsl = function setColorByContrastWithHsl(_ref5) {
-  var _ref5$attempt = _ref5.attempt,
-      attempt = _ref5$attempt === void 0 ? 0 : _ref5$attempt,
-      baseHex = _ref5.baseHex,
-      targetContrastRatio = _ref5.contrastRatio,
-      originalContrastRatio = _ref5.originalContrastRatio,
-      direction = _ref5.direction,
-      hex = _ref5.hex,
-      _ref5$maxAttempts = _ref5.maxAttempts,
-      maxAttempts = _ref5$maxAttempts === void 0 ? 10 : _ref5$maxAttempts;
-  var targetLuminance;
+const setColorByContrastWithHsl = ({
+  attempt: _attempt2 = 0,
+  baseHex,
+  contrastRatio: targetContrastRatio,
+  originalContrastRatio,
+  direction,
+  hex,
+  maxAttempts: _maxAttempts2 = 10
+}) => {
+  let targetLuminance;
   originalContrastRatio = originalContrastRatio || targetContrastRatio;
 
   if (!direction) {
@@ -1594,41 +1537,37 @@ var setColorByContrastWithHsl = function setColorByContrastWithHsl(_ref5) {
     });
   }
 
-  var nextColor = setColorByLuminanceWithHsl({
-    hex: hex,
+  const nextColor = setColorByLuminanceWithHsl({
+    hex,
     luminance: targetLuminance,
-    maxAttempts: maxAttempts
+    maxAttempts: _maxAttempts2
   });
 
   if (getContrastRatio({
     hexA: nextColor,
     hexB: baseHex
-  }) >= originalContrastRatio || attempt > maxAttempts) {
+  }) >= originalContrastRatio || _attempt2 > _maxAttempts2) {
     return nextColor;
   }
 
   return setColorByContrastWithHsl({
-    attempt: attempt + 1,
-    baseHex: baseHex,
+    attempt: _attempt2 + 1,
+    baseHex,
     contrastRatio: targetContrastRatio + 0.05,
-    originalContrastRatio: originalContrastRatio,
-    direction: direction,
-    hex: hex,
-    maxAttempts: maxAttempts
+    originalContrastRatio,
+    direction,
+    hex,
+    maxAttempts: _maxAttempts2
   });
 };
-var setHsl = function setHsl(_ref6) {
-  var _ref6$hsl = _ref6.hsl,
-      h = _ref6$hsl[0],
-      s = _ref6$hsl[1],
-      l = _ref6$hsl[2],
-      h2 = _ref6.h,
-      s2 = _ref6.s,
-      l2 = _ref6.l;
-  return [typeof h2 === 'number' ? h2 : h, typeof s2 === 'number' ? s2 : s, typeof l2 === 'number' ? l2 : l];
-};
-var getHexFromHexOrName = function getHexFromHexOrName(color) {
-  var safeValue;
+const setHsl = ({
+  hsl: [h, s, l],
+  h: h2,
+  s: s2,
+  l: l2
+}) => [typeof h2 === 'number' ? h2 : h, typeof s2 === 'number' ? s2 : s, typeof l2 === 'number' ? l2 : l];
+const getHexFromHexOrName = color => {
+  let safeValue;
 
   try {
     safeValue = colorConvert.keyword.hex(color).toLowerCase();
@@ -1636,32 +1575,33 @@ var getHexFromHexOrName = function getHexFromHexOrName(color) {
     safeValue = color[0] === '#' ? color.substr(1) : color;
   }
 
-  return "#" + safeValue || '#000000';
+  return `#${safeValue}` || '#000000';
 };
 window.pxbColors = {
-  colorConvert: colorConvert,
-  getContrastRatio: getContrastRatio,
-  getHexFromHexOrName: getHexFromHexOrName,
-  getLuminance: getLuminance,
-  setColorByContrastWithHsl: setColorByContrastWithHsl,
-  setHsl: setHsl
+  colorConvert,
+  getContrastRatio,
+  getHexFromHexOrName,
+  getLuminance,
+  setColorByContrastWithHsl,
+  setHsl
 };
 
-var getMinLineHeight = function getMinLineHeight(_ref5) {
-  var size = _ref5.size,
-      space = _ref5.space;
-  var idealSize = size * 1.4;
-  var floor = Math.floor(idealSize / space.xs) * space.xs;
-  var ceil = Math.ceil(idealSize / space.xs) * space.xs;
-  var px = Math.abs(idealSize - floor) <= Math.abs(idealSize - ceil) ? floor : ceil;
-  var ratio = px / size;
+const getMinLineHeight = ({
+  size,
+  space
+}) => {
+  const idealSize = size * 1.4;
+  const floor = Math.floor(idealSize / space.xs) * space.xs;
+  const ceil = Math.ceil(idealSize / space.xs) * space.xs;
+  const px = Math.abs(idealSize - floor) <= Math.abs(idealSize - ceil) ? floor : ceil;
+  const ratio = px / size;
   return {
-    px: px,
-    ratio: ratio
+    px,
+    ratio
   };
 };
 
-var tagPropType = PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.shape({
+const tagPropType = PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.shape({
   $$typeof: PropTypes.symbol,
   render: PropTypes.func
 }), PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.shape({
@@ -1669,136 +1609,148 @@ var tagPropType = PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTyp
   render: PropTypes.func
 })]))]);
 
-var styles$2 = {"Button":"_3hPPe"};
+var styles$2 = {"Button":"_Button-module__Button__3hPPe"};
 
-var getButttonStyle = function getButttonStyle(_ref) {
-  var _ref$outline = _ref.outline,
-      outline = _ref$outline === void 0 ? false : _ref$outline,
-      _ref$size = _ref.size,
-      size = _ref$size === void 0 ? 'md' : _ref$size,
-      theme = _ref.theme,
-      _ref$variant = _ref.variant,
-      variantKey = _ref$variant === void 0 ? 'default' : _ref$variant;
-  var buttons = theme.buttons,
-      colors = theme.colors,
-      shared = theme.shared,
-      space = theme.space;
-  var borderWidth = buttons.borderWidth,
-      sizes = buttons.sizes,
-      variants = buttons.variants;
+const getButttonStyle = ({
+  outline: _outline = false,
+  size: _size = 'md',
+  theme,
+  variant: variantKey = 'default'
+}) => {
+  const {
+    buttons,
+    colors,
+    shared,
+    space
+  } = theme;
+  const {
+    borderWidth,
+    sizes,
+    variants
+  } = buttons;
+  let variant = { ...variants[variantKey]
+  };
 
-  var variant = _extends({}, variants[variantKey]);
-
-  var getVariantColors = function getVariantColors(_ref2) {
+  const getVariantColors = ({
+    contrast,
+    mode,
+    outline,
+    styles
+  }) => {
     var _backgroundColor$3, _color$, _backgroundColor$4;
 
-    var contrast = _ref2.contrast,
-        mode = _ref2.mode,
-        outline = _ref2.outline,
-        styles = _ref2.styles;
-    var backgroundColorKey = styles.keyColor || 'default';
-    var backgroundColor = colors[backgroundColorKey] || backgroundColorKey;
-    var colorKey = styles.color || (mode === 'dark' ? 'black' : 'white');
-    var color = colors[colorKey] || colorKey;
+    let backgroundColorKey = styles.keyColor || 'default';
+    let backgroundColor = colors[backgroundColorKey] || backgroundColorKey;
+    let colorKey = styles.color || (mode === 'dark' ? 'black' : 'white');
+    let color = colors[colorKey] || colorKey;
 
     if (outline) {
       var _backgroundColor$, _backgroundColor$2;
 
       return {
-        color: (_backgroundColor$ = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[mode + "-" + contrast]) !== null && _backgroundColor$ !== void 0 ? _backgroundColor$ : backgroundColor,
+        color: (_backgroundColor$ = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[`${mode}-${contrast}`]) !== null && _backgroundColor$ !== void 0 ? _backgroundColor$ : backgroundColor,
         backgroundColor: 'transparent',
-        borderColor: (_backgroundColor$2 = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[mode + "-" + contrast]) !== null && _backgroundColor$2 !== void 0 ? _backgroundColor$2 : backgroundColor
+        borderColor: (_backgroundColor$2 = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[`${mode}-${contrast}`]) !== null && _backgroundColor$2 !== void 0 ? _backgroundColor$2 : backgroundColor
       };
     }
 
     return {
-      backgroundColor: (_backgroundColor$3 = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[mode + "-" + contrast]) !== null && _backgroundColor$3 !== void 0 ? _backgroundColor$3 : backgroundColor,
-      color: (_color$ = color === null || color === void 0 ? void 0 : color[mode + "-bg"]) !== null && _color$ !== void 0 ? _color$ : colorKey,
-      borderColor: (_backgroundColor$4 = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[mode + "-" + contrast]) !== null && _backgroundColor$4 !== void 0 ? _backgroundColor$4 : backgroundColor
+      backgroundColor: (_backgroundColor$3 = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[`${mode}-${contrast}`]) !== null && _backgroundColor$3 !== void 0 ? _backgroundColor$3 : backgroundColor,
+      color: (_color$ = color === null || color === void 0 ? void 0 : color[`${mode}-bg`]) !== null && _color$ !== void 0 ? _color$ : colorKey,
+      borderColor: (_backgroundColor$4 = backgroundColor === null || backgroundColor === void 0 ? void 0 : backgroundColor[`${mode}-${contrast}`]) !== null && _backgroundColor$4 !== void 0 ? _backgroundColor$4 : backgroundColor
     };
   };
 
-  var _sizes$size = sizes[size],
-      fontSize = _sizes$size.fontSize,
-      paddingH = _sizes$size.paddingH,
-      paddingV = _sizes$size.paddingV;
-
-  var _getMinLineHeight = getMinLineHeight({
+  let {
+    fontSize,
+    paddingH,
+    paddingV
+  } = sizes[_size];
+  const {
+    ratio: lineHeightRatio,
+    px: lineHeightPx
+  } = getMinLineHeight({
     size: fontSize,
-    space: space
-  }),
-      lineHeightRatio = _getMinLineHeight.ratio,
-      lineHeightPx = _getMinLineHeight.px;
-
-  var lightModeStyle = {
-    'default': _extends({}, getVariantColors({
-      contrast: '1',
-      mode: 'light',
-      outline: outline,
-      styles: variant['default']
-    })),
-    ':hover': _extends({}, getVariantColors({
-      contrast: '2',
-      mode: 'light',
-      outline: outline,
-      styles: variant[':hover']
-    })),
-    ':focus': _extends({}, getVariantColors({
-      contrast: '2',
-      mode: 'light',
-      outline: outline,
-      styles: variant[':focus']
-    })),
-    ':active': _extends({}, getVariantColors({
-      contrast: '2',
-      mode: 'light',
-      outline: outline,
-      styles: variant[':active']
-    })),
+    space
+  });
+  const lightModeStyle = {
+    'default': { ...getVariantColors({
+        contrast: '1',
+        mode: 'light',
+        outline: _outline,
+        styles: variant['default']
+      })
+    },
+    ':hover': { ...getVariantColors({
+        contrast: '2',
+        mode: 'light',
+        outline: _outline,
+        styles: variant[':hover']
+      })
+    },
+    ':focus': { ...getVariantColors({
+        contrast: '2',
+        mode: 'light',
+        outline: _outline,
+        styles: variant[':focus']
+      })
+    },
+    ':active': { ...getVariantColors({
+        contrast: '2',
+        mode: 'light',
+        outline: _outline,
+        styles: variant[':active']
+      })
+    },
     ':disabled': {
       color: getVariantColors({
         contrast: '3',
         mode: 'light',
-        outline: outline,
+        outline: _outline,
         styles: variant[':disabled']
       })
     }
   };
-  var darkModeStyle = {
-    'default': _extends({}, getVariantColors({
-      contrast: '1',
-      mode: 'dark',
-      outline: outline,
-      styles: variant['default']
-    })),
-    ':hover': _extends({}, getVariantColors({
-      contrast: '2',
-      mode: 'dark',
-      outline: outline,
-      styles: variant[':hover']
-    })),
-    ':focus': _extends({}, getVariantColors({
-      contrast: '2',
-      mode: 'dark',
-      outline: outline,
-      styles: variant[':focus']
-    })),
-    ':active': _extends({}, getVariantColors({
-      contrast: '2',
-      mode: 'dark',
-      outline: outline,
-      styles: variant[':active']
-    })),
-    ':disabled': _extends({}, getVariantColors({
-      contrast: '3',
-      mode: 'dark',
-      outline: outline,
-      styles: variant[':disabled']
-    }))
+  const darkModeStyle = {
+    'default': { ...getVariantColors({
+        contrast: '1',
+        mode: 'dark',
+        outline: _outline,
+        styles: variant['default']
+      })
+    },
+    ':hover': { ...getVariantColors({
+        contrast: '2',
+        mode: 'dark',
+        outline: _outline,
+        styles: variant[':hover']
+      })
+    },
+    ':focus': { ...getVariantColors({
+        contrast: '2',
+        mode: 'dark',
+        outline: _outline,
+        styles: variant[':focus']
+      })
+    },
+    ':active': { ...getVariantColors({
+        contrast: '2',
+        mode: 'dark',
+        outline: _outline,
+        styles: variant[':active']
+      })
+    },
+    ':disabled': { ...getVariantColors({
+        contrast: '3',
+        mode: 'dark',
+        outline: _outline,
+        styles: variant[':disabled']
+      })
+    }
   };
-  var modeStyles = shared.mode === 'dark' && darkModeStyle || lightModeStyle;
-  return _extends(_extends({
-    borderWidth: borderWidth,
+  const modeStyles = shared.mode === 'dark' && darkModeStyle || lightModeStyle;
+  return {
+    borderWidth,
     borderStyle: 'solid',
     borderRadius: theme.shared.roundness * (lineHeightPx / 2 + paddingV) / 10,
     paddingBottom: paddingV - borderWidth,
@@ -1807,30 +1759,35 @@ var getButttonStyle = function getButttonStyle(_ref) {
     paddingTop: paddingV - borderWidth,
     fontSize: fontSize,
     lineHeight: lineHeightRatio,
-    transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear'
-  }, modeStyles["default"]), {}, {
-    ':hover': _extends({}, modeStyles[':hover']),
-    ':focus': _extends({
+    transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
+    ...modeStyles.default,
+    ':hover': { ...modeStyles[':hover']
+    },
+    ':focus': {
       outlineStyle: 'none',
-      outlineColor: modeStyles["default"].borderColor,
-      boxShadow: "0 0 0 1px " + modeStyles["default"].borderColor + ", 0 0 4px 0px " + modeStyles[':focus'].borderColor
-    }, modeStyles[':focus']),
-    ':active': _extends({}, modeStyles[':active']),
-    ':disabled': _extends({}, modeStyles[':disabled']),
-    '@media (prefers-color-scheme: light)': !shared.mode && _extends({}, lightModeStyle),
-    '@media (prefers-color-scheme: dark)': !shared.mode && _extends({}, darkModeStyle)
-  });
+      outlineColor: modeStyles.default.borderColor,
+      boxShadow: `0 0 0 1px ${modeStyles.default.borderColor}, 0 0 4px 0px ${modeStyles[':focus'].borderColor}`,
+      ...modeStyles[':focus']
+    },
+    ':active': { ...modeStyles[':active']
+    },
+    ':disabled': { ...modeStyles[':disabled']
+    },
+    '@media (prefers-color-scheme: light)': !shared.mode && { ...lightModeStyle
+    },
+    '@media (prefers-color-scheme: dark)': !shared.mode && { ...darkModeStyle
+    }
+  };
 };
 
-var Button = function Button(_ref3) {
-  var className = _ref3.className,
-      Tag = _ref3.tag,
-      passedProps = _objectWithoutPropertiesLoose(_ref3, ["className", "outline", "tag"]);
-
-  return /*#__PURE__*/React.createElement(Tag, _extends({}, passedProps, {
-    className: classNames(className, styles$2.Button)
-  }));
-};
+const Button = ({
+  className,
+  outline,
+  tag: Tag,
+  ...passedProps
+}) => /*#__PURE__*/React.createElement(Tag, Object.assign({}, passedProps, {
+  className: classNames(className, styles$2.Button)
+}));
 
 Button.propTypes = {
   className: PropTypes.string,
@@ -1840,62 +1797,55 @@ Button.defaultProps = {
   className: '',
   tag: 'button'
 };
-var StyledButton = styled(Button)(function (props) {
-  return _extends({}, getButttonStyle(props));
-}, margin);
+const StyledButton = styled(Button)(props => ({ ...getButttonStyle(props)
+}), margin);
 
-var styles$3 = {"Font":"_3FImO","P":"_1a9Im"};
+var styles$3 = {"Font":"_Font-module__Font__3FImO","P":"_Font-module__P__1a9Im"};
 
-var getFontStyle = function getFontStyle(_ref) {
+const getFontStyle = ({
+  color: _color = 'default',
+  contrast: _contrast = '2',
+  family: _family = 'sansSerif',
+  size: _size = 'md',
+  weight: _weight = 'normal',
+  theme
+}) => {
   var _theme$shared;
 
-  var _ref$color = _ref.color,
-      color = _ref$color === void 0 ? 'default' : _ref$color,
-      _ref$contrast = _ref.contrast,
-      contrast = _ref$contrast === void 0 ? '2' : _ref$contrast,
-      _ref$family = _ref.family,
-      family = _ref$family === void 0 ? 'sansSerif' : _ref$family,
-      _ref$size = _ref.size,
-      size = _ref$size === void 0 ? 'md' : _ref$size,
-      _ref$weight = _ref.weight,
-      weight = _ref$weight === void 0 ? 'normal' : _ref$weight,
-      theme = _ref.theme;
-
-  var _getMinLineHeight = getMinLineHeight({
-    size: theme.fonts.sizes[size],
-    space: _extends(_extends({}, theme.space), {}, {
+  const {
+    ratio: lineHeightRatio
+  } = getMinLineHeight({
+    size: theme.fonts.sizes[_size],
+    space: { ...theme.space,
       xs: theme.space.sm
+    }
+  });
+  const darkModeStyle = {
+    color: theme.colors[_color][`dark-${_contrast}`]
+  };
+  const lightModeStyle = {
+    color: theme.colors[_color][`light-${_contrast}`]
+  };
+  return {
+    fontFamily: theme.fonts[_family],
+    fontSize: theme.fonts.sizes[_size],
+    fontWeight: theme.fonts.weights[_weight],
+    lineHeight: lineHeightRatio,
+    ...getModeStyles({
+      darkModeStyle,
+      lightModeStyle,
+      mode: theme === null || theme === void 0 ? void 0 : (_theme$shared = theme.shared) === null || _theme$shared === void 0 ? void 0 : _theme$shared.mode
     })
-  }),
-      lineHeightRatio = _getMinLineHeight.ratio;
-
-  var darkModeStyle = {
-    color: theme.colors[color]["dark-" + contrast]
   };
-  var lightModeStyle = {
-    color: theme.colors[color]["light-" + contrast]
-  };
-  return _extends({
-    fontFamily: theme.fonts[family],
-    fontSize: theme.fonts.sizes[size],
-    fontWeight: theme.fonts.weights[weight],
-    lineHeight: lineHeightRatio
-  }, getModeStyles({
-    darkModeStyle: darkModeStyle,
-    lightModeStyle: lightModeStyle,
-    mode: theme === null || theme === void 0 ? void 0 : (_theme$shared = theme.shared) === null || _theme$shared === void 0 ? void 0 : _theme$shared.mode
-  }));
 };
 
-var Font = function Font(_ref2) {
-  var className = _ref2.className,
-      CustomTag = _ref2.tag,
-      passedProps = _objectWithoutPropertiesLoose(_ref2, ["className", "tag"]);
-
-  return /*#__PURE__*/React.createElement(CustomTag, _extends({}, passedProps, {
-    className: classNames(className, styles$3.Font)
-  }));
-};
+const Font = ({
+  className,
+  tag: CustomTag,
+  ...passedProps
+}) => /*#__PURE__*/React.createElement(CustomTag, Object.assign({}, passedProps, {
+  className: classNames(className, styles$3.Font)
+}));
 
 Font.propTypes = {
   className: PropTypes.string,
@@ -1905,56 +1855,40 @@ Font.defaultProps = {
   className: '',
   tag: 'div'
 };
-var StyledFont = styled(Font)(function (props) {
-  return getFontStyle(props);
-}, margin);
-var P = function P(props) {
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({
-    className: styles$3.P,
-    tag: "p"
-  }, props));
-};
-var Small = function Small(props) {
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({
-    size: "sm",
-    tag: "small"
-  }, props));
-};
-var Strong = function Strong(props) {
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({
-    tag: "strong",
-    weight: "bold"
-  }, props));
-};
-var Em = function Em(props) {
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({
-    tag: "em"
-  }, props));
-};
-var U = function U(props) {
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({
-    tag: "u"
-  }, props));
-};
-var I = function I(props) {
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({
-    tag: "i"
-  }, props));
-};
-var B = function B(props) {
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({
-    tag: "b",
-    weight: "bold"
-  }, props));
-};
+const StyledFont = styled(Font)(props => getFontStyle(props), margin);
+const P = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  className: styles$3.P,
+  tag: "p"
+}, props));
+const Small = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  size: "sm",
+  tag: "small"
+}, props));
+const Strong = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  tag: "strong",
+  weight: "bold"
+}, props));
+const Em = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  tag: "em"
+}, props));
+const U = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  tag: "u"
+}, props));
+const I = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  tag: "i"
+}, props));
+const B = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  tag: "b",
+  weight: "bold"
+}, props));
 
-var styles$4 = {"Heading":"_3T98U"};
+var styles$4 = {"Heading":"_Heading-module__Heading__3T98U"};
 
-var getHeadingFontStyle = function getHeadingFontStyle(_ref) {
-  var _ref$level = _ref.level,
-      level = _ref$level === void 0 ? 1 : _ref$level,
-      theme = _ref.theme;
-  var levels = {
+const getHeadingFontStyle = ({
+  level: _level = 1,
+  theme
+}) => {
+  const levels = {
     1: {
       contrast: '3',
       size: 'xl',
@@ -1976,25 +1910,26 @@ var getHeadingFontStyle = function getHeadingFontStyle(_ref) {
       weight: 'bold'
     }
   };
-  return _extends({}, getFontStyle(_extends(_extends({}, levels["" + level]), {}, {
-    theme: theme
-  })));
+  return { ...getFontStyle({ ...levels[`${_level}`],
+      theme
+    })
+  };
 };
 
-var Heading = function Heading(_ref2) {
-  var className = _ref2.className,
-      level = _ref2.level,
-      CustomTag = _ref2.tag,
-      passedProps = _objectWithoutPropertiesLoose(_ref2, ["className", "level", "tag"]);
-
-  var Tag = useMemo(function () {
+const Heading = ({
+  className,
+  level,
+  tag: CustomTag,
+  ...passedProps
+}) => {
+  const Tag = useMemo(() => {
     if (CustomTag) {
       return CustomTag;
     }
 
-    return "h" + level;
+    return `h${level}`;
   }, [CustomTag, level]);
-  return /*#__PURE__*/React.createElement(StyledFont, _extends({}, passedProps, {
+  return /*#__PURE__*/React.createElement(StyledFont, Object.assign({}, passedProps, {
     className: classNames(className, styles$4.Heading),
     tag: Tag
   }));
@@ -2010,36 +1945,34 @@ Heading.defaultProps = {
   level: 1,
   tag: null
 };
-var StyledHeading = styled(Heading)(function (_ref3) {
-  var level = _ref3.level,
-      theme = _ref3.theme;
-  return getHeadingFontStyle({
-    level: level,
-    theme: theme
-  });
-});
-var H1 = function H1(props) {
-  return /*#__PURE__*/React.createElement(StyledHeading, _extends({}, props, {
-    level: 1
-  }));
-};
-var H2 = function H2(props) {
-  return /*#__PURE__*/React.createElement(StyledHeading, _extends({}, props, {
-    level: 2
-  }));
-};
-var H3 = function H3(props) {
-  return /*#__PURE__*/React.createElement(StyledHeading, _extends({}, props, {
-    level: 3
-  }));
-};
-var H4 = function H4(props) {
-  return /*#__PURE__*/React.createElement(StyledHeading, _extends({}, props, {
-    level: 4
-  }));
-};
+const StyledHeading = styled(Heading)(({
+  level,
+  theme
+}) => getHeadingFontStyle({
+  level,
+  theme
+}));
+const H1 = props => /*#__PURE__*/React.createElement(StyledHeading, Object.assign({}, props, {
+  level: 1
+}));
+const H2 = props => /*#__PURE__*/React.createElement(StyledHeading, Object.assign({}, props, {
+  level: 2
+}));
+const H3 = props => /*#__PURE__*/React.createElement(StyledHeading, Object.assign({}, props, {
+  level: 3
+}));
+const H4 = props => /*#__PURE__*/React.createElement(StyledHeading, Object.assign({}, props, {
+  level: 4
+}));
 
-var Heading$1 = StyledHeading;
+const Heading$1 = StyledHeading;
 
-export { StyledAccordion as Accordion, B, StyledButton as Button, StyledCard as Card, CardBody, CardFoot, CardHead, Em, StyledFont as Font, H1, H2, H3, H4, Heading$1 as Heading, I, P, Small, Strong, U, getCardBodyStyles, getCardFootStyles, getCardHeadStyles, getCardStyles, getFontStyle, getHeadingFontStyle };
+const Link = props => /*#__PURE__*/React.createElement(StyledFont, Object.assign({
+  tag: "a",
+  color: "primary"
+}, props));
+
+const A = Link;
+
+export { A, StyledAccordion as Accordion, B, StyledButton as Button, StyledCard as Card, CardBody, CardFoot, CardHead, Em, StyledFont as Font, H1, H2, H3, H4, Heading$1 as Heading, I, Link, P, Small, Strong, U, getCardBodyStyles, getCardFootStyles, getCardHeadStyles, getCardStyles, getFontStyle, getHeadingFontStyle };
 //# sourceMappingURL=index.modern.js.map

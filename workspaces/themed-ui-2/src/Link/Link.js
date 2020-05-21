@@ -1,7 +1,7 @@
 import React from 'react';
 import Font from '../Font';
 
-export const Link = props => (
+const Link = props => (
   <Font
     tag="a"
     color="primary"
