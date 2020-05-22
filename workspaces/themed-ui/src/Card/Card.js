@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
 import { margin } from 'styled-system';
-import { getModeStyles } from '../component-utils';
+import { getModeStyles } from '@pixelbandito/theme';
 import styles from './Card.module.css';
 
 export const getCardStyles = ({
