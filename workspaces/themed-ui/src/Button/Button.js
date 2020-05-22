@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
-import { margin } from 'styled-system'
-
+import { margin } from 'styled-system';
 import { getMinLineHeight } from '@pixelbandito/theme';
 
 import { tagPropType } from '../prop-types';
@@ -28,15 +27,20 @@ export const getButttonStyle = ({
     variants,
   } = buttons;
 
-  let variant = { ...variants[variantKey] };
+  const variant = { ...variants[variantKey] };
 
-  const getVariantColors = ({ contrast, mode, outline, styles }) => {
-    let backgroundColorKey = styles.keyColor || 'default';
-    let backgroundColor = colors[backgroundColorKey] || backgroundColorKey;
-    let colorKey = styles.color || (mode === 'dark' ? 'black' : 'white');
-    let color = colors[colorKey] || colorKey;
+  const getVariantColors = ({
+    contrast,
+    mode,
+    outline: variantOutline,
+    styles: variantStyles,
+  }) => {
+    const backgroundColorKey = variantStyles.keyColor || 'default';
+    const backgroundColor = colors[backgroundColorKey] || backgroundColorKey;
+    const colorKey = variantStyles.color || (mode === 'dark' ? 'black' : 'white');
+    const color = colors[colorKey] || colorKey;
 
-    if (outline) {
+    if (variantOutline) {
       return {
         color: backgroundColor?.[`${mode}-${contrast}`] ?? backgroundColor,
         backgroundColor: 'transparent',
@@ -44,14 +48,14 @@ export const getButttonStyle = ({
       };
     }
 
-    return  {
+    return {
       backgroundColor: backgroundColor?.[`${mode}-${contrast}`] ?? backgroundColor,
       color: color?.[`${mode}-bg`] ?? colorKey,
       borderColor: backgroundColor?.[`${mode}-${contrast}`] ?? backgroundColor,
     };
   };
 
-  let {
+  const {
     fontSize,
     paddingH,
     paddingV,
@@ -66,12 +70,12 @@ export const getButttonStyle = ({
   });
 
   const lightModeStyle = {
-    'default': {
+    default: {
       ...getVariantColors({
         contrast: '1',
         mode: 'light',
         outline,
-        styles: variant['default'],
+        styles: variant.default,
       }),
     },
     ':hover': {
@@ -109,12 +113,12 @@ export const getButttonStyle = ({
   };
 
   const darkModeStyle = {
-    'default': {
+    default: {
       ...getVariantColors({
         contrast: '1',
         mode: 'dark',
         outline,
-        styles: variant['default'],
+        styles: variant.default,
       }),
     },
     ':hover': {
@@ -156,12 +160,12 @@ export const getButttonStyle = ({
   return ({
     borderWidth,
     borderStyle: 'solid',
-    borderRadius: theme.shared.roundness * (lineHeightPx / 2 + paddingV) / 10,
+    borderRadius: (theme.shared.roundness * (lineHeightPx / 2 + paddingV)) / 10,
     paddingBottom: paddingV - borderWidth,
     paddingLeft: paddingH - borderWidth,
     paddingRight: paddingH - borderWidth,
     paddingTop: paddingV - borderWidth,
-    fontSize: fontSize,
+    fontSize,
     lineHeight: lineHeightRatio,
     transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
     ...modeStyles.default,
@@ -186,12 +190,11 @@ export const getButttonStyle = ({
     '@media (prefers-color-scheme: dark)': !shared.mode && {
       ...darkModeStyle,
     },
-  })
+  });
 };
 
 const Button = ({
   className,
-  outline,
   tag: Tag,
   ...passedProps
 }) => (
