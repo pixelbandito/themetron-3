@@ -1,5 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
+
+import { defaultTheme } from '@pixelbandito/theme';
 
 import {
   A,
@@ -15,9 +17,9 @@ import {
   P,
   Small,
   Strong,
-} from 'themed-ui';
-import 'themed-ui/dist/index.css';
-import defaultTheme from '@pixelbandito/theme-editor/src/theme.mjs';
+} from '@pixelbandito/themed-ui';
+
+import '@pixelbandito/themed-ui/dist/index.css';
 
 const App = () => {
   return (

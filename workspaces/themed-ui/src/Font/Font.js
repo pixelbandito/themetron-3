@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
 import { margin } from 'styled-system';
-
+import { getMinLineHeight } from '@pixelbandito/theme';
 import { getModeStyles } from '../component-utils';
-import { getMinLineHeight } from '../theme-utils.mjs';
 import { tagPropType } from '../prop-types';
 import styles from './Font.module.css';
 

@@ -2,9 +2,10 @@ import React, { useCallback, useState } from 'react';
 import { ThemeProvider } from 'styled-components'
 import classNames from 'classnames';
 
+import { defaultTheme } from '@pixelbandito/theme';
+
 import './App.css';
 import styles from './App.module.css';
-import defaultTheme from './theme.mjs';
 import ThemeForm from './ThemeForm';
 import Examples from './Examples';
 import GridOverlay from './GridOverlay';

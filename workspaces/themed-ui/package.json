@@ -27,6 +27,7 @@
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-scripts": "^3.4.1",
     "react-transition-group": "^4.3.0",
     "styled-components": "^5.0.1",
     "styled-system": "^5.1.5"

@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d build"
   },
   "workspaces": [
+    "workspaces/theme",
     "workspaces/theme-editor",
     "workspaces/themed-ui"
   ]

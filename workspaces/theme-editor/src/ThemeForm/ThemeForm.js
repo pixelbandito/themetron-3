@@ -3,12 +3,22 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
 import { debounce } from 'lodash-es';
-import { getButtons, getColors, getInheritedBaseColor, getSizes } from '../theme-utils.mjs';
-import { getLuminance } from '../utils/colors';
 
-import { Accordion, Button, Card } from '@pixelbandito/themed-ui';
+import {
+  getButtons,
+  getColors,
+  getInheritedBaseColor,
+  getLuminance,
+  getSizes,
+} from '@pixelbandito/theme';
+
+import {
+  Accordion,
+  Button,
+  Card,
+} from '@pixelbandito/themed-ui';
+
 import Swatch from '../Swatch';
-
 import { getHexOrDont, getNumberOrDont } from './utils';
 import Control from './Control';
 import styles from './ThemeForm.module.css';

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
 import { margin } from 'styled-system'
-import { getMinLineHeight } from '../theme-utils';
+
+import { getMinLineHeight } from '@pixelbandito/theme';
+
 import { tagPropType } from '../prop-types';
 import styles from './Button.module.css';
 

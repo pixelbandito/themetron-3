@@ -1,4 +1,4 @@
-import { getButtons, getColors, getShared, getSizes } from './theme-utils';
+import { getButtons, getColors, getShared, getSizes } from '@pixelbandito/theme';
 
 const baseSize = 4;
 
