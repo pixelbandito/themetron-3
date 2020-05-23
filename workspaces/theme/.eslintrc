@@ -1,0 +1,30 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb/hooks"
+  ],
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "ecmaFeatures": {
+      "legacyDecorators": true,
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "16.13.1"
+    }
+  },
+  "rules": {
+    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
+    "space-before-function-paren": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-props-no-spreading": 0
+  }
+}
