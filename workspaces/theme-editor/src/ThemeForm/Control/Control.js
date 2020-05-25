@@ -8,7 +8,7 @@ import styles from './Control.module.css';
 const MyFontPicker = ({ className, value, ...props }) => (
   <div className={classNames(className, styles.fontPicker)}>
     <FontPicker
-      apiKey="AIzaSyBSULUCj9eqbhC3_umbi6adtlQPTMjoftw"
+      apiKey={process.env.REACT_APP_GOOGLE_FONTS_API_KEY}
       activeFontFamily={value}
       {...props}
     />

@@ -4,6 +4,7 @@
 /node_modules
 workspaces/**/node_modules
 workspaces/**/dist
+workspaces/**/.env
 /.pnp
 .pnp.js
 
