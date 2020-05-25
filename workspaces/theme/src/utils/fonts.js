@@ -13,16 +13,11 @@ export const getFontFromGoogleFontApiResponse = ({ apiResponse }) => {
     apiUrl.push('greek');
   }
 
-  // url: 'https://fonts.googleapis.com/css?family=Anonymous+Pro:italic&subset=greek'
-  const url = apiUrl.join('');
-
-  const font = {
+  return {
     fallback: apiResponse.category,
     name: apiResponse.family,
-    source: url,
+    source: apiUrl.join(''),
   };
-
-  return font;
 };
 
 export default {
