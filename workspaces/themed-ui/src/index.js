@@ -6,3 +6,4 @@ export Font from './Font';
 export * from './Font';
 export Link from './Link';
 export * from './Link';
+export * from './prop-types';

@@ -2,14 +2,17 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
+import FontPicker from 'font-picker-react';
 import { debounce } from 'lodash-es';
 
 import {
   getButtons,
   getColors,
+  getFontFromGoogleFontApiResponse,
   getInheritedBaseColor,
   getLuminance,
   getSizes,
+  spacings,
 } from '@pixelbandito/theme';
 
 import {
@@ -29,26 +32,18 @@ const ThemeForm = ({
   onChangeTheme,
   onApplyTheme,
 }) => {
-  const [mdSize, setMdSize] = useState(initTheme.space.md);
   const [roundness, setRoundness] = useState(initTheme.shared.roundness);
   const [themeForm, setThemeForm] = useState(initTheme);
   const [isAddingBaseColor, setIsAddingBaseColor] = useState(false);
+  const [isAddingFont, setIsAddingFont] = useState(false);
   const [newBaseColor, setNewBaseColor] = useState(initTheme.colors.default['light-1']);
   const [newBaseColorName, setNewBaseColorName] = useState('');
   const importInputFileRef = useRef();
 
+  // High-level form syncing
   useEffect(() => {
     onChangeTheme(themeForm);
   }, [onChangeTheme, themeForm]);
-
-  useEffect(() => {
-    setThemeForm(prevThemeForm => ({
-      ...prevThemeForm,
-      buttons: getButtons({
-        ...prevThemeForm,
-      }),
-    }));
-  }, [themeForm.colors,  themeForm.fonts, themeForm.shared.roundness,  themeForm.space]);
 
   const handleClickApply = useCallback(() => {
     onApplyTheme(themeForm);
@@ -57,6 +52,36 @@ const ThemeForm = ({
   const handleClickRevert = useCallback(() => {
     setThemeForm(initTheme);
   }, [initTheme]);
+
+  // Import json
+  const handleClickImport = useCallback(() => {
+    if (importInputFileRef.current) {
+      importInputFileRef.current.click();
+    }
+  }, []);
+
+  const handleChangeImport = useCallback(e => {
+    const reader = new FileReader();
+    reader.readAsText(e.target.files[0]);
+
+    reader.onload = e => {
+      try {
+        setThemeForm(JSON.parse(e.target.result))
+      } catch (e) {
+        console.warn('Couldn\'t read theme file.', e.message);
+      }
+    }
+  }, []);
+
+  // High-level button theme syncing
+  useEffect(() => {
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      buttons: getButtons({
+        ...prevThemeForm,
+      }),
+    }));
+  }, [themeForm.colors,  themeForm.fonts, themeForm.shared.roundness,  themeForm.space]);
 
   // COLORS
   const safeBaseColors = useMemo(() => {
@@ -138,58 +163,39 @@ const ThemeForm = ({
     setNewBaseColorName('');
   }
 
-  // FONTS
+  // SHARED
 
-  const [fontSizesCount, setFontSizesCount] = useState(Object.keys(initTheme.fonts.sizes).length);
-  const [fontSizes, setFontSizes] = useState(initTheme.fonts.sizes);
+  // SPACING
+  const [spacing, setSpacing] = useState(
+    Object
+      .entries(spacings)
+      .filter(([key, value]) => value === initTheme.space?.md)
+      .map(([key, value]) => key)[0]
+    ?? Object.keys(spacings)[Math.floor(Object.keys(spacings).length / 2)]
+  );
 
-  const handleChangeFontSize = useCallback(({ event, key }) => {
-    const nextSizes = {
-      ...fontSizes,
-      [key]: getNumberOrDont(event.target.value),
-    };
-
-    setFontSizes(nextSizes);
+  const handleChangeSpacing = useCallback(e => {
+    const nextSpacing = e.target.value;
+    setSpacing(nextSpacing);
 
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
-      fonts: {
-        ...themeForm.fonts,
-        sizes: nextSizes,
+      shared: {
+        ...prevThemeForm.shared,
+        spacing: nextSpacing,
       },
     }));
-  }, [fontSizes, themeForm]);
-
-
-  const handleChangeFontSizesCount = useCallback(e => {
-    const nextFontSizesCount = getNumberOrDont(e.target.value);
-    let nextSizes = getSizes({ count: nextFontSizesCount });
-
-    nextSizes = Object.keys(nextSizes).reduce((result, sizeKey) => {
-      return {
-        ...result,
-        [sizeKey]: fontSizes[sizeKey] || Object.values(fontSizes)[0],
-      };
-    }, {});
-
-    setFontSizes(nextSizes);
-    setFontSizesCount(nextFontSizesCount);
-  }, [fontSizes]);
-
-  const handleChangeMdSize = e => {
-    const nextMdSize = getNumberOrDont(e.target.value);
-
-    setMdSize(nextMdSize);
 
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
       space: getSizes({
         count: 5,
-        mdSize: nextMdSize,
+        spacing: nextSpacing,
       }),
     }));
-  };
+  }, []);
 
+  // Roundness
   const roundnessMax = 10;
   const roundnessMin = 0;
 
@@ -209,24 +215,21 @@ const ThemeForm = ({
     }));
   };
 
-  const handleClickImport = useCallback(() => {
-    if (importInputFileRef.current) {
-      importInputFileRef.current.click();
-    }
+  // FONTS
+
+  const handleChangeFont = useCallback(({ key, value: apiResponse }) => {
+    const font = getFontFromGoogleFontApiResponse({ apiResponse });
+
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      baseFonts: {
+        ...prevThemeForm.baseFonts,
+        [key]: font,
+      },
+    }));
   }, []);
 
-  const handleChangeImport = useCallback(e => {
-    const reader = new FileReader();
-    reader.readAsText(e.target.files[0]);
-
-    reader.onload = e => {
-      try {
-        setThemeForm(JSON.parse(e.target.result))
-      } catch (e) {
-        console.warn('Couldn\'t read theme file.', e.message);
-      }
-    }
-  }, []);
+  // RENDER
 
   return (
     <form className={classNames(className, styles.ThemeForm)}>
@@ -239,11 +242,20 @@ const ThemeForm = ({
         }}
       >
         <Control
-          id="mdSize"
-          onChange={handleChangeMdSize}
-          type="number"
-          value={`${mdSize}`}
-        />
+          id="spacing"
+          onChange={handleChangeSpacing}
+          tag="select"
+          value={spacing}
+        >
+          {Object.keys(spacings).map(key => (
+            <option
+              key={key}
+              value={key}
+            >
+              {key}
+            </option>
+          ))}
+        </Control>
         <Control
           id="roundness"
           onChange={handleChangeRoundness}
@@ -390,30 +402,44 @@ const ThemeForm = ({
       </Accordion>
       <Accordion
         defaultIsOpen
-        head="Shared styles"
+        head="Fonts"
         style={{
           borderBottomWidth: '0',
           borderRadius: '0',
         }}
       >
-        <Control
-          id="fontSizesCount"
-          onChange={handleChangeFontSizesCount}
-          type="number"
-          value={`${fontSizesCount}`}
-        />
         <section>
-          <h4>Font sizes</h4>
-          {Object.entries(fontSizes).map(([key, value]) => (
-            <Control
-              id={`fontSize-${key}`}
-              key={key}
-              label={key}
-              onChange={event => handleChangeFontSize({ event, key })}
-              type="number"
-              value={`${value}`}
-            />
-          ))}
+          <Control
+            id="default"
+            label="default"
+            onChange={value => handleChangeFont({ key: 'default', value })}
+            tag={FontPicker}
+            value={themeForm.baseFonts.default.name ?? ''}
+          />
+          <Button
+            onClick={() => setIsAddingFont(true)}
+            type="button"
+          >
+            Add another font
+          </Button>
+          {isAddingFont && (
+            <>
+              <Button
+                onClick={() => {}}
+                type="button"
+              >
+                Confirm
+              </Button>
+              {' '}
+              <Button
+                onClick={() => setIsAddingFont(false)}
+                outline
+                type="button"
+              >
+                Cancel
+              </Button>
+            </>
+          )}
         </section>
       </Accordion>
       <Card style={{ borderRadius: '0' }}>

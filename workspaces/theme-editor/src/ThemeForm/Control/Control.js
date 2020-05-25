@@ -1,63 +1,90 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button } from '@pixelbandito/themed-ui';
+import FontPicker from 'font-picker-react';
+import { Button, tagPropType } from '@pixelbandito/themed-ui';
 import styles from './Control.module.css';
 
+const MyFontPicker = ({ className, value, ...props }) => (
+  <div className={classNames(className, styles.fontPicker)}>
+    <FontPicker
+      apiKey="AIzaSyBSULUCj9eqbhC3_umbi6adtlQPTMjoftw"
+      activeFontFamily={value}
+      {...props}
+    />
+  </div>
+);
+
 const Control = ({
+  children,
   className,
   id,
   label,
   onChange,
   onDelete,
+  tag: CustomTag,
   type,
   value,
   ...passedProps
-}) => (
-  <div
-    {...passedProps}
-    className={classNames(className, styles.Control)}
-  >
-    <label
-      className={styles.label}
-      htmlFor={id}
+}) => {
+  let Tag = CustomTag;
+
+  if (Tag === FontPicker) {
+    Tag = MyFontPicker;
+  }
+
+  return (
+    <div
+      {...passedProps}
+      className={classNames(className, styles.Control)}
     >
-      {label || id}
-    </label>
-    {' '}
-    {onDelete && (
-      <Button
-        className={styles.delete}
-        onClick={onDelete}
-        outline
-        size="sm"
+      <label
+        className={styles.label}
+        htmlFor={id}
       >
-        Ⓧ
-      </Button>
-    )}
-    <input
-      className={styles.input}
-      id={id}
-      onChange={onChange}
-      type={type}
-      value={value}
-    />
-  </div>
-);
+        {label || id}
+      </label>
+      {' '}
+      {onDelete && (
+        <Button
+          className={styles.delete}
+          onClick={onDelete}
+          outline
+          size="sm"
+        >
+          Ⓧ
+        </Button>
+      )}
+      <Tag
+        className={styles.input}
+        id={id}
+        onChange={onChange}
+        type={type}
+        value={value}
+      >
+        {children}
+      </Tag>
+    </div>
+  );
+};
 
 Control.propTypes = {
+  children: PropTypes.node,
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func,
+  tag: tagPropType,
   type: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
 
 Control.defaultProps = {
+  children: null,
   className: '',
   label: '',
+  tag: 'input',
   type: 'text',
 };
 

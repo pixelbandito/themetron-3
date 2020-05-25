@@ -1,3 +1,5 @@
+import { version } from '../package.json';
+
 import {
   getButtons,
   getColors,
@@ -24,9 +26,15 @@ const colors = getColors({ baseColors });
 
 const shared = getShared({ colors });
 
+const baseFonts = {
+  default: {
+    fallback: 'sans-serif',
+    name: null,
+    source: null,
+  },
+};
+
 const fonts = {
-  sansSerif: 'sans-serif',
-  serif: 'serif',
   sizes: {
     xs: 10,
     sm: 12,
@@ -87,8 +95,18 @@ const buttons = getButtons({
   - Edged for 3D realism
 */
 
-const theme = {
+export const stage0 = {
+  stage: 0,
+  version,
   baseColors,
+  shared,
+};
+
+const theme = {
+  stage: 1,
+  version,
+  baseColors,
+  baseFonts,
   buttons,
   colors,
   fonts,
