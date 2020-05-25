@@ -15,7 +15,7 @@
   margin-top: 5px;
 }
 
-.fontPicker > div {
+.input.fontPicker > div {
   display: block;
   width: 100%;
 }
