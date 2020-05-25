@@ -95,6 +95,27 @@ export const getColors = ({ baseColors }) => {
   return colors;
 };
 
+// export const getFont = ({
+//   fontData,
+// }) => {
+//   const getGFontApiUrl = () => {
+//     const apiUrl = [];
+//     apiUrl.push('https://fonts.googleapis.com/css?family=');
+//     apiUrl.push(anonymousPro.family.replace(/ /g, '+'));
+//     if (contains('italic', anonymousPro.variants)) {
+//     apiUrl.push(':');
+//     apiUrl.push('italic');
+//     }
+//     if (contains('greek', anonymousPro.subsets)) {
+//     apiUrl.push('&subset=');
+//     apiUrl.push('greek');
+//     }
+//
+//     // url: 'https://fonts.googleapis.com/css?family=Anonymous+Pro:italic&subset=greek'
+//     var url = apiUrl.join('');
+//   }
+// }
+
 export const getButtons = ({
   baseColors,
   fonts,
@@ -192,13 +213,33 @@ export const getSizeLabelFromIndex = (sizeIndex) => {
   return baseSizeLabel;
 };
 
+export const spacings = {
+  compact: 2 * 4,
+  cozy: 3 * 4,
+  default: 4 * 4,
+  relaxed: 5 * 4,
+  loose: 6 * 4,
+};
+
+/*
+  TODO: Make these objects easier to read, make compact have smaller spreads?
+  Maybe make sizes go from -N to N, so if you have smaller than small or
+  larger than large, it just limits you?
+*/
 export const getSizes = ({
+  spacing = 'default',
   count,
   customSizes = {},
   lgCount = 0,
-  mdSize = null,
+  mdSize: customMdSize = null,
   smCount = 0,
 }) => {
+  let mdSize = customMdSize;
+
+  if (spacings[spacing]) {
+    mdSize = spacings[spacing];
+  }
+
   let offset;
 
   let sizes = [{
@@ -236,8 +277,4 @@ export const getSizes = ({
     }), {}),
     ...customSizes,
   };
-};
-
-export default {
-  getSizes,
 };

@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import { margin } from 'styled-system';
 import { getMinLineHeight } from '@pixelbandito/theme';
 
+import { getFontStyle } from '../Font';
 import { tagPropType } from '../prop-types';
 import styles from './Button.module.css';
 
-export const getButttonStyle = ({
+export const getButtonStyle = ({
   outline = false,
   size = 'md',
   theme,
@@ -69,8 +70,25 @@ export const getButttonStyle = ({
     space,
   });
 
+  const fontStyle = getFontStyle({
+    color: variantKey, // Button variants map to color ways
+    size,
+    theme,
+  });
+
   const lightModeStyle = {
     default: {
+      ...getFontStyle({
+        color: variantKey, // Button variants map to color ways
+        size,
+        theme: {
+          ...theme,
+          shared: {
+            ...theme.shared,
+            mode: 'dark',
+          },
+        },
+      }),
       ...getVariantColors({
         contrast: '1',
         mode: 'light',
@@ -114,6 +132,17 @@ export const getButttonStyle = ({
 
   const darkModeStyle = {
     default: {
+      ...getFontStyle({
+        color: variantKey, // Button variants map to color ways
+        size,
+        theme: {
+          ...theme,
+          shared: {
+            ...theme.shared,
+            mode: 'dark',
+          },
+        },
+      }),
       ...getVariantColors({
         contrast: '1',
         mode: 'dark',
@@ -195,6 +224,7 @@ export const getButttonStyle = ({
 
 const Button = ({
   className,
+  outline,
   tag: Tag,
   ...passedProps
 }) => (
@@ -206,17 +236,19 @@ const Button = ({
 
 Button.propTypes = {
   className: PropTypes.string,
+  outline: PropTypes.bool,
   tag: tagPropType,
 };
 
 Button.defaultProps = {
   className: '',
+  outline: false,
   tag: 'button',
 };
 
 const StyledButton = styled(Button)(
   props => ({
-    ...getButttonStyle(props),
+    ...getButtonStyle(props),
   }),
   margin,
 );

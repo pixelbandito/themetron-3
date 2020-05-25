@@ -3,7 +3,7 @@
 }
 
 .label {
-  
+
 }
 
 .delete {
@@ -13,4 +13,9 @@
 .input {
   width: 100%;
   margin-top: 5px;
+}
+
+.fontPicker > div {
+  display: block;
+  width: 100%;
 }
