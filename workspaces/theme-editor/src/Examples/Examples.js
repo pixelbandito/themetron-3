@@ -122,29 +122,27 @@ const Examples = ({ className }) => {
         >
           <H1
             mb="md"
-            variant={fontVariant}
           >
             Fonts ({fontVariant})
           </H1>
           <P
             mb="md"
             mt="md"
-            variant={fontVariant}
           >
             This paragraph has{' '}
-            <Strong variant={fontVariant}>strong</Strong>,{' '}
-            <Em variant={fontVariant}>emphasized</Em>, and{' '}
-            <Small variant={fontVariant}>small</Small> text in it.{' '}
+            <Strong>strong</Strong>,{' '}
+            <Em>emphasized</Em>, and{' '}
+            <Small>small</Small> text in it.{' '}
           </P>
           <P
             mb="md"
             mt="md"
           >
-            <Font contrast="1" tag="span" variant={fontVariant}>High contrast text!</Font>{' '}
-            <Font contrast="2" tag="span" variant={fontVariant}>Medium contrast text!</Font>{' '}
-            <Font contrast="3" tag="span" variant={fontVariant}>Lower contrast text!</Font>
+            <Font contrast="1" tag="span">High contrast text!</Font>{' '}
+            <Font contrast="2" tag="span">Medium contrast text!</Font>{' '}
+            <Font contrast="3" tag="span">Lower contrast text!</Font>
           </P>
-          <A href="#heading" variant={fontVariant}>Link</A>
+          <A href="#heading">Link</A>
         </Font>
         <Card
           mb="md"
