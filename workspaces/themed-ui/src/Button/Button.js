@@ -121,7 +121,7 @@ export const getButtonStyle = ({
       }),
     },
     ':disabled': {
-      color: getVariantColors({
+      ...getVariantColors({
         contrast: '3',
         mode: 'light',
         outline,
