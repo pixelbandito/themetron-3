@@ -1,4 +1,5 @@
-import React, { Fragment, useContext } from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { createContext, Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled, { ThemeContext } from 'styled-components';
@@ -6,6 +7,8 @@ import { margin } from 'styled-system';
 import { getModeStyles, getMinLineHeight } from '@pixelbandito/theme';
 import { tagPropType } from '../prop-types';
 import styles from './Font.module.css';
+
+export const VariantContext = createContext();
 
 export const getFontStyle = ({
   color = 'default',
@@ -70,10 +73,10 @@ const useGoogleFontLink = (variantKey) => {
 const Font = ({
   className,
   tag: CustomTag,
-  variant: variantKey,
+  variant,
   ...passedProps
 }) => {
-  useGoogleFontLink(variantKey);
+  useGoogleFontLink(variant);
 
   return (
     <CustomTag
@@ -95,10 +98,49 @@ Font.defaultProps = {
   variant: 'default',
 };
 
-const StyledFont = styled(Font)(
+export const WithFontVariant = (WrappedComponent) => {
+  const Wrapper = ({
+    variant: variantProp,
+    ...passedProps
+  }) => {
+    const variantContext = useContext(VariantContext);
+
+    if (variantProp && variantProp !== variantContext) {
+      return (
+        <VariantContext.Provider value={variantProp}>
+          <WrappedComponent
+            {...passedProps}
+            variant={variantProp}
+          />
+        </VariantContext.Provider>
+      );
+    }
+
+    return (
+      <WrappedComponent
+        {...passedProps}
+        variant={variantContext}
+      />
+    );
+  };
+
+  Wrapper.propTypes = {
+    variant: PropTypes.string,
+  };
+
+  Wrapper.defaultProps = {
+    variant: null,
+  };
+
+  Wrapper.displayName = `WithFontVariant(${WrappedComponent})`;
+
+  return Wrapper;
+};
+
+const StyledFont = WithFontVariant(styled(Font)(
   props => getFontStyle(props),
   margin,
-);
+));
 
 export const P = props => (
   <StyledFont

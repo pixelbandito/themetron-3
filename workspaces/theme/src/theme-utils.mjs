@@ -95,27 +95,6 @@ export const getColors = ({ baseColors }) => {
   return colors;
 };
 
-// export const getFont = ({
-//   fontData,
-// }) => {
-//   const getGFontApiUrl = () => {
-//     const apiUrl = [];
-//     apiUrl.push('https://fonts.googleapis.com/css?family=');
-//     apiUrl.push(anonymousPro.family.replace(/ /g, '+'));
-//     if (contains('italic', anonymousPro.variants)) {
-//     apiUrl.push(':');
-//     apiUrl.push('italic');
-//     }
-//     if (contains('greek', anonymousPro.subsets)) {
-//     apiUrl.push('&subset=');
-//     apiUrl.push('greek');
-//     }
-//
-//     // url: 'https://fonts.googleapis.com/css?family=Anonymous+Pro:italic&subset=greek'
-//     var url = apiUrl.join('');
-//   }
-// }
-
 export const getButtons = ({
   baseColors,
   fonts,
@@ -139,7 +118,7 @@ export const getButtons = ({
           keyColor: key,
         },
         ':disabled': {
-          keyColor: 'neutral',
+          keyColor: 'default',
         },
       },
     }), {});

@@ -34,10 +34,6 @@ const ThemeForm = ({
 }) => {
   const [roundness, setRoundness] = useState(initTheme.shared.roundness);
   const [themeForm, setThemeForm] = useState(initTheme);
-  const [isAddingBaseColor, setIsAddingBaseColor] = useState(false);
-  const [isAddingFont, setIsAddingFont] = useState(false);
-  const [newBaseColor, setNewBaseColor] = useState(initTheme.colors.default['light-1']);
-  const [newBaseColorName, setNewBaseColorName] = useState('');
   const importInputFileRef = useRef();
 
   // High-level form syncing
@@ -84,6 +80,9 @@ const ThemeForm = ({
   }, [themeForm.colors,  themeForm.fonts, themeForm.shared.roundness,  themeForm.space]);
 
   // COLORS
+  const [isAddingBaseColor, setIsAddingBaseColor] = useState(false);
+  const [newBaseColorName, setNewBaseColorName] = useState('');
+
   const safeBaseColors = useMemo(() => {
     const baseColors =  Object.entries(themeForm.baseColors).reduce((result, [key, value]) => {
       // When base colors inherit from each other, this resolves to a hex code or css color name
@@ -120,11 +119,6 @@ const ThemeForm = ({
   }, []);
 
   const handleChangeBaseColorHex = useCallback(({ value, key }) => {
-    if (key === '_new') {
-      setNewBaseColor(value);
-      return;
-    }
-
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
       baseColors: {
@@ -146,24 +140,70 @@ const ThemeForm = ({
   const debouncedHandleChangeBaseColorHex = debounce(handleChangeBaseColorHex, 100);
 
   const handleClickAddBaseColor = (event) => {
-    if (!newBaseColor || !newBaseColorName) {
+    if (!newBaseColorName) {
       return;
     }
-
-    setIsAddingBaseColor(false);
 
     setThemeForm(prevThemeForm => ({
       ...prevThemeForm,
       baseColors: {
         ...prevThemeForm.baseColors,
-        [newBaseColorName.replace(' ', '_')]: getHexOrDont(newBaseColor),
+        [newBaseColorName.replace(' ', '_')]: prevThemeForm.baseColors.default,
       },
     }));
 
+    setIsAddingBaseColor(false);
     setNewBaseColorName('');
   }
 
   // SHARED
+
+  // FONTS
+  const [isAddingBaseFont, setIsAddingBaseFont] = useState(false);
+  const [newBaseFontName, setNewBaseFontName] = useState('');
+
+  const handleChangeFont = useCallback(({ key, value: apiResponse }) => {
+    const font = getFontFromGoogleFontApiResponse({ apiResponse });
+
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      baseFonts: {
+        ...prevThemeForm.baseFonts,
+        [key]: font,
+      },
+    }));
+  }, []);
+
+  const handleDeleteFont = useCallback(({ key }) => {
+    setThemeForm(prevThemeForm => {
+      const nextBaseFonts = { ...prevThemeForm.baseFonts };
+      delete nextBaseFonts[key];
+
+      return ({
+        ...prevThemeForm,
+        baseFonts: nextBaseFonts,
+      });
+    });
+  }, []);
+
+  const handleClickAddBaseFont = (event) => {
+    if (!newBaseFontName) {
+      return;
+    }
+
+    setThemeForm(prevThemeForm => ({
+      ...prevThemeForm,
+      baseFonts: {
+        ...prevThemeForm.baseFonts,
+        [newBaseFontName.replace(' ', '_')]: {
+          ...prevThemeForm.baseFonts.default,
+        },
+      },
+    }));
+
+    setIsAddingBaseFont(false);
+    setNewBaseFontName('');
+  }
 
   // SPACING
   const [spacing, setSpacing] = useState(
@@ -214,20 +254,6 @@ const ThemeForm = ({
       },
     }));
   };
-
-  // FONTS
-
-  const handleChangeFont = useCallback(({ key, value: apiResponse }) => {
-    const font = getFontFromGoogleFontApiResponse({ apiResponse });
-
-    setThemeForm(prevThemeForm => ({
-      ...prevThemeForm,
-      baseFonts: {
-        ...prevThemeForm.baseFonts,
-        [key]: font,
-      },
-    }));
-  }, []);
 
   // RENDER
 
@@ -373,13 +399,6 @@ const ThemeForm = ({
                   type="text"
                   value={newBaseColorName}
                 />
-                <Control
-                  id="_newBaseColor"
-                  label="Color"
-                  onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: '_new' })}
-                  type="color"
-                  value={newBaseColor}
-                />
                 <Button
                   disabled={Object.keys(themeForm.baseColors).includes(newBaseColorName)}
                   onClick={handleClickAddBaseColor}
@@ -409,30 +428,44 @@ const ThemeForm = ({
         }}
       >
         <section>
-          <Control
-            id="default"
-            label="default"
-            onChange={value => handleChangeFont({ key: 'default', value })}
-            tag={FontPicker}
-            value={themeForm.baseFonts.default.name ?? ''}
-          />
+          {Object.entries(themeForm.baseFonts).map(([key, value], i) => {
+            return (
+              <div key={key}>
+                <Control
+                  id={key}
+                  label={key}
+                  onChange={value => handleChangeFont({ key, value })}
+                  onDelete={key !== 'default' ? event => handleDeleteFont({ key }) : undefined}
+                  tag={FontPicker}
+                  value={value.name ?? ''}
+                />
+              </div>
+            );
+          })}
           <Button
-            onClick={() => setIsAddingFont(true)}
+            onClick={() => setIsAddingBaseFont(true)}
             type="button"
           >
             Add another font
           </Button>
-          {isAddingFont && (
+          {isAddingBaseFont && (
             <>
+              <Control
+                id="_newBaseFontName"
+                onChange={event => setNewBaseFontName(event.target.value)}
+                type="text"
+                value={newBaseFontName}
+              />
               <Button
-                onClick={() => {}}
+                disabled={Object.keys(themeForm.baseFonts).includes(newBaseFontName)}
+                onClick={handleClickAddBaseFont}
                 type="button"
               >
                 Confirm
               </Button>
               {' '}
               <Button
-                onClick={() => setIsAddingFont(false)}
+                onClick={() => setIsAddingBaseFont(false)}
                 outline
                 type="button"
               >

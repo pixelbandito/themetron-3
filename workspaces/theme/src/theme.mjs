@@ -32,6 +32,11 @@ const baseFonts = {
     name: null,
     source: null,
   },
+  mono: {
+    fallback: 'monospace',
+    name: null,
+    source: null,
+  },
 };
 
 const fonts = {

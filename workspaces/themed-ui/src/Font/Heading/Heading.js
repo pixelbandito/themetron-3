@@ -4,12 +4,12 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 
 import { tagPropType } from '../../prop-types';
-import Font, { getFontStyle } from '../Font';
+import Font, { getFontStyle, WithFontVariant } from '../Font';
 import styles from './Heading.module.css';
 
 export const getHeadingFontStyle = ({
   level = 1,
-  theme,
+  ...props
 }) => {
   const levels = {
     1: {
@@ -37,7 +37,7 @@ export const getHeadingFontStyle = ({
   return {
     ...getFontStyle({
       ...levels[`${level}`],
-      theme,
+      ...props,
     }),
   };
 };
@@ -77,15 +77,9 @@ Heading.defaultProps = {
   tag: null,
 };
 
-const StyledHeading = styled(Heading)(
-  ({
-    level,
-    theme,
-  }) => getHeadingFontStyle({
-    level,
-    theme,
-  }),
-);
+const StyledHeading = WithFontVariant(styled(Heading)(
+  props => getHeadingFontStyle(props),
+));
 
 export const H1 = props => <StyledHeading {...props} level={1} />;
 export const H2 = props => <StyledHeading {...props} level={2} />;

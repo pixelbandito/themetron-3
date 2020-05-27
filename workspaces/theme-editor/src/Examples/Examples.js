@@ -25,14 +25,14 @@ const Examples = ({ className }) => {
   const theme = useContext(ThemeContext);
   const [buttonVariantIndex, setButtonVariantIndex] = useState(0);
   const [cardVariantIndex, setCardVariantIndex] = useState(0);
+  const [fontVariantIndex, setFontVariantIndex] = useState(0);
 
-  const availableVariants = useMemo(
+  const availableColorVariants = useMemo(
     () => Object.keys(theme.baseColors).filter(key => !['black', 'white'].includes(key)),
     [theme.baseColors],
   );
 
-  const availableCardVariants = useMemo(() => [...availableVariants, undefined], [availableVariants]);
-
+  const availableCardVariants = useMemo(() => [...availableColorVariants, undefined], [availableColorVariants]);
   const cardVariant = availableCardVariants[cardVariantIndex];
 
   const handleIncrementCardVariantIndex = () => {
@@ -50,79 +50,100 @@ const Examples = ({ className }) => {
     setButtonVariantIndex(prevButtonVariantIndex => (prevButtonVariantIndex + 1) % availableButtonVariants.length);
   }
 
+  const availableFontVariants = useMemo(() => Object.keys(theme.baseFonts), [theme.baseFonts]);
+  const fontVariant = availableFontVariants[fontVariantIndex];
+
+  const handleIncrementFontVariantIndex = () => {
+    console.log('Doing it', fontVariantIndex, fontVariant);
+    setFontVariantIndex(prevFontVariantIndex => (prevFontVariantIndex + 1) % availableFontVariants.length);
+  }
+
   return (
     <div className={classNames(className, styles.Examples)}>
-      <A href="#heading">Link</A>
-      <H1
-        id="heading-1"
-        mb="md"
-      >
-        Heading 1
-      </H1>
-      <H2
-        id="heading-2"
-        mb="md"
-      >
-        Heading 2
-      </H2>
-      <H3
-        id="heading-3"
-        mb="md"
-      >
-        Heading 3
-      </H3>
-      <H4
-        id="heading-4"
-        mb="md"
-      >
-        Heading 4
-      </H4>
-      <Button
-        mb="md"
-        mr="md"
-        onClick={handleIncrementButtonVariantIndex}
-        size="sm"
-        variant={buttonVariant}
-      >
-        Button ({buttonVariant})
-      </Button>
-      {' '}
-      <Button
-        mb="md"
-        mr="md"
-        onClick={handleIncrementButtonVariantIndex}
-        variant={buttonVariant}
-      >
-        Button ({buttonVariant})
-      </Button>
-      {' '}
-      <Button
-        mb="md"
-        mr="md"
-        onClick={handleIncrementButtonVariantIndex}
-        size="lg"
-        variant={buttonVariant}
-      >
-        Button ({buttonVariant})
-      </Button>
-      {' '}
-      <input value="Input" onChange={() => {}}></input>
-      <P
-        mb="md"
-        mt="md"
-      >
-        This paragraph has <Strong>strong</Strong>, <Em>emphasized</Em>, and <Small>small</Small> text in it.
-      </P>
-      <P
-        mb="md"
-        mt="md"
-      >
-        <Font contrast="1" tag="span">High contrast text!</Font>{' '}
-        <Font contrast="2" tag="span">Medium contrast text!</Font>{' '}
-        <Font contrast="3" tag="span">Lower contrast text!</Font>
-      </P>
       <Font tag="div">
-        <A href="#heading">Link</A>
+        <H1
+          id="heading-1"
+          mb="md"
+        >
+          Heading 1
+        </H1>
+        <H2
+          id="heading-2"
+          mb="md"
+        >
+          Heading 2
+        </H2>
+        <H3
+          id="heading-3"
+          mb="md"
+        >
+          Heading 3
+        </H3>
+        <H4
+          id="heading-4"
+          mb="md"
+        >
+          Heading 4
+        </H4>
+        <Button
+          mb="md"
+          mr="md"
+          onClick={handleIncrementButtonVariantIndex}
+          size="sm"
+          variant={buttonVariant}
+        >
+          Button ({buttonVariant})
+        </Button>
+        {' '}
+        <Button
+          mb="md"
+          mr="md"
+          onClick={handleIncrementButtonVariantIndex}
+          variant={buttonVariant}
+        >
+          Button ({buttonVariant})
+        </Button>
+        {' '}
+        <Button
+          mb="md"
+          mr="md"
+          onClick={handleIncrementButtonVariantIndex}
+          size="lg"
+          variant={buttonVariant}
+        >
+          Button ({buttonVariant})
+        </Button>
+        {' '}
+        <input value="Input" onChange={() => {}}></input>
+        <Font
+          onClick={handleIncrementFontVariantIndex}
+          tag="div"
+          variant={fontVariant}
+        >
+          <H1
+            mb="md"
+          >
+            Fonts ({fontVariant})
+          </H1>
+          <P
+            mb="md"
+            mt="md"
+          >
+            This paragraph has{' '}
+            <Strong>strong</Strong>,{' '}
+            <Em>emphasized</Em>, and{' '}
+            <Small>small</Small> text in it.{' '}
+          </P>
+          <P
+            mb="md"
+            mt="md"
+          >
+            <Font contrast="1" tag="span">High contrast text!</Font>{' '}
+            <Font contrast="2" tag="span">Medium contrast text!</Font>{' '}
+            <Font contrast="3" tag="span">Lower contrast text!</Font>
+          </P>
+          <A href="#heading">Link</A>
+        </Font>
         <Card
           mb="md"
           mt="md"
