@@ -24,14 +24,10 @@ Foot.defaultProps = {
 
 const StyledFoot = styled(Foot)(
   ({
-    backgroundColor,
     theme,
-  }) => {
-    return {
-      backgroundColor: 'pink',
-      color: theme.color,
-    };
-  }
+  }) => ({
+    color: theme.color,
+  }),
 );
 
 export default StyledFoot;

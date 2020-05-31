@@ -2,10 +2,32 @@
   visibility: visible;
 }
 
-.body {
+
+.body.enter {
   overflow: hidden;
-  transition:
-    0.3s ease-in-out max-height,
-    0.3s ease-in-out padding-bottom,
-    0.3s ease-in-out padding-top;
+  position: relative;
+  height: 0;
+}
+
+.body.enter:not(.enterActive) {
+  padding: 0;
+}
+
+.body.enterActive {
+}
+
+.body.exit {
+  overflow: hidden;
+  position: relative;
+}
+
+.body.exitActive {
+  height: 0;
+  border-bottom-width: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.body.exitDone {
+  display: none;
 }
