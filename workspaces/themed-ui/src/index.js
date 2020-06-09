@@ -1,4 +1,5 @@
 export Accordion from './Accordion';
+export * from './Accordion';
 export Button from './Button';
 export Card from './Card';
 export * from './Card';

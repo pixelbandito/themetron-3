@@ -2,6 +2,13 @@
   visibility: visible;
 }
 
+.head.isClosed:not(.enter) {
+  border-width: 0;
+}
+
+.head.exitDone {
+  border-width: 0;
+}
 
 .body.enter {
   overflow: hidden;
@@ -10,10 +17,12 @@
 }
 
 .body.enter:not(.enterActive) {
-  padding: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .body.enterActive {
+  overflow: hidden;
 }
 
 .body.exit {

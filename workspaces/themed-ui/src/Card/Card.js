@@ -67,6 +67,7 @@ export const getCardBodyStyles = ({
   };
 
   return {
+    borderRadius: `${theme.shared.roundness * 2}px`,
     padding: `${theme.space.md}px`,
     ...getModeStyles({
       darkModeStyle,
