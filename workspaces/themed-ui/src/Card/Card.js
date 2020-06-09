@@ -45,7 +45,7 @@ export const getCardHeadStyles = ({
   };
 
   return {
-    borderRadius: `${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px 0 0`,
+    borderRadius: `${theme.shared.roundness * 2}px`,
     padding: `${theme.space.sm}px ${theme.space.md}px`,
     ...getModeStyles({
       darkModeStyle,
@@ -67,6 +67,7 @@ export const getCardBodyStyles = ({
   };
 
   return {
+    borderRadius: `${theme.shared.roundness * 2}px`,
     padding: `${theme.space.md}px`,
     ...getModeStyles({
       darkModeStyle,
@@ -91,7 +92,7 @@ export const getCardFootStyles = ({
   };
 
   return {
-    borderRadius: `0 0 ${theme.shared.roundness * 2}px ${theme.shared.roundness * 2}px`,
+    borderRadius: `${theme.shared.roundness * 2}px`,
     padding: `${theme.space.sm}px ${theme.space.md}px`,
     ...getModeStyles({
       darkModeStyle,

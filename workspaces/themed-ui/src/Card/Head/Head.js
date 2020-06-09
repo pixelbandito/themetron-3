@@ -24,14 +24,11 @@ Head.defaultProps = {
 
 const StyledHead = styled(Head)(
   ({
-    backgroundColor,
     theme,
-  }) => {
-    return {
-      backgroundColor: 'pink',
-      color: theme.color,
-    };
-  }
+  }) => ({
+    backgroundColor: 'pink',
+    color: theme.color,
+  }),
 );
 
 export default StyledHead;

@@ -2,10 +2,41 @@
   visibility: visible;
 }
 
-.body {
+.head.isClosed:not(.enter) {
+  border-width: 0;
+}
+
+.head.exitDone {
+  border-width: 0;
+}
+
+.body.enter {
   overflow: hidden;
-  transition:
-    0.3s ease-in-out max-height,
-    0.3s ease-in-out padding-bottom,
-    0.3s ease-in-out padding-top;
+  position: relative;
+  height: 0;
+}
+
+.body.enter:not(.enterActive) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.body.enterActive {
+  overflow: hidden;
+}
+
+.body.exit {
+  overflow: hidden;
+  position: relative;
+}
+
+.body.exitActive {
+  height: 0;
+  border-bottom-width: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.body.exitDone {
+  display: none;
 }

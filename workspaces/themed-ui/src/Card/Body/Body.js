@@ -24,14 +24,10 @@ Body.defaultProps = {
 
 const StyledBody = styled(Body)(
   ({
-    backgroundColor,
     theme,
-  }) => {
-    return {
-      backgroundColor: 'pink',
-      color: theme.color,
-    };
-  }
+  }) => ({
+    color: theme.color,
+  }),
 );
 
 export default StyledBody;

@@ -25,7 +25,7 @@ const App = () => {
   return (
     <div>
       <ThemeProvider theme={defaultTheme}>
-        <Accordion m="md">Stuff</Accordion>
+        <Accordion m="md" defaultIsOpen={true}>Stuff</Accordion>
         <Card m="md">
           <Card.Head variant="default">
             Card head
