@@ -19,6 +19,7 @@ import {
   Accordion,
   Button,
   Card,
+  Font,
 } from '@pixelbandito/themed-ui';
 
 import Swatch from '../Swatch';
@@ -258,157 +259,215 @@ const ThemeForm = ({
   // RENDER
 
   return (
-    <form className={classNames(className, styles.ThemeForm)}>
-      <Accordion
-        defaultIsOpen
-        head="Shared styles"
-        style={{
-          borderBottomWidth: '0',
-          borderRadius: '0',
-        }}
-      >
-        <Control
-          id="spacing"
-          onChange={handleChangeSpacing}
-          tag="select"
-          value={spacing}
+    <Font>
+      <form className={classNames(className, styles.ThemeForm)}>
+        <Accordion
+          defaultIsOpen
+          head="Shared styles"
+          style={{
+            borderBottomWidth: '0',
+            borderRadius: '0',
+          }}
         >
-          {Object.keys(spacings).map(key => (
-            <option
-              key={key}
-              value={key}
-            >
-              {key}
-            </option>
-          ))}
-        </Control>
-        <Control
-          id="roundness"
-          onChange={handleChangeRoundness}
-          type="number"
-          min="0"
-          max="10"
-          step="1"
-          value={`${roundness}`}
-        />
-      </Accordion>
-      <Accordion
-        defaultIsOpen
-        head="Colors"
-        style={{
-          borderBottomWidth: '0',
-          borderRadius: '0',
-        }}
-      >
-        <section>
-          <h4>Neutral colors</h4>
-          {safeBaseColors.white && (
-            <Control
-              id="white"
-              label="white"
-              onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: 'white' })}
-              type="color"
-              value={safeBaseColors.white}
-            />
-          )}
-          {safeBaseColors.black && (
-            <Control
-              id="black"
-              label="black"
-              onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: 'black' })}
-              type="color"
-              value={safeBaseColors.black}
-            />
-          )}
-          {themeForm.colors.default && (
-            <div className={styles.swatches}>
-              {
-                Object.entries(themeForm.colors.default)
-                .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
-                .filter(([variantKey]) => variantKey !== 'base')
-                .map(([variantKey, hex], i) => (
-                  <Swatch
-                    key={variantKey}
-                    className={styles.swatch}
-                    color={
-                      getLuminance(hex) > 0.5 ?
-                        themeForm.colors.default['dark-bg'] :
-                        themeForm.colors.default['light-bg']
-                    }
-                    backgroundColor={hex}
-                  >
-                    {variantKey}
-                  </Swatch>
-                ))
-              }
-            </div>
-          )}
-        </section>
-        <section>
-          <h4>Semantic colors</h4>
-          {Object.entries(themeForm.colors).filter(([key, value]) => key !== 'default').map(([key, value], i) => {
-            return (
-              <div key={key}>
-                <Control
-                  id={`semanticColor-${key}`}
-                  key={key}
-                  label={key}
-                  onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key })}
-                  onDelete={key !== 'primary' ? event => handleDeleteBaseColor({ key }) : undefined}
-                  type="color"
-                  value={`${value.base}`}
-                />
-                {themeForm.colors[key] && (
-                  <div className={styles.swatches}>
-                    {
-                      Object.entries(themeForm.colors[key])
-                      .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
-                      .filter(([variantKey]) => variantKey !== 'base')
-                      .map(([variantKey, hex], i) => (
-                        <Swatch
-                          key={variantKey}
-                          className={styles.swatch}
-                          color={
-                            getLuminance(hex) > 0.5 ?
-                              themeForm.colors[key]['dark-bg'] :
-                              themeForm.colors[key]['light-bg']
-                          }
-                          backgroundColor={hex}
-                        >
-                          {variantKey}
-                        </Swatch>
-                      ))
-                    }
-                  </div>
-                )}
+          <Control
+            id="spacing"
+            onChange={handleChangeSpacing}
+            tag="select"
+            value={spacing}
+          >
+            {Object.keys(spacings).map(key => (
+              <option
+                key={key}
+                value={key}
+              >
+                {key}
+              </option>
+            ))}
+          </Control>
+          <Control
+            id="roundness"
+            onChange={handleChangeRoundness}
+            type="number"
+            min="0"
+            max="10"
+            step="1"
+            value={`${roundness}`}
+          />
+        </Accordion>
+        <Accordion
+          defaultIsOpen
+          head="Colors"
+          style={{
+            borderBottomWidth: '0',
+            borderRadius: '0',
+          }}
+        >
+          <section>
+            <h4>Neutral colors</h4>
+            {safeBaseColors.white && (
+              <Control
+                id="white"
+                label="white"
+                onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: 'white' })}
+                type="color"
+                value={safeBaseColors.white}
+              />
+            )}
+            {safeBaseColors.black && (
+              <Control
+                id="black"
+                label="black"
+                onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key: 'black' })}
+                type="color"
+                value={safeBaseColors.black}
+              />
+            )}
+            {themeForm.colors.default && (
+              <div className={styles.swatches}>
+                {
+                  Object.entries(themeForm.colors.default)
+                  .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
+                  .filter(([variantKey]) => variantKey !== 'base')
+                  .map(([variantKey, hex], i) => (
+                    <Swatch
+                      key={variantKey}
+                      className={styles.swatch}
+                      color={
+                        getLuminance(hex) > 0.5 ?
+                          themeForm.colors.default['dark-bg'] :
+                          themeForm.colors.default['light-bg']
+                      }
+                      backgroundColor={hex}
+                    >
+                      {variantKey}
+                    </Swatch>
+                  ))
+                }
               </div>
+            )}
+          </section>
+          <section>
+            <h4>Semantic colors</h4>
+            {Object.entries(themeForm.colors).filter(([key, value]) => key !== 'default').map(([key, value], i) => {
+              return (
+                <div key={key}>
+                  <Control
+                    id={`semanticColor-${key}`}
+                    key={key}
+                    label={key}
+                    onChange={event => debouncedHandleChangeBaseColorHex({ value: event.target.value, key })}
+                    onDelete={key !== 'primary' ? event => handleDeleteBaseColor({ key }) : undefined}
+                    type="color"
+                    value={`${value.base}`}
+                  />
+                  {themeForm.colors[key] && (
+                    <div className={styles.swatches}>
+                      {
+                        Object.entries(themeForm.colors[key])
+                        .sort(([variantKeyA ,hexA], [variantKeyB ,hexB]) => variantKeyB.charCodeAt(0) + getLuminance(hexB) - variantKeyA.charCodeAt(0) - getLuminance(hexA))
+                        .filter(([variantKey]) => variantKey !== 'base')
+                        .map(([variantKey, hex], i) => (
+                          <Swatch
+                            key={variantKey}
+                            className={styles.swatch}
+                            color={
+                              getLuminance(hex) > 0.5 ?
+                                themeForm.colors[key]['dark-bg'] :
+                                themeForm.colors[key]['light-bg']
+                            }
+                            backgroundColor={hex}
+                          >
+                            {variantKey}
+                          </Swatch>
+                        ))
+                      }
+                    </div>
+                  )}
+                </div>
+                );
+            })}
+            <div>
+              <Button
+                onClick={() => setIsAddingBaseColor(true)}
+                type="button"
+              >
+                Add another color
+              </Button>
+              {isAddingBaseColor && (
+                <>
+                  <Control
+                    id="_newBaseColorName"
+                    onChange={event => setNewBaseColorName(event.target.value)}
+                    type="text"
+                    value={newBaseColorName}
+                  />
+                  <Button
+                    disabled={Object.keys(themeForm.baseColors).includes(newBaseColorName)}
+                    onClick={handleClickAddBaseColor}
+                    type="button"
+                  >
+                    Confirm
+                  </Button>
+                  {' '}
+                  <Button
+                    onClick={() => setIsAddingBaseColor(false)}
+                    outline
+                    type="button"
+                  >
+                    Cancel
+                  </Button>
+                </>
+              )}
+            </div>
+          </section>
+        </Accordion>
+        <Accordion
+          defaultIsOpen
+          head="Fonts"
+          style={{
+            borderBottomWidth: '0',
+            borderRadius: '0',
+          }}
+        >
+          <section>
+            {Object.entries(themeForm.baseFonts).map(([key, value], i) => {
+              return (
+                <div key={key}>
+                  <Control
+                    id={key}
+                    label={key}
+                    onChange={value => handleChangeFont({ key, value })}
+                    onDelete={key !== 'default' ? event => handleDeleteFont({ key }) : undefined}
+                    tag={FontPicker}
+                    value={value.name ?? ''}
+                  />
+                </div>
               );
-          })}
-          <div>
+            })}
             <Button
-              onClick={() => setIsAddingBaseColor(true)}
+              onClick={() => setIsAddingBaseFont(true)}
               type="button"
             >
-              Add another color
+              Add another font
             </Button>
-            {isAddingBaseColor && (
+            {isAddingBaseFont && (
               <>
                 <Control
-                  id="_newBaseColorName"
-                  onChange={event => setNewBaseColorName(event.target.value)}
+                  id="_newBaseFontName"
+                  onChange={event => setNewBaseFontName(event.target.value)}
                   type="text"
-                  value={newBaseColorName}
+                  value={newBaseFontName}
                 />
                 <Button
-                  disabled={Object.keys(themeForm.baseColors).includes(newBaseColorName)}
-                  onClick={handleClickAddBaseColor}
+                  disabled={Object.keys(themeForm.baseFonts).includes(newBaseFontName)}
+                  onClick={handleClickAddBaseFont}
                   type="button"
                 >
                   Confirm
                 </Button>
                 {' '}
                 <Button
-                  onClick={() => setIsAddingBaseColor(false)}
+                  onClick={() => setIsAddingBaseFont(false)}
                   outline
                   type="button"
                 >
@@ -416,126 +475,68 @@ const ThemeForm = ({
                 </Button>
               </>
             )}
-          </div>
-        </section>
-      </Accordion>
-      <Accordion
-        defaultIsOpen
-        head="Fonts"
-        style={{
-          borderBottomWidth: '0',
-          borderRadius: '0',
-        }}
-      >
-        <section>
-          {Object.entries(themeForm.baseFonts).map(([key, value], i) => {
-            return (
-              <div key={key}>
-                <Control
-                  id={key}
-                  label={key}
-                  onChange={value => handleChangeFont({ key, value })}
-                  onDelete={key !== 'default' ? event => handleDeleteFont({ key }) : undefined}
-                  tag={FontPicker}
-                  value={value.name ?? ''}
-                />
-              </div>
-            );
-          })}
-          <Button
-            onClick={() => setIsAddingBaseFont(true)}
-            type="button"
-          >
-            Add another font
-          </Button>
-          {isAddingBaseFont && (
-            <>
-              <Control
-                id="_newBaseFontName"
-                onChange={event => setNewBaseFontName(event.target.value)}
-                type="text"
-                value={newBaseFontName}
-              />
+          </section>
+        </Accordion>
+        <Card style={{ borderRadius: '0' }}>
+          <Card.Head variant="default">
+            <div className={styles.actions}>
               <Button
-                disabled={Object.keys(themeForm.baseFonts).includes(newBaseFontName)}
-                onClick={handleClickAddBaseFont}
+                onClick={handleClickRevert}
                 type="button"
+                level="secondary"
               >
-                Confirm
+                Revert
               </Button>
               {' '}
               <Button
-                onClick={() => setIsAddingBaseFont(false)}
-                outline
+                onClick={handleClickApply}
+                type="button"
+                variant="primary"
+              >
+                Apply
+              </Button>
+              <br />
+              <br />
+              <Button
+                download="theme.json"
+                href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(themeForm))}`}
+                size="sm"
+                style={{
+                  display: 'inline-block',
+                }}
+                tag="a"
+              >
+                Export JSON
+              </Button>
+              {' '}
+              <input
+                onChange={handleChangeImport}
+                ref={importInputFileRef}
+                style={{
+                  fontSize: '0',
+                  height: '0',
+                  left: '-100vw',
+                  opacity: '0',
+                  position: 'absolute',
+                  top: '-100vh',
+                  width: '0',
+                  zIndex: '-1',
+                }}
+                tabIndex="-1"
+                type="file"
+              />
+              <Button
+                onClick={handleClickImport}
+                size="sm"
                 type="button"
               >
-                Cancel
+                Import JSON ...
               </Button>
-            </>
-          )}
-        </section>
-      </Accordion>
-      <Card style={{ borderRadius: '0' }}>
-        <Card.Head variant="default">
-          <div className={styles.actions}>
-            <Button
-              outline
-              onClick={handleClickRevert}
-              type="button"
-            >
-              Revert
-            </Button>
-            {' '}
-            <Button
-              onClick={handleClickApply}
-              type="button"
-              variant="primary"
-            >
-              Apply
-            </Button>
-            <br />
-            <br />
-            <Button
-              download="theme.json"
-              href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(themeForm))}`}
-              outline
-              size="sm"
-              style={{
-                display: 'inline-block',
-              }}
-              tag="a"
-            >
-              Export JSON
-            </Button>
-            {' '}
-            <input
-              onChange={handleChangeImport}
-              ref={importInputFileRef}
-              style={{
-                fontSize: '0',
-                height: '0',
-                left: '-100vw',
-                opacity: '0',
-                position: 'absolute',
-                top: '-100vh',
-                width: '0',
-                zIndex: '-1',
-              }}
-              tabIndex="-1"
-              type="file"
-            />
-            <Button
-              onClick={handleClickImport}
-              outline
-              size="sm"
-              type="button"
-            >
-              Import JSON ...
-            </Button>
-          </div>
-        </Card.Head>
-      </Card>
-    </form>
+            </div>
+          </Card.Head>
+        </Card>
+      </form>
+    </Font>
   );
 }
 
