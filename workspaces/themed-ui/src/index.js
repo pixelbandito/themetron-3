@@ -5,6 +5,7 @@ export Card from './Card';
 export * from './Card';
 export Font from './Font';
 export * from './Font';
+export Input from './Input';
 export Link from './Link';
 export * from './Link';
 export * from './prop-types';

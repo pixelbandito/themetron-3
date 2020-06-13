@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { defaultTheme } from '@pixelbandito/theme';
@@ -13,6 +13,7 @@ import {
   H2,
   H3,
   H4,
+  Input,
   Link,
   P,
   Small,
@@ -22,9 +23,17 @@ import {
 import '@pixelbandito/themed-ui/dist/index.css';
 
 const App = () => {
+  const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef();
   return (
     <div>
-      <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={{
+          ...defaultTheme,
+          shared: {
+            ...defaultTheme.shared,
+            mode: 'light',
+          }
+        }}>
         <Accordion m="md" defaultIsOpen={true}>Stuff</Accordion>
         <Card m="md">
           <Card.Head variant="default">
@@ -59,6 +68,15 @@ const App = () => {
           <A href="#">Link</A>{' '}
           <Link href="#">Link</Link>
         </P>
+        <Input
+          m="md"
+          onChange={e => {
+            setInputValue(e.target.value);
+            console.log(inputRef);
+          }}
+          ref={inputRef}
+          value={inputValue}
+        />
       </ThemeProvider>
     </div>
   );
