@@ -14,6 +14,7 @@ import {
   H2,
   H3,
   H4,
+  Input,
   P,
   Small,
   Strong,
@@ -26,6 +27,7 @@ const Examples = ({ className }) => {
   const [buttonVariantIndex, setButtonVariantIndex] = useState(0);
   const [cardVariantIndex, setCardVariantIndex] = useState(0);
   const [fontVariantIndex, setFontVariantIndex] = useState(0);
+  const [inputValue, setInputValue] = useState('');
 
   const availableColorVariants = useMemo(
     () => Object.keys(theme.baseColors).filter(key => !['black', 'white'].includes(key)),
@@ -114,7 +116,7 @@ const Examples = ({ className }) => {
           Button ({buttonVariant})
         </Button>
         {' '}
-        <input value="Input" onChange={() => {}}></input>
+        <Input value={inputValue} onChange={e => setInputValue(e.target.value)}></Input>
         <Font
           onClick={handleIncrementFontVariantIndex}
           tag="div"

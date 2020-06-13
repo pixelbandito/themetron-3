@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
@@ -68,12 +68,6 @@ export const getButtonStyle = ({
   } = getMinLineHeight({
     size: fontSize,
     space,
-  });
-
-  const fontStyle = getFontStyle({
-    color: variantKey, // Button variants map to color ways
-    size,
-    theme,
   });
 
   const lightModeStyle = {
@@ -213,26 +207,27 @@ export const getButtonStyle = ({
     ':disabled': {
       ...modeStyles[':disabled'],
     },
-    '@media (prefers-color-scheme: light)': !shared.mode && {
+    '@media (prefers-color-scheme: light)': shared.mode === undefined && {
       ...lightModeStyle,
     },
-    '@media (prefers-color-scheme: dark)': !shared.mode && {
+    '@media (prefers-color-scheme: dark)': shared.mode === undefined && {
       ...darkModeStyle,
     },
   });
 };
 
-const Button = ({
+const Button = forwardRef(({
   className,
   outline,
   tag: Tag,
   ...passedProps
-}) => (
+}, ref) => (
   <Tag
     {...passedProps}
     className={classNames(className, styles.Button)}
+    ref={ref}
   />
-);
+));
 
 Button.propTypes = {
   className: PropTypes.string,
@@ -247,9 +242,7 @@ Button.defaultProps = {
 };
 
 const StyledButton = styled(Button)(
-  props => ({
-    ...getButtonStyle(props),
-  }),
+  getButtonStyle,
   margin,
 );
 
