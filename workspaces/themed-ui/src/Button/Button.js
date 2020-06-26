@@ -71,25 +71,23 @@ export const getButtonStyle = ({
   });
 
   const lightModeStyle = {
-    default: {
-      ...getFontStyle({
-        color: variantKey, // Button variants map to color ways
-        size,
-        theme: {
-          ...theme,
-          shared: {
-            ...theme.shared,
-            mode: 'dark',
-          },
+    ...getFontStyle({
+      color: variantKey, // Button variants map to color ways
+      size,
+      theme: {
+        ...theme,
+        shared: {
+          ...theme.shared,
+          mode: 'dark',
         },
-      }),
-      ...getVariantColors({
-        contrast: '1',
-        mode: 'light',
-        outline,
-        styles: variant.default,
-      }),
-    },
+      },
+    }),
+    ...getVariantColors({
+      contrast: '1',
+      mode: 'light',
+      outline,
+      styles: variant.default,
+    }),
     ':hover': {
       ...getVariantColors({
         contrast: '2',
@@ -125,25 +123,23 @@ export const getButtonStyle = ({
   };
 
   const darkModeStyle = {
-    default: {
-      ...getFontStyle({
-        color: variantKey, // Button variants map to color ways
-        size,
-        theme: {
-          ...theme,
-          shared: {
-            ...theme.shared,
-            mode: 'dark',
-          },
+    ...getFontStyle({
+      color: variantKey, // Button variants map to color ways
+      size,
+      theme: {
+        ...theme,
+        shared: {
+          ...theme.shared,
+          mode: 'dark',
         },
-      }),
-      ...getVariantColors({
-        contrast: '1',
-        mode: 'dark',
-        outline,
-        styles: variant.default,
-      }),
-    },
+      },
+    }),
+    ...getVariantColors({
+      contrast: '1',
+      mode: 'dark',
+      outline,
+      styles: variant.default,
+    }),
     ':hover': {
       ...getVariantColors({
         contrast: '2',
@@ -181,6 +177,7 @@ export const getButtonStyle = ({
   const modeStyles = (shared.mode === 'dark' && darkModeStyle) || lightModeStyle;
 
   return ({
+    ...modeStyles,
     borderWidth,
     borderStyle: 'solid',
     borderRadius: (theme.shared.roundness * (lineHeightPx / 2 + paddingV)) / 10,
@@ -191,21 +188,11 @@ export const getButtonStyle = ({
     fontSize,
     lineHeight: lineHeightRatio,
     transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
-    ...modeStyles.default,
-    ':hover': {
-      ...modeStyles[':hover'],
-    },
     ':focus': {
       outlineStyle: 'none',
-      outlineColor: modeStyles.default.borderColor,
-      boxShadow: `0 0 0 1px ${modeStyles.default.borderColor}, 0 0 4px 0px ${modeStyles[':focus'].borderColor}`,
+      outlineColor: modeStyles.borderColor,
+      boxShadow: `0 0 0 1px ${modeStyles.borderColor}, 0 0 4px 0px ${modeStyles[':focus'].borderColor}`,
       ...modeStyles[':focus'],
-    },
-    ':active': {
-      ...modeStyles[':active'],
-    },
-    ':disabled': {
-      ...modeStyles[':disabled'],
     },
     '@media (prefers-color-scheme: light)': shared.mode === undefined && {
       ...lightModeStyle,

@@ -56,7 +56,6 @@ const Examples = ({ className }) => {
   const fontVariant = availableFontVariants[fontVariantIndex];
 
   const handleIncrementFontVariantIndex = () => {
-    console.log('Doing it', fontVariantIndex, fontVariant);
     setFontVariantIndex(prevFontVariantIndex => (prevFontVariantIndex + 1) % availableFontVariants.length);
   }
 

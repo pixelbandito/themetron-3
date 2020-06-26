@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import FontPicker from 'font-picker-react';
-import { Button, tagPropType } from '@pixelbandito/themed-ui';
+
+import {
+  Button,
+  Font,
+  Input,
+  tagPropType,
+} from '@pixelbandito/themed-ui';
+
 import styles from './Control.module.css';
 
 const MyFontPicker = ({ className, value, ...props }) => (
@@ -38,12 +45,13 @@ const Control = ({
       {...passedProps}
       className={classNames(className, styles.Control)}
     >
-      <label
+      <Font
         className={styles.label}
         htmlFor={id}
+        tag="label"
       >
         {label || id}
-      </label>
+      </Font>
       {' '}
       {onDelete && (
         <Button
@@ -84,7 +92,7 @@ Control.defaultProps = {
   children: null,
   className: '',
   label: '',
-  tag: 'input',
+  tag: Input,
   type: 'text',
 };
 

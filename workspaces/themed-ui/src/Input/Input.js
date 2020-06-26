@@ -11,6 +11,7 @@ import styles from './Input.module.css';
 export const getInputStyle = ({
   size = 'md',
   theme,
+  type,
 } = {}) => {
   const {
     buttons,
@@ -171,12 +172,15 @@ export const getInputStyle = ({
     },
   };
 
-  console.log({
-    lightModeFontStyle,
-    darkModeFontStyle,
-  });
-
   const modeStyles = (shared.mode === 'dark' && darkModeStyle) || lightModeStyle;
+
+  const inputTypePropsMap = {
+    color: {
+      height: 2 * paddingV + lineHeightPx,
+    },
+  };
+
+  const inputTypeProps = inputTypePropsMap[type] || {};
 
   const inputStyle = {
     ...modeStyles,
@@ -190,6 +194,7 @@ export const getInputStyle = ({
     fontSize,
     lineHeight: lineHeightRatio,
     transition: 'background-color 0.2s linear, border-color 0.2s linear, color 0.2s linear',
+    ...inputTypeProps,
     ':focus': {
       outlineStyle: 'none',
       outlineColor: modeStyles.borderColor,
@@ -203,14 +208,6 @@ export const getInputStyle = ({
       ...darkModeStyle,
     },
   };
-
-  console.log(shared.mode);
-
-  if (shared.mode === undefined) {
-    console.log({
-      ...darkModeStyle,
-    });
-  }
 
   return inputStyle;
 };
