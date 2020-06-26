@@ -72,7 +72,6 @@ const App = () => {
           m="md"
           onChange={e => {
             setInputValue(e.target.value);
-            console.log(inputRef);
           }}
           ref={inputRef}
           value={inputValue}
