@@ -35,9 +35,11 @@ const Control = ({
   ...passedProps
 }) => {
   let Tag = CustomTag;
+  const fontPickerProps = {};
 
   if (Tag === FontPicker) {
     Tag = MyFontPicker;
+    fontPickerProps.pickerId = id;
   }
 
   return (
@@ -69,6 +71,7 @@ const Control = ({
         onChange={onChange}
         type={type}
         value={value}
+        {...fontPickerProps}
       >
         {children}
       </Tag>
