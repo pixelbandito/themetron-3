@@ -1,2 +1,4 @@
-export default from './Accordion';
+import AccordionDefault from './Accordion';
+
 export * from './Accordion';
+export default AccordionDefault;

@@ -13,15 +13,18 @@
   },
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "deploy": "gh-pages -d example/build",
+    "jest:screen": "jest -c __screen-tests__/jest.config.js",
+    "predeploy": "cd example && yarn install && yarn run build",
     "prepublish": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "storybook": "start-storybook -p 9009",
     "test:build": "run-s build",
     "test:lint": "eslint .",
+    "test:screen": "start-server-and-test storybook http-get://localhost:9009 jest:screen",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "test": "run-s test:unit test:lint test:build"
   },
   "dependencies": {
     "@pixelbandito/theme": "^1.0.0",
@@ -39,6 +42,12 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^5.3.19",
     "@testing-library/dom": "^7.21.5",
     "@testing-library/react": "~10.4.7",
     "@testing-library/user-event": "^12.0.15",
@@ -58,14 +67,19 @@
     "gh-pages": "^2.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
+    "jest-image-snapshot": "^4.1.0",
+    "jest-puppeteer": "^4.4.0",
     "microbundle-crl": "^0.13.10",
     "mocha": "^7.1.2",
     "npm-run-all": "^4.1.5",
+    "puppeteer": "^5.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
     "react-scripts": "^3.4.1",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "regenerator-runtime": "^0.13.7",
+    "start-server-and-test": "^1.11.2"
   },
   "files": [
     "dist"
