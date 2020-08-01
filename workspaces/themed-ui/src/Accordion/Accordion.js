@@ -1,4 +1,5 @@
 import React, {
+  createContext,
   // <> shorthard doesn't work without importing Fragment
   // eslint-disable-next-line no-unused-vars
   Fragment,
@@ -12,12 +13,14 @@ import styled, { ThemeContext } from 'styled-components';
 import styles from './Accordion.module.css';
 import Card, { getCardBodyStyles } from '../Card';
 
+export const AccordionContext = createContext();
+
 export const UnstyledAccordion = ({
   children,
   className,
   defaultIsOpen,
   speed = 1,
-  head: customHead,
+  head: CustomHead,
   variant,
   ...passedProps
 }) => {
@@ -26,7 +29,7 @@ export const UnstyledAccordion = ({
   const [height, setHeight] = useState();
   const [transition, setTransition] = useState();
   const theme = useContext(ThemeContext);
-  const head = customHead || (isOpen ? 'Show less' : 'Show more');
+  const head = CustomHead || (isOpen ? 'Show less' : 'Show more');
 
   const handleOnEnter = (node) => {
     // We have to compensate for padding, because we're using border-box
@@ -78,65 +81,67 @@ export const UnstyledAccordion = ({
   };
 
   return (
-    <Card
-      {...passedProps}
-      className={classNames(className, styles.Accordion)}
-      variant={variant}
-    >
-      <CSSTransition
-        classNames={{
-          enter: styles.enter,
-          enterActive: styles.enterActive,
-          exit: styles.exit,
-          exitActive: styles.exitActive,
-          exitDone: styles.exitDone,
-        }}
-        in={isOpen}
-        timeout={duration}
+    <AccordionContext.Provider value={isOpen}>
+      <Card
+        {...passedProps}
+        className={classNames(className, styles.Accordion)}
+        variant={variant}
       >
-        <Card.Head
-          className={classNames(styles.head, {
-            [styles.isOpen]: isOpen,
-            [styles.isClosed]: !isOpen,
-          })}
-          onClick={() => setIsOpen(prev => !prev)}
-          variant={variant}
-          style={{
-            transition: `${duration}ms ease-in-out border-width`,
+        <CSSTransition
+          classNames={{
+            enter: styles.enter,
+            enterActive: styles.enterActive,
+            exit: styles.exit,
+            exitActive: styles.exitActive,
+            exitDone: styles.exitDone,
           }}
+          in={isOpen}
+          timeout={duration}
         >
-          {head}
-        </Card.Head>
-      </CSSTransition>
-      <CSSTransition
-        classNames={{
-          enter: styles.enter,
-          enterActive: styles.enterActive,
-          exit: styles.exit,
-          exitActive: styles.exitActive,
-          exitDone: styles.exitDone,
-        }}
-        in={isOpen}
-        mountOnEnter
-        onEnter={handleOnEnter}
-        onEntered={handleOnEntered}
-        onExit={handleOnExit}
-        onExiting={handleOnExiting}
-        timeout={duration}
-        unmountOnExit
-      >
-        <Card.Body
-          className={styles.body}
-          style={{
-            transition,
-            height,
+          <Card.Head
+            className={classNames(styles.head, {
+              [styles.isOpen]: isOpen,
+              [styles.isClosed]: !isOpen,
+            })}
+            onClick={() => setIsOpen(prev => !prev)}
+            variant={variant}
+            style={{
+              transition: `${duration}ms ease-in-out border-width`,
+            }}
+          >
+            {head}
+          </Card.Head>
+        </CSSTransition>
+        <CSSTransition
+          classNames={{
+            enter: styles.enter,
+            enterActive: styles.enterActive,
+            exit: styles.exit,
+            exitActive: styles.exitActive,
+            exitDone: styles.exitDone,
           }}
-          variant={variant}
+          in={isOpen}
+          mountOnEnter
+          onEnter={handleOnEnter}
+          onEntered={handleOnEntered}
+          onExit={handleOnExit}
+          onExiting={handleOnExiting}
+          timeout={duration}
+          unmountOnExit
         >
-          {children}
-        </Card.Body>
-      </CSSTransition>
-    </Card>
+          <Card.Body
+            className={styles.body}
+            style={{
+              transition,
+              height,
+            }}
+            variant={variant}
+          >
+            {children}
+          </Card.Body>
+        </CSSTransition>
+      </Card>
+    </AccordionContext.Provider>
   );
 };
 
