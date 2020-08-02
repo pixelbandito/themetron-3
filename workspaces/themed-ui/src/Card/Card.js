@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 import { margin } from 'styled-system';
 import { getModeStyles } from '@pixelbandito/theme';
+import { withThemeFallback } from '../themeFallbackHelpers';
 import styles from './Card.module.css';
 
 export const getCardStyles = ({
@@ -211,8 +212,10 @@ const StyledCardFoot = styled(CardFoot)(
   }),
 );
 
-StyledCard.Head = StyledCardHead;
-StyledCard.Body = StyledCardBody;
-StyledCard.Foot = StyledCardFoot;
+const StyledCardWithThemeFallback = withThemeFallback(StyledCard);
 
-export default StyledCard;
+StyledCardWithThemeFallback.Head = withThemeFallback(StyledCardHead);
+StyledCardWithThemeFallback.Body = withThemeFallback(StyledCardBody);
+StyledCardWithThemeFallback.Foot = withThemeFallback(StyledCardFoot);
+
+export default StyledCardWithThemeFallback;

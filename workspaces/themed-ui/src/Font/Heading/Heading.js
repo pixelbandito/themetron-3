@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styled from 'styled-components';
-
 import { tagPropType } from '../../prop-types';
+import { withThemeFallback } from '../../themeFallbackHelpers';
 import Font, { getFontStyle, WithFontVariant } from '../Font';
 import styles from './Heading.module.css';
 
@@ -86,4 +86,4 @@ export const H2 = props => <StyledHeading {...props} level={2} />;
 export const H3 = props => <StyledHeading {...props} level={3} />;
 export const H4 = props => <StyledHeading {...props} level={4} />;
 
-export default StyledHeading;
+export default withThemeFallback(StyledHeading);
