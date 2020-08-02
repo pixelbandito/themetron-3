@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 import { margin } from 'styled-system';
 import { getMinLineHeight } from '@pixelbandito/theme';
-
+import { withThemeFallback } from '../themeFallbackHelpers';
 import { getFontStyle } from '../Font';
 import { tagPropType } from '../prop-types';
 import styles from './Button.module.css';
@@ -233,4 +233,4 @@ const StyledButton = styled(Button)(
   margin,
 );
 
-export default StyledButton;
+export default withThemeFallback(StyledButton);

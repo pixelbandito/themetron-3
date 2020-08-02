@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import styled, { ThemeContext } from 'styled-components';
 import { margin } from 'styled-system';
 import { getModeStyles, getMinLineHeight } from '@pixelbandito/theme';
+import { withThemeFallback, useThemeWithFallback } from '../themeFallbackHelpers';
 import { tagPropType } from '../prop-types';
 import styles from './Font.module.css';
 
@@ -59,7 +60,7 @@ const getGoogleFontLink = ({ font }) => {
 };
 
 const useGoogleFontLink = (variantKey) => {
-  const theme = useContext(ThemeContext);
+  const theme = useThemeWithFallback(ThemeContext);
   const variant = theme.baseFonts[variantKey] || theme.baseFonts.default;
 
   if (variant.name && variant.source) {
@@ -142,57 +143,57 @@ const StyledFont = WithFontVariant(styled(Font)(
   margin,
 ));
 
-export const P = props => (
+export const P = withThemeFallback(props => (
   <StyledFont
     className={styles.P}
     tag="p"
     {...props}
   />
-);
+));
 
-export const Small = props => (
+export const Small = withThemeFallback(props => (
   <StyledFont
     size="sm"
     tag="small"
     {...props}
   />
-);
+));
 
-export const Strong = props => (
+export const Strong = withThemeFallback(props => (
   <StyledFont
     tag="strong"
     weight="bold"
     {...props}
   />
-);
+));
 
-export const Em = props => (
+export const Em = withThemeFallback(props => (
   <StyledFont
     tag="em"
     {...props}
   />
-);
+));
 
-export const U = props => (
+export const U = withThemeFallback(props => (
   <StyledFont
     tag="u"
     {...props}
   />
-);
+));
 
-export const I = props => (
+export const I = withThemeFallback(props => (
   <StyledFont
     tag="i"
     {...props}
   />
-);
+));
 
-export const B = props => (
+export const B = withThemeFallback(props => (
   <StyledFont
     tag="b"
     weight="bold"
     {...props}
   />
-);
+));
 
-export default StyledFont;
+export default withThemeFallback(StyledFont);

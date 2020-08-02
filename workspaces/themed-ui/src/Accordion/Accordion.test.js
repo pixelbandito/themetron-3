@@ -1,32 +1,18 @@
 import React, { useContext } from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ThemeProvider } from 'styled-components';
-import { defaultTheme } from '@pixelbandito/theme';
 import Accordion, { AccordionContext } from './Accordion';
 
 describe('Accordion', () => {
-  let theme;
-
-  beforeEach(() => {
-    theme = defaultTheme;
-  });
-
   it('doesn\'t error', () => {
-    render(
-      <ThemeProvider theme={theme}>
-        <Accordion />
-      </ThemeProvider>,
-    );
+    render(<Accordion />);
   });
 
   it('toggles open and closed', async () => {
     const { queryByText } = render(
-      <ThemeProvider theme={theme}>
-        <Accordion>
-          BAR
-        </Accordion>
-      </ThemeProvider>,
+      <Accordion>
+        BAR
+      </Accordion>,
     );
 
     let showMore = queryByText('Show more');
@@ -54,9 +40,7 @@ describe('Accordion', () => {
 
   it('props.className renders', () => {
     const { getByTestId } = render(
-      <ThemeProvider theme={theme}>
-        <Accordion className="foo" data-testid="accordion" />
-      </ThemeProvider>,
+      <Accordion className="foo" data-testid="accordion" />,
     );
 
     const contents = getByTestId('accordion');
@@ -66,11 +50,9 @@ describe('Accordion', () => {
   describe('props.defaultIsOpen', () => {
     it('renders props.children when true', () => {
       const { getByText } = render(
-        <ThemeProvider theme={theme}>
-          <Accordion defaultIsOpen>
-            FOO
-          </Accordion>
-        </ThemeProvider>,
+        <Accordion defaultIsOpen>
+          FOO
+        </Accordion>,
       );
 
       const contents = getByText('FOO');
@@ -79,11 +61,7 @@ describe('Accordion', () => {
 
     it('doesn\'t render props.children when false', () => {
       const { queryByText } = render(
-        <ThemeProvider theme={theme}>
-          <Accordion>
-            FOO
-          </Accordion>
-        </ThemeProvider>,
+        <Accordion>FOO</Accordion>,
       );
 
       const contents = queryByText('FOO');
@@ -100,11 +78,9 @@ describe('Accordion', () => {
 
     it('renders custom accordion head with closed context', () => {
       const { getByText } = render(
-        <ThemeProvider theme={theme}>
-          <Accordion
-            head={<CustomHead />}
-          />
-        </ThemeProvider>,
+        <Accordion
+          head={<CustomHead />}
+        />,
       );
 
       const customHead = getByText('CLOSED');
@@ -113,12 +89,10 @@ describe('Accordion', () => {
 
     it('renders custom accordion head with open context', () => {
       const { getByText } = render(
-        <ThemeProvider theme={theme}>
-          <Accordion
-            defaultIsOpen
-            head={<CustomHead />}
-          />
-        </ThemeProvider>,
+        <Accordion
+          defaultIsOpen
+          head={<CustomHead />}
+        />,
       );
 
       const customHead = getByText('OPEN');

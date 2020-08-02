@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 import { margin } from 'styled-system';
 import { getMinLineHeight } from '@pixelbandito/theme';
-
+import { withThemeFallback } from '../themeFallbackHelpers';
 import { getFontStyle } from '../Font';
 import styles from './Input.module.css';
 
@@ -236,4 +236,4 @@ const StyledInput = styled(Input)(
   margin,
 );
 
-export default StyledInput;
+export default withThemeFallback(StyledInput);

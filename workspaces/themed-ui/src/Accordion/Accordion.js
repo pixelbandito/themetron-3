@@ -3,13 +3,13 @@ import React, {
   // <> shorthard doesn't work without importing Fragment
   // eslint-disable-next-line no-unused-vars
   Fragment,
-  useContext,
   useState,
 } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
+import { withThemeFallback, useThemeWithFallback } from '../themeFallbackHelpers';
 import styles from './Accordion.module.css';
 import Card, { getCardBodyStyles } from '../Card';
 
@@ -28,7 +28,7 @@ export const UnstyledAccordion = ({
   const [duration, setDuration] = useState(1000 / speed);
   const [height, setHeight] = useState();
   const [transition, setTransition] = useState();
-  const theme = useContext(ThemeContext);
+  const theme = useThemeWithFallback();
   const head = CustomHead || (isOpen ? 'Show less' : 'Show more');
 
   const handleOnEnter = (node) => {
@@ -171,4 +171,4 @@ const StyledAccordion = styled(UnstyledAccordion)(
   }),
 );
 
-export default StyledAccordion;
+export default withThemeFallback(StyledAccordion);
