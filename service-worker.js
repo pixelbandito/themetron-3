@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/themetron-3/precache-manifest.69e6376f5c98cabb55465f3c6ff2c80e.js"
+  "/themetron-3/precache-manifest.9c0c594b8f0f7f0c5e1428254d6a8341.js"
 );
 
 self.addEventListener('message', (event) => {
