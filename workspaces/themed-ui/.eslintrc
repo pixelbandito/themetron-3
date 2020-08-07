@@ -38,7 +38,11 @@
         }
     },
     {
-        "files": ["**/?(*.)+(screen-test).[tj]s?(x)", "**/jest.setup.[tj]s?(x)"],
+        "files": [
+          "**/?(*.)+(screen-test).[tj]s?(x)",
+          "**/jest.setup.[tj]s?(x)",
+          "**/setupTests.[tj]s?(x)"
+        ],
         "env": {
           "node": true,
           "browser": true,

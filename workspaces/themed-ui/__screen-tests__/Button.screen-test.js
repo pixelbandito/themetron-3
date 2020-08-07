@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-describe('Accordion', () => {
+describe('Button', () => {
   let browser;
   let page;
 
@@ -14,7 +14,7 @@ describe('Accordion', () => {
   });
 
   it('looks right', async () => {
-    await page.goto('http://localhost:9009/iframe.html?selectedKind=Accordion&selectedStory=Examples');
+    await page.goto('http://localhost:9009/iframe.html?selectedKind=Button&selectedStory=Examples');
     const image = await page.screenshot();
 
     // API from jest-image-snapshot

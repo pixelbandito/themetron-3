@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://pixelbandito.github.io/themetron-3",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "yarn workspace ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -14,6 +14,7 @@
   "workspaces": [
     "workspaces/theme",
     "workspaces/theme-editor",
-    "workspaces/themed-ui"
+    "workspaces/themed-ui",
+    "workspaces/themed-ui/example"
   ]
 }
