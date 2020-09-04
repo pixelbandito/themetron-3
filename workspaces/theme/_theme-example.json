@@ -1,0 +1,133 @@
+{
+  "stage": 1,
+  "version": "1.0.0",
+  "baseColors": {
+    "white": "white",
+    "black": "#16161d",
+    "default": "black",
+    "primary": "blue"
+  },
+  "baseFonts": {
+    "default": {
+      "fallback": "sans-serif",
+      "name": null,
+      "source": null
+    }
+  },
+  "buttons": {
+    "borderWidth": 1,
+    "roundness": 0.2,
+    "depth": {
+      "elevation": 1,
+      "embossed": 1,
+      "fullness": 1,
+      "shine": 1
+    },
+    "sizes": {
+      "sm": {
+        "fontSize": 12,
+        "paddingH": 8,
+        "paddingV": 4
+      },
+      "md": {
+        "fontSize": 16,
+        "paddingH": 16,
+        "paddingV": 8
+      },
+      "lg": {
+        "fontSize": 24,
+        "paddingH": 16,
+        "paddingV": 8
+      }
+    },
+    "variants": {
+      "default": {
+        "default": {
+          "keyColor": "default"
+        },
+        ":hover": {
+          "keyColor": "default"
+        },
+        ":focus": {
+          "keyColor": "default"
+        },
+        ":active": {
+          "keyColor": "default"
+        },
+        ":disabled": {
+          "keyColor": "default"
+        }
+      },
+      "primary": {
+        "default": {
+          "keyColor": "primary"
+        },
+        ":hover": {
+          "keyColor": "primary"
+        },
+        ":focus": {
+          "keyColor": "primary"
+        },
+        ":active": {
+          "keyColor": "primary"
+        },
+        ":disabled": {
+          "keyColor": "default"
+        }
+      }
+    }
+  },
+  "colors": {
+    "default": {
+      "base": "#16161d",
+      "light-bg": "#F1F1F4",
+      "light-1": "#4D4D66",
+      "light-2": "#6B6B8E",
+      "light-3": "#8888A5",
+      "dark-bg": "#21212C",
+      "dark-1": "#ABABC0",
+      "dark-2": "#8888A5",
+      "dark-3": "#6B6B8E"
+    },
+    "primary": {
+      "base": "#0000ff",
+      "light-bg": "#EFEFFF",
+      "light-1": "#1616FF",
+      "light-2": "#5151FF",
+      "light-3": "#7676FF",
+      "dark-bg": "#00007E",
+      "dark-1": "#A8A8FF",
+      "dark-2": "#7E7EFF",
+      "dark-3": "#5050FF"
+    }
+  },
+  "fonts": {
+    "sizes": {
+      "xs": 10,
+      "sm": 12,
+      "md": 16,
+      "lg": 24,
+      "xl": 32
+    },
+    "weights": {
+      "normal": 400,
+      "bold": 700
+    }
+  },
+  "shared": {
+    "depth": {
+      "elevation": 1,
+      "embossed": 1,
+      "fullness": 1,
+      "shine": 1
+    },
+    "roundness": 3
+  },
+  "space": {
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 32,
+    "xl": 64
+  }
+}
