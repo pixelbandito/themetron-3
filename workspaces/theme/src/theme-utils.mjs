@@ -1,5 +1,37 @@
 import { getHexFromHexOrName, setColorByContrastWithHsl } from './utils/colors';
 
+const mergeChildren = (a, b) => Object.keys(a).reduce(
+  (result, key) => ({
+    ...result,
+    [key]: {
+      ...a[key],
+      ...b[key],
+    },
+  }),
+  {},
+);
+
+const getDepth = ({
+  elevation = 1,
+  embossed = 1,
+  fullness = 1,
+  shine = 1,
+} = {}) => ({
+  elevation,
+  embossed,
+  fullness,
+  shine,
+});
+
+export const getShared = ({
+  depth = {},
+  roundness = 3,
+}) => ({
+  depth: getDepth(depth),
+  mode: undefined, // 'light', 'dark', undefined
+  roundness,
+});
+
 export const getInheritedBaseColor = ({
   attempt = 0,
   baseColors,
@@ -95,8 +127,23 @@ export const getColors = ({ baseColors }) => {
   return colors;
 };
 
+const buttonStateKeys = ['default', ':hover', ':focus', ':active', ':disabled'];
+
+const getButtonStates = props => buttonStateKeys.reduce(
+  (result, state) => ({
+    ...result,
+    [state]: {
+      ...props.default,
+      ...props[state],
+    },
+  }),
+  {},
+);
+
 export const getButtons = ({
   baseColors,
+  variants: customVariants,
+  depth = getDepth(),
   fonts,
   space,
 }) => {
@@ -104,29 +151,34 @@ export const getButtons = ({
     .filter(key => !['black', 'white'].includes(key))
     .reduce((result, key) => ({
       ...result,
-      [key]: {
+      [key]: getButtonStates({
         default: {
-          keyColor: key,
-        },
-        ':hover': {
-          keyColor: key,
-        },
-        ':focus': {
-          keyColor: key,
-        },
-        ':active': {
           keyColor: key,
         },
         ':disabled': {
           keyColor: 'default',
         },
-      },
+      }),
     }), {});
+
+  if (customVariants) {
+    Object.entries(customVariants).forEach(([variantName, variantOverrides]) => {
+      const variant = mergeChildren(
+        variants[variantName],
+        variantOverrides,
+      );
+
+      variants[variantName] = {
+        ...variants[variantName],
+        ...variant,
+      };
+    });
+  }
 
   return ({
     borderWidth: 1,
     roundness: 0.2,
-    shine: 1, // Very shiny: glass, shiny: plastic, slightly shiny: paper, 0: flat
+    depth,
     sizes: {
       sm: {
         fontSize: fonts.sizes.sm,
@@ -160,13 +212,6 @@ export const getMinLineHeight = ({ size, space }) => {
     ratio,
   };
 };
-
-export const getShared = ({ elevation = 1, roundness = 3, shine = 0 }) => ({
-  elevation,
-  mode: undefined, // 'light', 'dark', undefined
-  roundness,
-  shine,
-});
 
 export const getSizeLabelFromIndex = (sizeIndex) => {
   const smSizeLabels = ['sm', 'xs'];
